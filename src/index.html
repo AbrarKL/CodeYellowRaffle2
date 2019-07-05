@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <title>Codeyellow Raffle Bot</title>
+   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
+   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'>
+   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+   <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+   <link rel="stylesheet" href="css/style.css">
+   <script src="js/hammer.js" onload="window.Hammer = module.exports;"></script>
+   <script>
+      window.$ = window.jQuery = require('./js/jquery.js');
+   </script>
+   <script src="js/materialize.js"></script>
+</head>
+
+<body>
+   <div class="drag-top"></div>
+   <div class="window-options noselect">
+      <div id="closeM" class="window-icon"><span class="lnr lnr-cross"></span>
+      </div>
+      <div id="minimizeM" class="window-icon">－</div>
+   </div>
+
+   <div class="under-line"></div>
+
+   <div class="nav-me noselect">
+      <div class="left-me">
+         <div id="defaultOpen" class="nav-item refro">Tasks</div>
+         <div id="profilesTab" class="nav-item refro">Profiles</div>
+      </div>
+      <a href="#">
+         <div data-toggle="tooltip" title="Update available!" class="update-dot updateav"><i
+               class="fas fa-download"></i></div>
+      </a>
+      <img class="middle-me" src="css/img/logo.png">
+      <div class="right-me">
+         <div id="proxiesTab" class="nav-item refro">Proxies</div>
+         <div id="settingsTab" class="nav-item refro">Settings</div>
+      </div>
+   </div>
+   <div class="tasks">
+
+      <div id="Tasks" style="top: 150px;" class="main tabcontent">
+         <!--        <div class="twonav">
+            <div class="two-left">
+               <div id="creattask" class="two-item">Create task</div>
+               <div class="two-item" id="startAllTasks">Start all</div>
+            </div>
+            <div class="two-right">
+               <div class="two-item" style="opacity: 0.3;">Stop all</div>
+               <div class="two-item" id="deleteAllTasks">Delete all</div>
+            </div>
+         </div>
+         <table style="width: 100%;margin-bottom: 10px;">
+            <tbody id="tasks">
+               <tr style="background: #0e0e0e;">
+                  <th>ID</th>
+                  <th>SITE</th>
+                  <th>PROFILE</th>
+                  <th>STATUS</th>
+				  <th>PROXY</th>
+                  <th>ACTION</th>
+               </tr>
+            </tbody>
+         </table> -->
+
+
+
+
+         <div id="autoenterx" style="padding-top: 100px;text-align: center;" class="main tabcontent">
+
+            <div class="twonav">
+               <div class="two-left">
+                  <div style="width: 100%;" class="two-item singleenter twoactive">One-click Entry</div>
+               </div>
+               <div class="two-right">
+                  <div style="width: 100%;" class="two-item massenter">Mass Entry</div>
+               </div>
+            </div>
+
+            <!--	 <div class="altnav">
+			<div class="altnavi">Setup</div>
+			<div class="altnavi">Enter all</div>
+			<div class="altnavi">Setup</div>
+			<div class="altnavi">Enter all</div>
+         </div> -->
+
+            <div class="altnav">
+               <div style="float: left;" class="nav-row">
+                  <div class="nav-icon"><img src="css/img/shoeicon.png"
+                        style="width: 80%;image-rendering: -webkit-optimize-contrast;">
+                  </div>
+                  <select class="nav-input" id="oneClickFilter"
+                     style="background: rgba(14, 14, 14, 0) !important;color: #000 !important;">
+                     <option value="default">Filter</option>
+
+                  </select>
+               </div>
+
+               <div style="float: left;" class="nav-row">
+                  <div class="nav-icon"><i class="fa fa-user" aria-hidden="true"></i>
+                  </div>
+                  <select class="nav-input" id="oneClicktaskProfile"
+                     style="background: rgba(14, 14, 14, 0) !important;color: #000 !important;">
+                  </select>
+               </div>
+
+               <div style="float: left;" class="nav-row">
+                  <div class="nav-icon"><i class="fas fa-mail-bulk"></i>
+                  </div>
+                  <input class="nav-input" id="oneClicktaskEmail"
+                     style="background: rgba(14, 14, 14, 0) !important;color: #000 !important;" placeholder="Email">
+               </div>
+
+
+               <div style="float: right;" class="nav-row">
+                  <div class="nav-icon"><i class="fa fa-globe" aria-hidden="true"></i>
+                  </div>
+                  <input class="nav-input" id="oneClicktaskSpecificProxy"
+                     style="background: rgba(14, 14, 14, 0) !important;color: #000 !important;"
+                     placeholder="Task Proxy">
+               </div>
+
+            </div>
+
+            <div class="oneclick-container">
+
+               <!-- <div style="height: 400px;" class="raffle-enter-container">
+		
+                     <div class="raffle-im" ><img class="raffle-item" src="https://codeyellow.io/img/adidas-yeezy-700-analog.png"></div>
+                     <div class="raff-t">Naked raffle</div>
+                     <div class="feature">
+                        <div class="fcon"><i class="fas fa-clock"></i></div>
+                        27th April
+                     </div>
+					 
+					 <div class="feature">
+                     <div style="width: 100%;float:left;" class="create-row">
+                        <div class="inputicon"><i class="fas fa-sort-amount-down" aria-hidden="true"></i>
+                        </div>
+                        <select class="createinput" id="cardType">
+                              <option class="taskSizeOption" value="selectOnWin">Selected on Win</option>
+                              <option class="taskSizeOption" value="4">4</option>
+                              <option class="taskSizeOption" value="4.5">4.5</option>
+                              <option class="taskSizeOption" value="5">5</option>
+                              <option class="taskSizeOption" value="5.5">5.5</option>
+                              <option class="taskSizeOption" value="6">6</option>
+                              <option class="taskSizeOption" value="6.5">6.5</option>
+                              <option class="taskSizeOption" value="7">7</option>
+                              <option class="taskSizeOption" value="7.5">7.5</option>
+                              <option class="taskSizeOption" value="8">8</option>
+                              <option class="taskSizeOption" value="8.5">8.5</option>
+                              <option class="taskSizeOption" value="9">9</option>
+                              <option class="taskSizeOption" value="9.5">9.5</option>
+                              <option class="taskSizeOption" value="10">10</option>
+                              <option class="taskSizeOption" value="10.5">10.5</option>
+                              <option class="taskSizeOption" value="11">11</option>
+                              <option class="taskSizeOption" value="11.5">11.5</option>
+                              <option class="taskSizeOption" value="12">12</option>
+                        </select>
+                     </div>
+                     </div>
+					 
+                     <a target="_blank">
+                        <div class="feature enter-r">
+                           Enter Raffle
+                        </div>
+                     </a>
+        </div>-->
+            </div>
+
+         </div>
+
+         <div id="massenter" style="padding-top: 130px;text-align: center;display:none;" class="main tabcontent">
+
+            <div class="twonav">
+               <div class="two-left">
+                  <div style="width: 100%;" class="two-item singleenter">One-click Entry</div>
+               </div>
+               <div class="two-right">
+                  <div style="width: 100%;" class="two-item massenter twoactive">Mass Entry</div>
+               </div>
+            </div>
+
+
+            <div class="altnav">
+
+               <div style="width: 50%;" class="two-left">
+                  <div id="creattask" class="altnavi">Create Task</div>
+                  <div id="eeconfig" class="altnavi">Configure emails</div>
+               </div>
+               <div style="width: 50%;" class="two-right">
+                  <div class="altnavi" id="startAllTasks">Start All</div>
+                  <div class="altnavi" id="deleteAllTasks">Delete All</div>
+               </div>
+
+            </div>
+
+            <table style="width: 100%;margin-bottom: 10px;">
+               <tbody id="tasks">
+                  <tr style="background: #0e0e0e;">
+                     <th>ID</th>
+                     <th>SITE</th>
+                     <th>PROFILE</th>
+                     <th>STATUS</th>
+                     <th>PROXY</th>
+                     <th>ACTION</th>
+                  </tr>
+               </tbody>
+            </table>
+
+         </div>
+
+
+
+
+
+
+      </div>
+
+      <div class="Econf">
+         <div id="Addprox" style="padding: 90px 0px 0px 0px;" class="main tabcontent">
+
+            <div style="overflow-y: auto;" class="lefts">
+
+               <!-- <div class="proxy-gen-h">Proxy generation</div>
+		<div class="proxy-gen-i">Select your favourite proxy brand to generate safe proxies!</div> -->
+
+               <div style="width: 100%; margin-left: 0%;background: rgba(0,0,0,0.5);" class="setterhat">
+                  <div class="settit">Generate Emails</div>
+                  <div class="setinfo">Jig your current email address or setup a catch here!</div>
+               </div>
+
+               <div style="padding: 2% 2% 6% 2%;margin-top: 2%;" class="email-gen-hold-con">
+
+                  <div style="margin-bottom: 10px;margin-top: -10px;" class="proxy-gen-i">Enter a gmail email address
+                     that you want to jig!</div>
+
+                  <div style="width: 96%;float:left;margin-left: 2%;margin-top:2%;" class="create-row">
+                     <div class="inputicon"><i class="fa fa-envelope" aria-hidden="true"></i>
+                     </div>
+                     <input class="createinput" id="gmailJigInput" placeholder="Gmail to jig">
+                  </div>
+
+
+                  <div style="margin-top: 40px;" class="proxy-gen-i">Generate <b id="gmailLimitShow">15</b> emails</div>
+                  <div style="margin-top: 45px;" class="slidecontainer">
+                     <input id="gmailLimit" type="range" min="0" max="100" value="15" class="slider">
+                  </div>
+                  <div class="setterbummer">
+                     <div style="margin-top: 10px;width: 30%;margin-bottom: 2%;" id="generateGmails"
+                        class="price-it-up">Generate Emails</div>
+                  </div>
+               </div>
+
+
+               <div style="padding: 2% 2% 6% 2%;margin-top: 2%;" class="email-gen-hold-con">
+
+                  <div style="margin-bottom: 10px;margin-top: -10px;" class="proxy-gen-i">Input your catchall domain
+                     (example.com) and generate unique emails!</div>
+
+                  <div style="width: 96%;float:left;margin-left: 2%;margin-top:2%;" class="create-row">
+                     <div class="inputicon"><i class="fa fa-globe" aria-hidden="true"></i>
+                     </div>
+                     <input class="createinput" id="catchallJigInput" placeholder="Catchall to jig">
+                  </div>
+
+
+                  <div style="margin-top: 40px;" class="proxy-gen-i">Generate <b id="catchallLimitShow">15</b> emails
+                  </div>
+                  <div style="margin-top: 45px;" class="slidecontainer">
+                     <input id="catchallLimit" type="range" min="0" max="100" value="15" class="slider">
+                  </div>
+                  <div class="setterbummer">
+                     <div style="margin-top: 10px;width: 30%;margin-bottom: 2%;" id="generateCatchalls"
+                        class="price-it-up">Generate Emails</div>
+                  </div>
+               </div>
+
+
+            </div>
+
+            <div class="rights">
+               <div style="width: 100%; margin-left: 0%;background: rgba(0,0,0,0.5);" class="setterhat">
+                  <div class="settit">Input Emails</div>
+                  <div class="setinfo">input emails here or use our generation to easilly jig your emails!</div>
+               </div>
+               <div class="addcon" style="margin-top: 2%;">
+                  <!--    					<div style="padding: 20px;margin-bottom: 0px;background:rgba(0,0,0,0.6);" class="setterhat">
+                  <div class="settit">Input proxies</div>
+                  <div class="setinfo">Input your proxies here!</div>
+                  </div> -->
+                  <textarea style="height: 410px;" class="barea" id="emailsToSave" placeholder="email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com"></textarea>
+                  <div class="setterbummer">
+                     <div style="margin-top: 10px;width: 30%;" id="saveEmailList" class="price-it-up">Save email list
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+         </div>
+
+
+      </div>
+
+	  <div class="profiles">
+
+			<div id="Profiles" style="padding-top: 10px;" class="main tabcontent">
+
+
+            <div class="proDetails">
+               <div class="midtitle">Create / Edit a profile</div>
+               <div class="midtitleinfo">Create a new profile or edit an existing one!</div>
+
+               <div class="shoe-container">
+
+                  <div style="height: 200px;position: relative;" class="new-meta">
+
+                     <div style="margin-top: -10px;margin-bottom: 30px;" class="proxy-gen-i">Select a profile to Edit, Export or delete!</div>
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Task profile!" class="inputicon"><i
+                              class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <select class="createinput" id="profileList">
+                        </select>
+                     </div>
+
+					<div class="cpbbar">
+					<input id="importProfiles" type="file" accept=".json" hidden/>
+					<div style="float: left;margin-left: 0;" class="babr" data-toggle="tooltip" data-placement="top" title="Import profiles" id="importProfilesContainer" onclick="document.getElementById('importProfiles').click();">IMPORT PROFILES</div>
+					<input id="exportProfiles" type="file" webkitdirectory directory hidden/>
+					<div class="babr" data-toggle="tooltip" data-placement="top" title="Export profiles" id="exportProfilesContainer" onclick="document.getElementById('exportProfiles').click();">EXPORT PROFILES</div>
+					<div style="float: right;margin-right: 0;" class="babr" data-toggle="tooltip" data-placement="top" title="Delete Profile" id="deleteProfile">DELETE PROFILE</div>
+					</div>
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton editprofile" data-toggle="tooltip" data-placement="top" title="Load Profile" id="loadProfile">EDIT (Demo) PROFILE</div>
+                  <div class="createbumbutton createprofile" data-toggle="tooltip" data-placement="top" title="New profile">NEW PROFILE</div>
+                  <div class="canclerow"></div>
+               </div>
+
+            </div>			
+			
+			<div style="display: none;" class="proDetails1">
+               <div class="midtitle">Jig options!</div>
+               <div class="midtitleinfo">Select the fields you want to jig for you profile.</div>
+
+               <div class="shoe-container">
+
+                  <div style="height: 200px;position: relative;" class="new-meta">
+
+		 <div style="margin-top: 0px;" class="jig-tit">Name, address & phone number jig</div>
+		 <div style="margin-bottom: 40px;" class="jig-info">Here you can select to jig your first and last name, address (line 2) and phone number for each profile (per task)</div>			
+		 
+		 <div class="half-check-con" ><label style="margin-top: 10px;" class="switch">
+	     <input id="jigProfileName" class="customCheckbx" type="checkbox">
+         <span class="sliderf roundf"></span>
+		 </label></div>
+
+		 <div class="half-check-con"><label style="margin-top: 10px;" class="switch">
+		 <input id="jigProfileAddress" class="customCheckbx" type="checkbox">
+		 <span class="sliderf roundf"></span>
+		 </label></div>
+		 
+		 <div class="half-check-con"><label style="margin-top: 10px;" class="switch">
+		 <input id="jigProfilePhoneNumber" class="customCheckbx" type="checkbox">
+		 <span class="sliderf roundf"></span>
+		 </label></div>
+		 
+		 <div class="half-check-tit">Jig profile first and last name</div>
+		 <div class="half-check-tit">Jig profile address</div>
+		 <div class="half-check-tit">Jig profile phone number!</div>	
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton pmin1">BACK</div>
+                  <div class="createbumbutton pnext1">NEXT</div>
+                  <div class="canclerow"><span class="pcancel">cancel</span></div>
+               </div>
+
+            </div>
+
+			<div style="display: none;" class="proDetails2">
+               <div class="midtitle">Profile information</div>
+               <div class="midtitleinfo">Profile information for raffle entries.</div>
+
+               <div class="shoe-container">
+
+                  <div style="height: 215px;position: relative;" class="new-meta">
+			   
+			<div style="width: 100%;float:left;" class="create-row">
+               <div class="inputicon"><i class="fas fa-user"></i>
+               </div>
+               <input class="createinput" id="firstName" placeholder="First name">
+            </div>
+            <div style="width: 100%;float:right;" class="create-row">
+               <div class="inputicon"><i class="far fa-user"></i>
+               </div>
+               <input class="createinput" id="lastName" placeholder="Last name">
+            </div>
+            <div style="width: 100%;float:left;" class="create-row">
+               <div class="inputicon"><i class="fa fa-phone" aria-hidden="true"></i>
+               </div>
+               <input class="createinput" id="phoneNumber" placeholder="Phone Number">
+            </div>
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton pmin1">BACK</div>
+                  <div class="createbumbutton pnext1">NEXT</div>
+                  <div class="canclerow"><span class="pcancel">cancel</span></div>
+               </div>
+
+            </div>
+
+			<div style="display: none;" class="proDetails3">
+               <div class="midtitle">Delivery address</div>
+               <div class="midtitleinfo">Your delivery address for raffle entries</div>
+
+               <div class="shoe-container">
+
+                  <div style="position: relative;" class="new-meta">
+
+			<div style="width: 100%;float:left;" class="create-row">
+               <div class="inputicon"><i class="fa fa-map-marker" aria-hidden="true"></i>
+               </div>
+               <input class="createinput" id="address" placeholder="Address">
+            </div>
+            <div style="width: 100%;float:right;" class="create-row">
+               <div class="inputicon"><i class="fas fa-map-marker-alt"></i>
+               </div>
+               <input class="createinput" id="aptSuite" placeholder="Apt Suite (optional)">
+            </div>
+            <div style="width: 49%;float:left;" class="create-row">
+               <div class="inputicon"><i class="fa fa-globe" aria-hidden="true"></i>
+               </div>
+               <select class="createinput" id="country">
+                  <option value="Country">Country</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="Ireland">Ireland</option>
+                  <option value="North Ireland">North Ireland</option>
+                  <option value="United States">United States</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Austria">Austria</option>
+                  <option value="Slovakia">Slovakia</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Denmark">Denmark</option>
+                  <option value="Finland">Finland</option>
+                  <option value="Romania">Romania</option>
+                  <option value="Germany">Germany</option>
+                  <option value="Poland">Poland</option>
+                  <option value="Belgium">Belgium</option>
+                  <option value="Slovenia">Slovenia</option>
+                  <option value="Sweden">Sweden</option>
+                  <option value="Netherlands">Netherlands</option>
+                  <option value="Switzerland">Switzerland</option>
+                  <option value="France">France</option>
+                  <option value="Spain">Spain</option>
+                  <option value="Italy">Italy</option>
+                  <option value="Czech Republic">Czech Republic</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="Malaysia">Malaysia</option>
+                  <option value="Hong Kong">Hong Kong</option>
+                  <option value="China">China</option>
+                  <option value="Japan">Japan</option>
+               </select>
+            </div>
+            <div style="width: 49%;float:right;" class="create-row">
+               <div class="inputicon"><i class="fa fa-building" aria-hidden="true"></i>
+               </div>
+               <input class="createinput" id="city" placeholder="City">
+            </div>
+            <div style="width: 49%;float:left;" class="create-row">
+               <div class="inputicon"><i class="fa fa-map" aria-hidden="true"></i>
+               </div>
+               <select class="createinput" id="stateProvince">
+                  <option value="">State / Province</option>
+                  <option value="none" class="NONEProfileState">None</option>
+					  
+                  <option value="BRU" class="BGProfileState stateSelectOption" style="display:none;">Brussels Capital</option>
+                  <option value="VLG" class="BGProfileState stateSelectOption" style="display:none;">Flanders</option>
+                  <option value="WAL" class="BGProfileState stateSelectOption" style="display:none;">Wallonia</option>
+				  
+				  
+				  
+                  <option value="AL" class="USProfileState stateSelectOption" style="display:none;">Alabama</option>
+                  <option value="AK" class="USProfileState stateSelectOption" style="display:none;">Alaska</option>
+                  <option value="AZ" class="USProfileState stateSelectOption" style="display:none;">Arizona</option>
+                  <option value="AR" class="USProfileState stateSelectOption" style="display:none;">Arkansas</option>
+                  <option value="CA" class="USProfileState stateSelectOption" style="display:none;">California</option>
+                  <option value="CO" class="USProfileState stateSelectOption" style="display:none;">Colorado</option>
+                  <option value="CT" class="USProfileState stateSelectOption" style="display:none;">Connecticut</option>
+                  <option value="DE" class="USProfileState stateSelectOption" style="display:none;">Delaware</option>
+                  <option value="FL" class="USProfileState stateSelectOption" style="display:none;">Florida</option>
+                  <option value="GA" class="USProfileState stateSelectOption" style="display:none;">Georgia</option>
+                  <option value="HI" class="USProfileState stateSelectOption" style="display:none;">Hawaii</option>
+                  <option value="ID" class="USProfileState stateSelectOption" style="display:none;">Idaho</option>
+                  <option value="IL" class="USProfileState stateSelectOption" style="display:none;">Illinois</option>
+                  <option value="IN" class="USProfileState stateSelectOption" style="display:none;">Indiana</option>
+                  <option value="IA" class="USProfileState stateSelectOption" style="display:none;">Iowa</option>
+                  <option value="KS" class="USProfileState stateSelectOption" style="display:none;">Kansas</option>
+                  <option value="KY" class="USProfileState stateSelectOption" style="display:none;">Kentucky</option>
+                  <option value="LA" class="USProfileState stateSelectOption" style="display:none;">Louisiana</option>
+                  <option value="ME" class="USProfileState stateSelectOption" style="display:none;">Maine</option>
+                  <option value="MD" class="USProfileState stateSelectOption" style="display:none;">Maryland</option>
+                  <option value="MA" class="USProfileState stateSelectOption" style="display:none;">Massachusetts</option>
+                  <option value="MI" class="USProfileState stateSelectOption" style="display:none;">Michigan</option>
+                  <option value="MN" class="USProfileState stateSelectOption" style="display:none;">Minnesota</option>
+                  <option value="MS" class="USProfileState stateSelectOption" style="display:none;">Mississippi</option>
+                  <option value="MO" class="USProfileState stateSelectOption" style="display:none;">Missouri</option>
+                  <option value="MT" class="USProfileState stateSelectOption" style="display:none;">Montana</option>
+                  <option value="NE" class="USProfileState stateSelectOption" style="display:none;">Nebraska</option>
+                  <option value="NV" class="USProfileState stateSelectOption" style="display:none;">Nevada</option>
+                  <option value="NH" class="USProfileState stateSelectOption" style="display:none;">New Hampshire</option>
+                  <option value="NJ" class="USProfileState stateSelectOption" style="display:none;">New Jersey</option>
+                  <option value="NM" class="USProfileState stateSelectOption" style="display:none;">New Mexico</option>
+                  <option value="NY" class="USProfileState stateSelectOption" style="display:none;">New York</option>
+                  <option value="NC" class="USProfileState stateSelectOption" style="display:none;">North Carolina</option>
+                  <option value="ND" class="USProfileState stateSelectOption" style="display:none;">North Dakota</option>
+                  <option value="OH" class="USProfileState stateSelectOption" style="display:none;">Ohio</option>
+                  <option value="OK" class="USProfileState stateSelectOption" style="display:none;">Oklahoma</option>
+                  <option value="OR" class="USProfileState stateSelectOption" style="display:none;">Oregon</option>
+                  <option value="PA" class="USProfileState stateSelectOption" style="display:none;">Pennsylvania</option>
+                  <option value="RI" class="USProfileState stateSelectOption" style="display:none;">Rhode Island</option>
+                  <option value="SC" class="USProfileState stateSelectOption" style="display:none;">South Carolina</option>
+                  <option value="SD" class="USProfileState stateSelectOption" style="display:none;">South Dakota</option>
+                  <option value="TN" class="USProfileState stateSelectOption" style="display:none;">Tennessee</option>
+                  <option value="TX" class="USProfileState stateSelectOption" style="display:none;">Texas</option>
+                  <option value="UT" class="USProfileState stateSelectOption" style="display:none;">Utah</option>
+                  <option value="VT" class="USProfileState stateSelectOption" style="display:none;">Vermont</option>
+                  <option value="VA" class="USProfileState stateSelectOption" style="display:none;">Virginia</option>
+                  <option value="WA" class="USProfileState stateSelectOption" style="display:none;">Washington</option>
+                  <option value="WV" class="USProfileState stateSelectOption" style="display:none;">West Virginia</option>
+                  <option value="WI" class="USProfileState stateSelectOption" style="display:none;">Wisconsin</option>
+                  <option value="WY" class="USProfileState stateSelectOption" style="display:none;">Wyoming</option>
+                  
+					<option value="AB" class="CAProfileState stateSelectOption" style="display:none;">Alberta</option>
+					<option value="BC" class="CAProfileState stateSelectOption" style="display:none;">British Columbia</option>
+					<option value="MB" class="CAProfileState stateSelectOption" style="display:none;">Manitoba</option>
+					<option value="NB" class="CAProfileState stateSelectOption" style="display:none;">New Brunswick</option>
+					<option value="NF" class="CAProfileState stateSelectOption" style="display:none;">Newfoundland</option>
+					<option value="NT" class="CAProfileState stateSelectOption" style="display:none;">Northwest Territories</option>
+					<option value="NS" class="CAProfileState stateSelectOption" style="display:none;">Nova Scotia</option>
+					<option value="NU" class="CAProfileState stateSelectOption" style="display:none;">Nunavut</option>
+					<option value="ON" class="CAProfileState stateSelectOption" style="display:none;">Ontario</option>
+					<option value="PE" class="CAProfileState stateSelectOption" style="display:none;">Prince Edward Island</option>
+					<option value="QC" class="CAProfileState stateSelectOption" style="display:none;">Quebec</option>
+					<option value="SK" class="CAProfileState stateSelectOption" style="display:none;">Saskatchewan</option>
+					<option value="YT" class="CAProfileState stateSelectOption" style="display:none;">Yukon Territory</option>
+				   
+				   
+				   	<option value="AG" class="ITProfileState stateSelectOption" style="display:none;" style="display:none;">Agrigento</option>
+					<option value="AL" class="ITProfileState stateSelectOption" style="display:none;">Alessandria</option>
+					<option value="AN" class="ITProfileState stateSelectOption" style="display:none;">Ancona</option>
+					<option value="AO" class="ITProfileState stateSelectOption" style="display:none;">Valle d'Aosta</option>
+					<option value="AR" class="ITProfileState stateSelectOption" style="display:none;">Arezzo</option>
+					<option value="AP" class="ITProfileState stateSelectOption" style="display:none;">Ascoli Piceno</option>
+					<option value="AT" class="ITProfileState stateSelectOption" style="display:none;">Asti</option>
+					<option value="AV" class="ITProfileState stateSelectOption" style="display:none;">Avellino</option>
+					<option value="BT" class="ITProfileState stateSelectOption" style="display:none;">Barletta-Andria-Trani</option>
+					<option value="BL" class="ITProfileState stateSelectOption" style="display:none;">Belluno</option>
+					<option value="BN" class="ITProfileState stateSelectOption" style="display:none;">Benevento</option>
+					<option value="BG" class="ITProfileState stateSelectOption" style="display:none;">Bergamo</option>
+					<option value="BI" class="ITProfileState stateSelectOption" style="display:none;">Biella</option>
+					<option value="BZ" class="ITProfileState stateSelectOption" style="display:none;">Bolzano</option>
+					<option value="BS" class="ITProfileState stateSelectOption" style="display:none;">Brescia</option>
+					<option value="BR" class="ITProfileState stateSelectOption" style="display:none;">Brindisi</option>
+					<option value="CL" class="ITProfileState stateSelectOption" style="display:none;">Caltanissetta</option>
+					<option value="CB" class="ITProfileState stateSelectOption" style="display:none;">Campobasso</option>
+					<option value="CE" class="ITProfileState stateSelectOption" style="display:none;">Caserta</option>
+					<option value="CZ" class="ITProfileState stateSelectOption" style="display:none;">Catanzaro</option>
+					<option value="CH" class="ITProfileState stateSelectOption" style="display:none;">Chieti</option>
+					<option value="CO" class="ITProfileState stateSelectOption" style="display:none;">Como</option>
+					<option value="CS" class="ITProfileState stateSelectOption" style="display:none;">Cosenza</option>
+					<option value="CR" class="ITProfileState stateSelectOption" style="display:none;">Cremona</option>
+					<option value="KR" class="ITProfileState stateSelectOption" style="display:none;">Crotone</option>
+					<option value="CN" class="ITProfileState stateSelectOption" style="display:none;">Cuneo</option>
+					<option value="EN" class="ITProfileState stateSelectOption" style="display:none;">Enna</option>
+					<option value="FM" class="ITProfileState stateSelectOption" style="display:none;">Fermo</option>
+					<option value="FE" class="ITProfileState stateSelectOption" style="display:none;">Ferrara</option>
+					<option value="FG" class="ITProfileState stateSelectOption" style="display:none;">Foggia</option>
+					<option value="FC" class="ITProfileState stateSelectOption" style="display:none;">Forlì-Cesena</option>
+					<option value="FR" class="ITProfileState stateSelectOption" style="display:none;">Frosinone</option>
+					<option value="GO" class="ITProfileState stateSelectOption" style="display:none;">Gorizia</option>
+					<option value="GR" class="ITProfileState stateSelectOption" style="display:none;">Grosseto</option>
+					<option value="IM" class="ITProfileState stateSelectOption" style="display:none;">Imperia</option>
+					<option value="IS" class="ITProfileState stateSelectOption" style="display:none;">Isernia</option>
+					<option value="SP" class="ITProfileState stateSelectOption" style="display:none;">La Spezia</option>
+					<option value="AQ" class="ITProfileState stateSelectOption" style="display:none;">L'Aquila</option>
+					<option value="LT" class="ITProfileState stateSelectOption" style="display:none;">Latina</option>
+					<option value="LE" class="ITProfileState stateSelectOption" style="display:none;">Lecce</option>
+					<option value="LC" class="ITProfileState stateSelectOption" style="display:none;">Lecco</option>
+					<option value="LI" class="ITProfileState stateSelectOption" style="display:none;">Livorno</option>
+					<option value="LO" class="ITProfileState stateSelectOption" style="display:none;">Lodi</option>
+					<option value="LU" class="ITProfileState stateSelectOption" style="display:none;">Lucca</option>
+					<option value="MC" class="ITProfileState stateSelectOption" style="display:none;">Macerata</option>
+					<option value="MN" class="ITProfileState stateSelectOption" style="display:none;">Mantova</option>
+					<option value="MS" class="ITProfileState stateSelectOption" style="display:none;">Massa-Carrara</option>
+					<option value="MT" class="ITProfileState stateSelectOption" style="display:none;">Matera</option>
+					<option value="ME" class="ITProfileState stateSelectOption" style="display:none;">Messina</option>
+					<option value="MIL" class="ITProfileState stateSelectOption" style="display:none;">Milano</option>
+					<option value="MB" class="ITProfileState stateSelectOption" style="display:none;">Monza e Brianza</option>
+					<option value="MO" class="ITProfileState stateSelectOption" style="display:none;">Modena</option>
+					<option value="NO" class="ITProfileState stateSelectOption" style="display:none;">Novara</option>
+					<option value="NU" class="ITProfileState stateSelectOption" style="display:none;">Nuoro</option>
+					<option value="OR" class="ITProfileState stateSelectOption" style="display:none;">Oristano</option>
+					<option value="PD" class="ITProfileState stateSelectOption" style="display:none;">Padova</option>
+					<option value="PR" class="ITProfileState stateSelectOption" style="display:none;">Parma</option>
+					<option value="PV" class="ITProfileState stateSelectOption" style="display:none;">Pavia</option>
+					<option value="PG" class="ITProfileState stateSelectOption" style="display:none;">Perugia</option>
+					<option value="PU" class="ITProfileState stateSelectOption" style="display:none;">Pesaro e Urbino</option>
+					<option value="PE" class="ITProfileState stateSelectOption" style="display:none;">Pescara</option>
+					<option value="PC" class="ITProfileState stateSelectOption" style="display:none;">Piacenza</option>
+					<option value="PI" class="ITProfileState stateSelectOption" style="display:none;">Pisa</option>
+					<option value="PT" class="ITProfileState stateSelectOption" style="display:none;">Pistoia</option>
+					<option value="PN" class="ITProfileState stateSelectOption" style="display:none;">Pordenone</option>
+					<option value="PZ" class="ITProfileState stateSelectOption" style="display:none;">Potenza</option>
+					<option value="PO" class="ITProfileState stateSelectOption" style="display:none;">Prato</option>
+					<option value="RG" class="ITProfileState stateSelectOption" style="display:none;">Ragusa</option>
+					<option value="RA" class="ITProfileState stateSelectOption" style="display:none;">Ravenna</option>
+					<option value="RE" class="ITProfileState stateSelectOption" style="display:none;">Reggio Emilia</option>
+					<option value="RI" class="ITProfileState stateSelectOption" style="display:none;">Rieti</option>
+					<option value="RN" class="ITProfileState stateSelectOption" style="display:none;">Rimini</option>
+					<option value="RO" class="ITProfileState stateSelectOption" style="display:none;">Rovigo</option>
+					<option value="SA" class="ITProfileState stateSelectOption" style="display:none;">Salerno</option>
+					<option value="SS" class="ITProfileState stateSelectOption" style="display:none;">Sassari</option>
+					<option value="SV" class="ITProfileState stateSelectOption" style="display:none;">Savona</option>
+					<option value="SI" class="ITProfileState stateSelectOption" style="display:none;">Siena</option>
+					<option value="SR" class="ITProfileState stateSelectOption" style="display:none;">Siracusa</option>
+					<option value="SO" class="ITProfileState stateSelectOption" style="display:none;">Sondrio</option>
+					<option value="TA" class="ITProfileState stateSelectOption" style="display:none;">Taranto</option>
+					<option value="TOR" class="ITProfileState stateSelectOption" style="display:none;">Torino</option>
+					<option value="TE" class="ITProfileState stateSelectOption" style="display:none;">Teramo</option>
+					<option value="TR" class="ITProfileState stateSelectOption" style="display:none;">Terni</option>
+					<option value="TP" class="ITProfileState stateSelectOption" style="display:none;">Trapani</option>
+					<option value="TN" class="ITProfileState stateSelectOption" style="display:none;">Trento</option>
+					<option value="TV" class="ITProfileState stateSelectOption" style="display:none;">Treviso</option>
+					<option value="TS" class="ITProfileState stateSelectOption" style="display:none;">Trieste</option>
+					<option value="UD" class="ITProfileState stateSelectOption" style="display:none;">Udine</option>
+					<option value="VA" class="ITProfileState stateSelectOption" style="display:none;">Varese</option>
+					<option value="VB" class="ITProfileState stateSelectOption" style="display:none;">Verbano-Cusio-Ossola</option>
+					<option value="VC" class="ITProfileState stateSelectOption" style="display:none;">Vercelli</option>
+					<option value="VR" class="ITProfileState stateSelectOption" style="display:none;">Verona</option>
+					<option value="VV" class="ITProfileState stateSelectOption" style="display:none;">Vibo Valentia</option>
+					<option value="VI" class="ITProfileState stateSelectOption" style="display:none;">Vicenza</option>
+					<option value="VT" class="ITProfileState stateSelectOption" style="display:none;">Viterbo</option>
+					
+					<option value="ACT" class="AUSProfileState stateSelectOption" style="display:none;">Australian Capital Territory</option>
+					<option value="NSW" class="AUSProfileState stateSelectOption" style="display:none;">New South Wales</option>
+					<option value="NT" class="AUSProfileState stateSelectOption" style="display:none;">Northern Territory</option>
+					<option value="QLD" class="AUSProfileState stateSelectOption" style="display:none;">Queensland</option>
+					<option value="ASA" class="AUSProfileState stateSelectOption" style="display:none;">South Australia</option>
+					<option value="TAS" class="AUSProfileState stateSelectOption" style="display:none;">Tasmania</option>
+					<option value="VIC" class="AUSProfileState stateSelectOption" style="display:none;">Victoria</option>
+					<option value="WA" class="AUSProfileState stateSelectOption" style="display:none;">Western Australia</option>
+					
+					<option value="BW" class="DEProfileState stateSelectOption" style="display:none;">Baden Württemberg</option>
+					<option value="BY" class="DEProfileState stateSelectOption" style="display:none;">Bayern</option>
+					<option value="BE" class="DEProfileState stateSelectOption" style="display:none;">Berlin</option>
+					<option value="BB" class="DEProfileState stateSelectOption" style="display:none;">Brandenburg</option>
+					<option value="HB" class="DEProfileState stateSelectOption" style="display:none;">Bremen</option>
+					<option value="HH" class="DEProfileState stateSelectOption" style="display:none;">Hamburg</option>
+					<option value="HE" class="DEProfileState stateSelectOption" style="display:none;">Hessen</option>
+					<option value="MV" class="DEProfileState stateSelectOption" style="display:none;">Mecklenburg Vorpommern</option>
+					<option value="NI" class="DEProfileState stateSelectOption" style="display:none;">Niedersachsen</option>
+					<option value="NW" class="DEProfileState stateSelectOption" style="display:none;">Nordrhein Westfalen</option>
+					<option value="RP" class="DEProfileState stateSelectOption" style="display:none;">Rheinland Pfalz</option>
+					<option value="SL" class="DEProfileState stateSelectOption" style="display:none;">Saarland</option>
+					<option value="SN" class="DEProfileState stateSelectOption" style="display:none;">Sachsen</option>
+					<option value="ST" class="DEProfileState stateSelectOption" style="display:none;">Sachsen Anhalt</option>
+					<option value="SH" class="DEProfileState stateSelectOption" style="display:none;">Schleswig Holstein</option>
+					<option value="TH" class="DEProfileState stateSelectOption" style="display:none;">Thüringen</option>
+					
+					<option value="Ajdovscina" class="SIProfileState stateSelectOption" style="display:none;">Ajdovscina</option>
+					<option value="Apace" class="SIProfileState stateSelectOption" style="display:none;">Apace</option>
+					<option value="Beltinci" class="SIProfileState stateSelectOption" style="display:none;">Beltinci</option>
+					<option value="Benedikt" class="SIProfileState stateSelectOption" style="display:none;">Benedikt</option>
+					<option value="Bistrica ob Sotli" class="SIProfileState stateSelectOption" style="display:none;">Bistrica ob Sotli</option>
+					<option value="Bled" class="SIProfileState stateSelectOption" style="display:none;">Bled</option>
+					<option value="Bloke" class="SIProfileState stateSelectOption" style="display:none;">Bloke</option>
+					<option value="Bohinj" class="SIProfileState stateSelectOption" style="display:none;">Bohinj</option>
+					<option value="Borovnica" class="SIProfileState stateSelectOption" style="display:none;">Borovnica</option>
+					<option value="Bovec" class="SIProfileState stateSelectOption" style="display:none;">Bovec</option>
+					<option value="Braslovce" class="SIProfileState stateSelectOption" style="display:none;">Braslovce</option>
+					<option value="Brda" class="SIProfileState stateSelectOption" style="display:none;">Brda</option>
+					<option value="Brezice" class="SIProfileState stateSelectOption" style="display:none;">Brezice</option>
+					<option value="Brezovica" class="SIProfileState stateSelectOption" style="display:none;">Brezovica</option>
+					<option value="Cankova" class="SIProfileState stateSelectOption" style="display:none;">Cankova</option>
+					<option value="Celje" class="SIProfileState stateSelectOption" style="display:none;">Celje</option>
+					<option value="Cerklje na Gorenjskem" class="SIProfileState stateSelectOption" style="display:none;">Cerklje na Gorenjskem</option>
+					<option value="Cerknica" class="SIProfileState stateSelectOption" style="display:none;">Cerknica</option>
+					<option value="Cerkno" class="SIProfileState stateSelectOption" style="display:none;">Cerkno</option>
+					<option value="Cerkvenjak" class="SIProfileState stateSelectOption" style="display:none;">Cerkvenjak</option>
+					<option value="Cirkulane" class="SIProfileState stateSelectOption" style="display:none;">Cirkulane</option>
+					<option value="Comune di Ancarano" class="SIProfileState stateSelectOption" style="display:none;">Comune di Ancarano</option>
+					<option value="Crensovci" class="SIProfileState stateSelectOption" style="display:none;">Crensovci</option>
+					<option value="Crna na Koroskem" class="SIProfileState stateSelectOption" style="display:none;">Crna na Koroskem</option>
+					<option value="Crnomelj" class="SIProfileState stateSelectOption" style="display:none;">Crnomelj</option>
+					<option value="Destrnik" class="SIProfileState stateSelectOption" style="display:none;">Destrnik</option>
+					<option value="Divaca" class="SIProfileState stateSelectOption" style="display:none;">Divaca</option>
+					<option value="Dobje" class="SIProfileState stateSelectOption" style="display:none;">Dobje</option>
+					<option value="Dobrepolje" class="SIProfileState stateSelectOption" style="display:none;">Dobrepolje</option>
+					<option value="Dobrna" class="SIProfileState stateSelectOption" style="display:none;">Dobrna</option>
+					<option value="Dobrova-Horjul-Polhov Gradec" class="SIProfileState stateSelectOption" style="display:none;">Dobrova-Horjul-Polhov Gradec</option>
+					<option value="Dobrovnik-Dobronak" class="SIProfileState stateSelectOption" style="display:none;">Dobrovnik-Dobronak</option>
+					<option value="Dol pri Ljubljani" class="SIProfileState stateSelectOption" style="display:none;">Dol pri Ljubljani</option>
+					<option value="Dolenjske Toplice" class="SIProfileState stateSelectOption" style="display:none;">Dolenjske Toplice</option>
+					<option value="Domzale" class="SIProfileState stateSelectOption" style="display:none;">Domzale</option>
+					<option value="Dornava" class="SIProfileState stateSelectOption" style="display:none;">Dornava</option>
+					<option value="Dravograd" class="SIProfileState stateSelectOption" style="display:none;">Dravograd</option>
+					<option value="Duplek" class="SIProfileState stateSelectOption" style="display:none;">Duplek</option>
+					<option value="Gorenja Vas-Poljane" class="SIProfileState stateSelectOption" style="display:none;">Gorenja Vas-Poljane</option>
+					<option value="Gorisnica" class="SIProfileState stateSelectOption" style="display:none;">Gorisnica</option>
+					<option value="Gorje" class="SIProfileState stateSelectOption" style="display:none;">Gorje</option>
+					<option value="Gornja Radgona" class="SIProfileState stateSelectOption" style="display:none;">Gornja Radgona</option>
+					<option value="Gornji Grad" class="SIProfileState stateSelectOption" style="display:none;">Gornji Grad</option>
+					<option value="Gornji Petrovci" class="SIProfileState stateSelectOption" style="display:none;">Gornji Petrovci</option>
+					<option value="Grad" class="SIProfileState stateSelectOption" style="display:none;">Grad</option>
+					<option value="Grosuplje" class="SIProfileState stateSelectOption" style="display:none;">Grosuplje</option>
+					<option value="Hajdina" class="SIProfileState stateSelectOption" style="display:none;">Hajdina</option>
+					<option value="Hoce-Slivnica" class="SIProfileState stateSelectOption" style="display:none;">Hoce-Slivnica</option>
+					<option value="Hodos-Hodos" class="SIProfileState stateSelectOption" style="display:none;">Hodos-Hodos</option>
+					<option value="Horjul" class="SIProfileState stateSelectOption" style="display:none;">Horjul</option>
+					<option value="Hrastnik" class="SIProfileState stateSelectOption" style="display:none;">Hrastnik</option>
+					<option value="Hrpelje-Kozina" class="SIProfileState stateSelectOption" style="display:none;">Hrpelje-Kozina</option>
+					<option value="Idrija" class="SIProfileState stateSelectOption" style="display:none;">Idrija</option>
+					<option value="Ig" class="SIProfileState stateSelectOption" style="display:none;">Ig</option>
+					<option value="Ilirska Bistrica" class="SIProfileState stateSelectOption" style="display:none;">Ilirska Bistrica</option>
+					<option value="Ivancna Gorica" class="SIProfileState stateSelectOption" style="display:none;">Ivancna Gorica</option>
+					<option value="Izola-Isola" class="SIProfileState stateSelectOption" style="display:none;">Izola-Isola</option>
+					<option value="Jesenice" class="SIProfileState stateSelectOption" style="display:none;">Jesenice</option>
+					<option value="Jezersko" class="SIProfileState stateSelectOption" style="display:none;">Jezersko</option>
+					<option value="Jursinci" class="SIProfileState stateSelectOption" style="display:none;">Jursinci</option>
+					<option value="Kamnik" class="SIProfileState stateSelectOption" style="display:none;">Kamnik</option>
+					<option value="Kanal" class="SIProfileState stateSelectOption" style="display:none;">Kanal</option>
+					<option value="Kidricevo" class="SIProfileState stateSelectOption" style="display:none;">Kidricevo</option>
+					<option value="Kobarid" class="SIProfileState stateSelectOption" style="display:none;">Kobarid</option>
+					<option value="Kobilje" class="SIProfileState stateSelectOption" style="display:none;">Kobilje</option>
+					<option value="Kocevje" class="SIProfileState stateSelectOption" style="display:none;">Kocevje</option>
+					<option value="Komen" class="SIProfileState stateSelectOption" style="display:none;">Komen</option>
+					<option value="Komenda" class="SIProfileState stateSelectOption" style="display:none;">Komenda</option>
+					<option value="Koper-Capodistria" class="SIProfileState stateSelectOption" style="display:none;">Koper-Capodistria</option>
+					<option value="Kostanjevica na Krki" class="SIProfileState stateSelectOption" style="display:none;">Kostanjevica na Krki</option>
+					<option value="Kostel" class="SIProfileState stateSelectOption" style="display:none;">Kostel</option>
+					<option value="Kozje" class="SIProfileState stateSelectOption" style="display:none;">Kozje</option>
+					<option value="Kranj" class="SIProfileState stateSelectOption" style="display:none;">Kranj</option>
+					<option value="Kranjska Gora" class="SIProfileState stateSelectOption" style="display:none;">Kranjska Gora</option>
+					<option value="Krizevci" class="SIProfileState stateSelectOption" style="display:none;">Krizevci</option>
+					<option value="Krsko" class="SIProfileState stateSelectOption" style="display:none;">Krsko</option>
+					<option value="Kungota" class="SIProfileState stateSelectOption" style="display:none;">Kungota</option>
+					<option value="Kuzma" class="SIProfileState stateSelectOption" style="display:none;">Kuzma</option>
+					<option value="Lasko" class="SIProfileState stateSelectOption" style="display:none;">Lasko</option>
+					<option value="Lenart" class="SIProfileState stateSelectOption" style="display:none;">Lenart</option>
+					<option value="Lendava-Lendva" class="SIProfileState stateSelectOption" style="display:none;">Lendava-Lendva</option>
+					<option value="Litija" class="SIProfileState stateSelectOption" style="display:none;">Litija</option>
+					<option value="Ljubljana" class="SIProfileState stateSelectOption" style="display:none;">Ljubljana</option>
+					<option value="Ljubno" class="SIProfileState stateSelectOption" style="display:none;">Ljubno</option>
+					<option value="Ljutomer" class="SIProfileState stateSelectOption" style="display:none;">Ljutomer</option>
+					<option value="Log-Dragomer" class="SIProfileState stateSelectOption" style="display:none;">Log-Dragomer</option>
+					<option value="Logatec" class="SIProfileState stateSelectOption" style="display:none;">Logatec</option>
+					<option value="Loska Dolina" class="SIProfileState stateSelectOption" style="display:none;">Loska Dolina</option>
+					<option value="Loski Potok" class="SIProfileState stateSelectOption" style="display:none;">Loski Potok</option>
+					<option value="Lovrenc na Pohorju" class="SIProfileState stateSelectOption" style="display:none;">Lovrenc na Pohorju</option>
+					<option value="Luce" class="SIProfileState stateSelectOption" style="display:none;">Luce</option>
+					<option value="Lukovica" class="SIProfileState stateSelectOption" style="display:none;">Lukovica</option>
+					<option value="Majsperk" class="SIProfileState stateSelectOption" style="display:none;">Majsperk</option>
+					<option value="Makole" class="SIProfileState stateSelectOption" style="display:none;">Makole</option>
+					<option value="Maribor" class="SIProfileState stateSelectOption" style="display:none;">Maribor</option>
+					<option value="Markovci" class="SIProfileState stateSelectOption" style="display:none;">Markovci</option>
+					<option value="Medvode" class="SIProfileState stateSelectOption" style="display:none;">Medvode</option>
+					<option value="Menges" class="SIProfileState stateSelectOption" style="display:none;">Menges</option>
+					<option value="Metlika" class="SIProfileState stateSelectOption" style="display:none;">Metlika</option>
+					<option value="Mezica" class="SIProfileState stateSelectOption" style="display:none;">Mezica</option>
+					<option value="Miklavz na Dravskem Polju" class="SIProfileState stateSelectOption" style="display:none;">Miklavz na Dravskem Polju</option>
+					<option value="Miren-Kostanjevica" class="SIProfileState stateSelectOption" style="display:none;">Miren-Kostanjevica</option>
+					<option value="Mirna" class="SIProfileState stateSelectOption" style="display:none;">Mirna</option>
+					<option value="Mirna Pec" class="SIProfileState stateSelectOption" style="display:none;">Mirna Pec</option>
+					<option value="Mislinja" class="SIProfileState stateSelectOption" style="display:none;">Mislinja</option>
+					<option value="Mokronog-Trebelno" class="SIProfileState stateSelectOption" style="display:none;">Mokronog-Trebelno</option>
+					<option value="Moravce" class="SIProfileState stateSelectOption" style="display:none;">Moravce</option>
+					<option value="Moravske Toplice" class="SIProfileState stateSelectOption" style="display:none;">Moravske Toplice</option>
+					<option value="Mozirje" class="SIProfileState stateSelectOption" style="display:none;">Mozirje</option>
+					<option value="Murska Sobota" class="SIProfileState stateSelectOption" style="display:none;">Murska Sobota</option>
+					<option value="Muta" class="SIProfileState stateSelectOption" style="display:none;">Muta</option>
+					<option value="Naklo" class="SIProfileState stateSelectOption" style="display:none;">Naklo</option>
+					<option value="Nazarje" class="SIProfileState stateSelectOption" style="display:none;">Nazarje</option>
+					<option value="Nova Gorica" class="SIProfileState stateSelectOption" style="display:none;">Nova Gorica</option>
+					<option value="Novo Mesto" class="SIProfileState stateSelectOption" style="display:none;">Novo Mesto</option>
+					<option value="Odranci" class="SIProfileState stateSelectOption" style="display:none;">Odranci</option>
+					<option value="Oplotnica" class="SIProfileState stateSelectOption" style="display:none;">Oplotnica</option>
+					<option value="Ormoz" class="SIProfileState stateSelectOption" style="display:none;">Ormoz</option>
+					<option value="Osilnica" class="SIProfileState stateSelectOption" style="display:none;">Osilnica</option>
+					<option value="Pesnica" class="SIProfileState stateSelectOption" style="display:none;">Pesnica</option>
+					<option value="Piran-Pirano" class="SIProfileState stateSelectOption" style="display:none;">Piran-Pirano</option>
+					<option value="Pivka" class="SIProfileState stateSelectOption" style="display:none;">Pivka</option>
+					<option value="Podcetrtek" class="SIProfileState stateSelectOption" style="display:none;">Podcetrtek</option>
+					<option value="Podlehnik" class="SIProfileState stateSelectOption" style="display:none;">Podlehnik</option>
+					<option value="Podvelka" class="SIProfileState stateSelectOption" style="display:none;">Podvelka</option>
+					<option value="Poljcane" class="SIProfileState stateSelectOption" style="display:none;">Poljcane</option>
+					<option value="Polzela" class="SIProfileState stateSelectOption" style="display:none;">Polzela</option>
+					<option value="Postojna" class="SIProfileState stateSelectOption" style="display:none;">Postojna</option>
+					<option value="Prebold" class="SIProfileState stateSelectOption" style="display:none;">Prebold</option>
+					<option value="Preddvor" class="SIProfileState stateSelectOption" style="display:none;">Preddvor</option>
+					<option value="Prevalje" class="SIProfileState stateSelectOption" style="display:none;">Prevalje</option>
+					<option value="Ptuj" class="SIProfileState stateSelectOption" style="display:none;">Ptuj</option>
+					<option value="Puconci" class="SIProfileState stateSelectOption" style="display:none;">Puconci</option>
+					<option value="Race-Fram" class="SIProfileState stateSelectOption" style="display:none;">Race-Fram</option>
+					<option value="Radece" class="SIProfileState stateSelectOption" style="display:none;">Radece</option>
+					<option value="Radenci" class="SIProfileState stateSelectOption" style="display:none;">Radenci</option>
+					<option value="Radlje ob Dravi" class="SIProfileState stateSelectOption" style="display:none;">Radlje ob Dravi</option>
+					<option value="Radovljica" class="SIProfileState stateSelectOption" style="display:none;">Radovljica</option>
+					<option value="Ravne na Koroskem" class="SIProfileState stateSelectOption" style="display:none;">Ravne na Koroskem</option>
+					<option value="Razkrizje" class="SIProfileState stateSelectOption" style="display:none;">Razkrizje</option>
+					<option value="Recica ob Savinji" class="SIProfileState stateSelectOption" style="display:none;">Recica ob Savinji</option>
+					<option value="Rence-Vogrsko" class="SIProfileState stateSelectOption" style="display:none;">Rence-Vogrsko</option>
+					<option value="Ribnica" class="SIProfileState stateSelectOption" style="display:none;">Ribnica</option>
+					<option value="Ribnica na Pohorju" class="SIProfileState stateSelectOption" style="display:none;">Ribnica na Pohorju</option>
+					<option value="Rogaska Slatina" class="SIProfileState stateSelectOption" style="display:none;">Rogaska Slatina</option>
+					<option value="Rogasovci" class="SIProfileState stateSelectOption" style="display:none;">Rogasovci</option>
+					<option value="Rogatec" class="SIProfileState stateSelectOption" style="display:none;">Rogatec</option>
+					<option value="Ruse" class="SIProfileState stateSelectOption" style="display:none;">Ruse</option>
+					<option value="Salovci" class="SIProfileState stateSelectOption" style="display:none;">Salovci</option>
+					<option value="Selnica ob Dravi" class="SIProfileState stateSelectOption" style="display:none;">Selnica ob Dravi</option>
+					<option value="Semic" class="SIProfileState stateSelectOption" style="display:none;">Semic</option>
+					<option value="Sempeter-Vrtojba" class="SIProfileState stateSelectOption" style="display:none;">Sempeter-Vrtojba</option>
+					<option value="Sencur" class="SIProfileState stateSelectOption" style="display:none;">Sencur</option>
+					<option value="Sentilj" class="SIProfileState stateSelectOption" style="display:none;">Sentilj</option>
+					<option value="Sentjernej" class="SIProfileState stateSelectOption" style="display:none;">Sentjernej</option>
+					<option value="Sentjur" class="SIProfileState stateSelectOption" style="display:none;">Sentjur</option>
+					<option value="Sentrupert" class="SIProfileState stateSelectOption" style="display:none;">Sentrupert</option>
+					<option value="Sevnica" class="SIProfileState stateSelectOption" style="display:none;">Sevnica</option>
+					<option value="Sezana" class="SIProfileState stateSelectOption" style="display:none;">Sezana</option>
+					<option value="Skocjan" class="SIProfileState stateSelectOption" style="display:none;">Skocjan</option>
+					<option value="Skofja Loka" class="SIProfileState stateSelectOption" style="display:none;">Skofja Loka</option>
+					<option value="Skofljica" class="SIProfileState stateSelectOption" style="display:none;">Skofljica</option>
+					<option value="Slovenj Gradec" class="SIProfileState stateSelectOption" style="display:none;">Slovenj Gradec</option>
+					<option value="Slovenska Bistrica" class="SIProfileState stateSelectOption" style="display:none;">Slovenska Bistrica</option>
+					<option value="Slovenska Konjice" class="SIProfileState stateSelectOption" style="display:none;">Slovenska Konjice</option>
+					<option value="Smarje pri Jelsah" class="SIProfileState stateSelectOption" style="display:none;">Smarje pri Jelsah</option>
+					<option value="Smarjeske Toplice" class="SIProfileState stateSelectOption" style="display:none;">Smarjeske Toplice</option>
+					<option value="Smartno ob Paki" class="SIProfileState stateSelectOption" style="display:none;">Smartno ob Paki</option>
+					<option value="Smartno pri Litiji" class="SIProfileState stateSelectOption" style="display:none;">Smartno pri Litiji</option>
+					<option value="Sodrazica" class="SIProfileState stateSelectOption" style="display:none;">Sodrazica</option>
+					<option value="Solcava" class="SIProfileState stateSelectOption" style="display:none;">Solcava</option>
+					<option value="Sostanj" class="SIProfileState stateSelectOption" style="display:none;">Sostanj</option>
+					<option value="Sredisce ob Dravi" class="SIProfileState stateSelectOption" style="display:none;">Sredisce ob Dravi</option>
+					<option value="Starse" class="SIProfileState stateSelectOption" style="display:none;">Starse</option>
+					<option value="Store" class="SIProfileState stateSelectOption" style="display:none;">Store</option>
+					<option value="Straza" class="SIProfileState stateSelectOption" style="display:none;">Straza</option>
+					<option value="Sv. Trojica v Slov. Goricah" class="SIProfileState stateSelectOption" style="display:none;">Sv. Trojica v Slov. Goricah</option>
+					<option value="Sveta Ana" class="SIProfileState stateSelectOption" style="display:none;">Sveta Ana</option>
+					<option value="Sveti Andraz v Slovenskih Goricah" class="SIProfileState stateSelectOption" style="display:none;">Sveti Andraz v Slovenskih Goricah</option>
+					<option value="Sveti Jurij" class="SIProfileState stateSelectOption" style="display:none;">Sveti Jurij</option>
+					<option value="Sveti Jurij v Slovenskih Goricah" class="SIProfileState stateSelectOption" style="display:none;">Sveti Jurij v Slovenskih Goricah</option>
+					<option value="Sveti Tomaz" class="SIProfileState stateSelectOption" style="display:none;">Sveti Tomaz</option>
+					<option value="Tabor" class="SIProfileState stateSelectOption" style="display:none;">Tabor</option>
+					<option value="Tisina" class="SIProfileState stateSelectOption" style="display:none;">Tisina</option>
+					<option value="Tolmin" class="SIProfileState stateSelectOption" style="display:none;">Tolmin</option>
+					<option value="Trbovlje" class="SIProfileState stateSelectOption" style="display:none;">Trbovlje</option>
+					<option value="Trebnje" class="SIProfileState stateSelectOption" style="display:none;">Trebnje</option>
+					<option value="Trnovska Vas" class="SIProfileState stateSelectOption" style="display:none;">Trnovska Vas</option>
+					<option value="Trzic" class="SIProfileState stateSelectOption" style="display:none;">Trzic</option>
+					<option value="Trzin" class="SIProfileState stateSelectOption" style="display:none;">Trzin</option>
+					<option value="Turnisce" class="SIProfileState stateSelectOption" style="display:none;">Turnisce</option>
+					<option value="Velenje" class="SIProfileState stateSelectOption" style="display:none;">Velenje</option>
+					<option value="Velika Polana" class="SIProfileState stateSelectOption" style="display:none;">Velika Polana</option>
+					<option value="Velike Lasce" class="SIProfileState stateSelectOption" style="display:none;">Velike Lasce</option>
+					<option value="Verzej" class="SIProfileState stateSelectOption" style="display:none;">Verzej</option>
+					<option value="Videm" class="SIProfileState stateSelectOption" style="display:none;">Videm</option>
+					<option value="Vipava" class="SIProfileState stateSelectOption" style="display:none;">Vipava</option>
+					<option value="Vitanje" class="SIProfileState stateSelectOption" style="display:none;">Vitanje</option>
+					<option value="Vodice" class="SIProfileState stateSelectOption" style="display:none;">Vodice</option>
+					<option value="Vojnik" class="SIProfileState stateSelectOption" style="display:none;">Vojnik</option>
+					<option value="Vransko" class="SIProfileState stateSelectOption" style="display:none;">Vransko</option>
+					<option value="Vrhnika" class="SIProfileState stateSelectOption" style="display:none;">Vrhnika</option>
+					<option value="Vuzenica" class="SIProfileState stateSelectOption" style="display:none;">Vuzenica</option>
+					<option value="Zagorje ob Savi" class="SIProfileState stateSelectOption" style="display:none;">Zagorje ob Savi</option>
+					<option value="Zalec" class="SIProfileState stateSelectOption" style="display:none;">Zalec</option>
+					<option value="Zavrc" class="SIProfileState stateSelectOption" style="display:none;">Zavrc</option>
+					<option value="Zelezniki" class="SIProfileState stateSelectOption" style="display:none;">Zelezniki</option>
+					<option value="Zetale" class="SIProfileState stateSelectOption" style="display:none;">Zetale</option>
+					<option value="Ziri" class="SIProfileState stateSelectOption" style="display:none;">Ziri</option>
+					<option value="Zirovnica" class="SIProfileState stateSelectOption" style="display:none;">Zirovnica</option>
+					<option value="Zrece" class="SIProfileState stateSelectOption" style="display:none;">Zrece</option>
+					<option value="Zuzemberk" class="SIProfileState stateSelectOption" style="display:none;">Zuzemberk</option>
+					
+					<option value="Auvergne-Rhone-Alpes" class="FRProfileState stateSelectOption" style="display:none;">Auvergne-Rhone-Alpes</option>
+					<option value="Bourgogne-Franche-Comte" class="FRProfileState stateSelectOption" style="display:none;">Bourgogne-Franche-Comte</option>
+					<option value="Brittany" class="FRProfileState stateSelectOption" style="display:none;">Brittany</option>
+					<option value="Centre" class="FRProfileState stateSelectOption" style="display:none;">Centre</option>
+					<option value="Corsica" class="FRProfileState stateSelectOption" style="display:none;">Corsica</option>
+					<option value="Grand Est" class="FRProfileState stateSelectOption" style="display:none;">Grand Est</option>
+					<option value="Hauts-de-France" class="FRProfileState stateSelectOption" style="display:none;">Hauts-de-France</option>
+					<option value="Ile-de-France" class="FRProfileState stateSelectOption" style="display:none;">Ile-de-France</option>
+					<option value="Normandy" class="FRProfileState stateSelectOption" style="display:none;">Normandy</option>
+					<option value="Nouvelle-Aquitaine" class="FRProfileState stateSelectOption" style="display:none;">Nouvelle-Aquitaine</option>
+					<option value="Occitanie" class="FRProfileState stateSelectOption" style="display:none;">Occitanie</option>
+					<option value="Pays de la Loire" class="FRProfileState stateSelectOption" style="display:none;">Pays de la Loire</option>
+					<option value="Provence-Alpes-Cote d'Azur" class="FRProfileState stateSelectOption" style="display:none;">Provence-Alpes-Cote d'Azur</option>
+					
+					<option value="Drenthe" class="NLProfileState stateSelectOption" style="display:none;">Drenthe</option>
+					<option value="Flevoland" class="NLProfileState stateSelectOption" style="display:none;">Flevoland</option>
+					<option value="Friesland" class="NLProfileState stateSelectOption" style="display:none;">Friesland</option>
+					<option value="Gelderland" class="NLProfileState stateSelectOption" style="display:none;">Gelderland</option>
+					<option value="Groningen" class="NLProfileState stateSelectOption" style="display:none;">Groningen</option>
+					<option value="Limburg" class="NLProfileState stateSelectOption" style="display:none;">Limburg</option>
+					<option value="North Brabant" class="NLProfileState stateSelectOption" style="display:none;">North Brabant</option>
+					<option value="North Holland" class="NLProfileState stateSelectOption" style="display:none;">North Holland</option>
+					<option value="Overijssel" class="NLProfileState stateSelectOption" style="display:none;">Overijssel</option>
+					<option value="South Holland" class="NLProfileState stateSelectOption" style="display:none;">South Holland</option>
+					<option value="Utrecht" class="NLProfileState stateSelectOption" style="display:none;">Utrecht</option>
+					<option value="Zeeland" class="NLProfileState stateSelectOption" style="display:none;">Zeeland</option>
+					
+					
+					<option value="Anhui" class="CNProfileState stateSelectOption" style="display:none;">Anhui</option>
+					<option value="Beijing" class="CNProfileState stateSelectOption" style="display:none;">Beijing</option>
+					<option value="Chongqing" class="CNProfileState stateSelectOption" style="display:none;">Chongqing</option>
+					<option value="Fujian" class="CNProfileState stateSelectOption" style="display:none;">Fujian</option>
+					<option value="Gansu" class="CNProfileState stateSelectOption" style="display:none;">Gansu</option>
+					<option value="Guangdong" class="CNProfileState stateSelectOption" style="display:none;">Guangdong</option>
+					<option value="Guangxi" class="CNProfileState stateSelectOption" style="display:none;">Guangxi</option>
+					<option value="Guangxi Zhuang" class="CNProfileState stateSelectOption" style="display:none;">Guangxi Zhuang</option>
+					<option value="Guizhou" class="CNProfileState stateSelectOption" style="display:none;">Guizhou</option>
+					<option value="Hainan" class="CNProfileState stateSelectOption" style="display:none;">Hainan</option>
+					<option value="Hebei" class="CNProfileState stateSelectOption" style="display:none;">Hebei</option>
+					<option value="Heilongjiang" class="CNProfileState stateSelectOption" style="display:none;">Heilongjiang</option>
+					<option value="Henan" class="CNProfileState stateSelectOption" style="display:none;">Henan</option>
+					<option value="Hubei" class="CNProfileState stateSelectOption" style="display:none;">Hubei</option>
+					<option value="Hunan" class="CNProfileState stateSelectOption" style="display:none;">Hunan</option>
+					<option value="Inner Mongolia" class="CNProfileState stateSelectOption" style="display:none;">Inner Mongolia</option>
+					<option value="Jiangsu" class="CNProfileState stateSelectOption" style="display:none;">Jiangsu</option>
+					<option value="Jiangxi" class="CNProfileState stateSelectOption" style="display:none;">Jiangxi</option>
+					<option value="Jilin" class="CNProfileState stateSelectOption" style="display:none;">Jilin</option>
+					<option value="Liaoning" class="CNProfileState stateSelectOption" style="display:none;">Liaoning</option>
+					<option value="Nei Mongol" class="CNProfileState stateSelectOption" style="display:none;">Nei Mongol</option>
+					<option value="Ningsia Hui Autonomous Region" class="CNProfileState stateSelectOption" style="display:none;">Ningsia Hui Autonomous Region</option>
+					<option value="Ningxia Hui" class="CNProfileState stateSelectOption" style="display:none;">Ningxia Hui</option>
+					<option value="Qinghai" class="CNProfileState stateSelectOption" style="display:none;">Qinghai</option>
+					<option value="Shaanxi" class="CNProfileState stateSelectOption" style="display:none;">Shaanxi</option>
+					<option value="Shandong" class="CNProfileState stateSelectOption" style="display:none;">Shandong</option>
+					<option value="Shanghai" class="CNProfileState stateSelectOption" style="display:none;">Shanghai</option>
+					<option value="Shanxi" class="CNProfileState stateSelectOption" style="display:none;">Shanxi</option>
+					<option value="Sichuan" class="CNProfileState stateSelectOption" style="display:none;">Sichuan</option>
+					<option value="Tianjin" class="CNProfileState stateSelectOption" style="display:none;">Tianjin</option>
+					<option value="Tibet" class="CNProfileState stateSelectOption" style="display:none;">Tibet</option>
+					<option value="Xinjiang" class="CNProfileState stateSelectOption" style="display:none;">Xinjiang</option>
+					<option value="Xinjiang Uygur" class="CNProfileState stateSelectOption" style="display:none;">Xinjiang Uygur</option>
+					<option value="Xizang" class="CNProfileState stateSelectOption" style="display:none;">Xizang</option>
+					<option value="Yunnan" class="CNProfileState stateSelectOption" style="display:none;">Yunnan</option>
+					<option value="Zhejiang" class="CNProfileState stateSelectOption" style="display:none;">Zhejiang</option>
+					
+					
+					<option value="BL" class="SWEProfileState stateSelectOption" style="display:none;">Blekinge</option>
+					<option value="DA" class="SWEProfileState stateSelectOption" style="display:none;">Dalarna</option>
+					<option value="GA" class="SWEProfileState stateSelectOption" style="display:none;">Gaevleborg</option>
+					<option value="GO" class="SWEProfileState stateSelectOption" style="display:none;">Gotland</option>
+					<option value="HA" class="SWEProfileState stateSelectOption" style="display:none;">Halland</option>
+					<option value="JA" class="SWEProfileState stateSelectOption" style="display:none;">Jaemtland</option>
+					<option value="JO" class="SWEProfileState stateSelectOption" style="display:none;">Joenkoeping</option>
+					<option value="KA" class="SWEProfileState stateSelectOption" style="display:none;">Kalmar</option>
+					<option value="KR" class="SWEProfileState stateSelectOption" style="display:none;">Kronoberg</option>
+					<option value="NO" class="SWEProfileState stateSelectOption" style="display:none;">Norrbotten</option>
+					<option value="OE" class="SWEProfileState stateSelectOption" style="display:none;">OErebro</option>
+					<option value="OES" class="SWEProfileState stateSelectOption" style="display:none;">OEstergoetland</option>
+					<option value="SK" class="SWEProfileState stateSelectOption" style="display:none;">Skane</option>
+					<option value="SO" class="SWEProfileState stateSelectOption" style="display:none;">Soedermanland</option>
+					<option value="ST" class="SWEProfileState stateSelectOption" style="display:none;">Stockholm</option>
+					<option value="UP" class="SWEProfileState stateSelectOption" style="display:none;">Uppsala</option>
+					<option value="VA" class="SWEProfileState stateSelectOption" style="display:none;">Vaermland</option>
+					<option value="VAE" class="SWEProfileState stateSelectOption" style="display:none;">Vaesterbotten</option>
+					<option value="VAES" class="SWEProfileState stateSelectOption" style="display:none;">Vaesternorrland</option>
+					<option value="VAEST" class="SWEProfileState stateSelectOption" style="display:none;">Vaestmanland</option>
+					<option value="VG" class="SWEProfileState stateSelectOption" style="display:none;">Vaestra Goetaland</option>
+					
+					<option value="Aichi" class="JPProfileState stateSelectOption" style="display:none;">Aichi</option>
+					<option value="Gunma" class="JPProfileState stateSelectOption" style="display:none;">Gunma</option>
+					<option value="Hiroshima" class="JPProfileState stateSelectOption" style="display:none;">Hiroshima</option>
+					<option value="Hokkaido" class="JPProfileState stateSelectOption" style="display:none;">Hokkaido</option>
+					<option value="Hyogo" class="JPProfileState stateSelectOption" style="display:none;">Hyogo</option>
+					<option value="Ibaraki" class="JPProfileState stateSelectOption" style="display:none;">Ibaraki</option>
+					<option value="Ishikawa" class="JPProfileState stateSelectOption" style="display:none;">Ishikawa</option>
+					<option value="Iwate" class="JPProfileState stateSelectOption" style="display:none;">Iwate</option>
+					<option value="Kagawa" class="JPProfileState stateSelectOption" style="display:none;">Kagawa</option>
+					<option value="Kagoshima" class="JPProfileState stateSelectOption" style="display:none;">Kagoshima</option>
+					<option value="Kanagawa" class="JPProfileState stateSelectOption" style="display:none;">Kanagawa</option>
+					<option value="Akita" class="JPProfileState stateSelectOption" style="display:none;">Akita</option>
+					<option value="Kochi" class="JPProfileState stateSelectOption" style="display:none;">Kochi</option>
+					<option value="Kumamoto" class="JPProfileState stateSelectOption" style="display:none;">Kumamoto</option>
+					<option value="Kyoto" class="JPProfileState stateSelectOption" style="display:none;">Kyoto</option>
+					<option value="Mie" class="JPProfileState stateSelectOption" style="display:none;">Mie</option>
+					<option value="Miyagi" class="JPProfileState stateSelectOption" style="display:none;">Miyagi</option>
+					<option value="Miyazaki" class="JPProfileState stateSelectOption" style="display:none;">Miyazaki</option>
+					<option value="Nagano" class="JPProfileState stateSelectOption" style="display:none;">Nagano</option>
+					<option value="Nagasaki" class="JPProfileState stateSelectOption" style="display:none;">Nagasaki</option>
+					<option value="Nara" class="JPProfileState stateSelectOption" style="display:none;">Nara</option>
+					<option value="Niigata" class="JPProfileState stateSelectOption" style="display:none;">Niigata</option>
+					<option value="Aomori" class="JPProfileState stateSelectOption" style="display:none;">Aomori</option>
+					<option value="Oita" class="JPProfileState stateSelectOption" style="display:none;">Oita</option>
+					<option value="Okayama" class="JPProfileState stateSelectOption" style="display:none;">Okayama</option>
+					<option value="Osaka" class="JPProfileState stateSelectOption" style="display:none;">Osaka</option>
+					<option value="Saga" class="JPProfileState stateSelectOption" style="display:none;">Saga</option>
+					<option value="Saitama" class="JPProfileState stateSelectOption" style="display:none;">Saitama</option>
+					<option value="Shiga" class="JPProfileState stateSelectOption" style="display:none;">Shiga</option>
+					<option value="Shimane" class="JPProfileState stateSelectOption" style="display:none;">Shimane</option>
+					<option value="Shizuoka" class="JPProfileState stateSelectOption" style="display:none;">Shizuoka</option>
+					<option value="Tochigi" class="JPProfileState stateSelectOption" style="display:none;">Tochigi</option>
+					<option value="Tokushima" class="JPProfileState stateSelectOption" style="display:none;">Tokushima</option>
+					<option value="Chiba" class="JPProfileState stateSelectOption" style="display:none;">Chiba</option>
+					<option value="Tokyo" class="JPProfileState stateSelectOption" style="display:none;">Tokyo</option>
+					<option value="Tottori" class="JPProfileState stateSelectOption" style="display:none;">Tottori</option>
+					<option value="Toyama" class="JPProfileState stateSelectOption" style="display:none;">Toyama</option>
+					<option value="Wakayama" class="JPProfileState stateSelectOption" style="display:none;">Wakayama</option>
+					<option value="Yamagata" class="JPProfileState stateSelectOption" style="display:none;">Yamagata</option>
+					<option value="Yamaguchi" class="JPProfileState stateSelectOption" style="display:none;">Yamaguchi</option>
+					<option value="Yamanashi" class="JPProfileState stateSelectOption" style="display:none;">Yamanashi</option>
+					<option value="Okinawa" class="JPProfileState stateSelectOption" style="display:none;">Okinawa</option>
+					<option value="Ehime" class="JPProfileState stateSelectOption" style="display:none;">Ehime</option>
+					<option value="Fukui" class="JPProfileState stateSelectOption" style="display:none;">Fukui</option>
+					<option value="Fukuoka" class="JPProfileState stateSelectOption" style="display:none;">Fukuoka</option>
+					<option value="Fukushima" class="JPProfileState stateSelectOption" style="display:none;">Fukushima</option>
+					<option value="Gifu" class="JPProfileState stateSelectOption" style="display:none;">Gifu</option>
+               </select>
+            </div>
+            <div style="width: 49%;float:right;" class="create-row">
+               <div class="inputicon"><i class="far fa-map"></i>
+               </div>
+               <input class="createinput" id="zipCode" placeholder="Zip code">
+            </div>
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton pmin1">BACK</div>
+                  <div class="createbumbutton pnext1">NEXT</div>
+                  <div class="canclerow"><span class="pcancel">cancel</span></div>
+               </div>
+
+            </div>
+
+			<div style="display: none;" class="proDetails4">
+               <div class="midtitle">Payment Information</div>
+               <div class="midtitleinfo">Payment information for raffle entries.</div>
+
+               <div class="shoe-container">
+
+        <div style="position: relative;" class="new-meta">
+		
+		<div style="margin-top: -10px;margin-bottom: 20px;" class="proxy-gen-i">Be aware some site may charge a small amount to verify your card.</div>
+		
+			<div style="width: 100%;float:left;" class="create-row">
+               <div class="inputicon"><i class="far fa-credit-card"></i>
+               </div>
+               <select class="createinput" id="cardType">
+                  <option value="default">Card Type</option>
+                  <option value="visa">Visa</option>
+                  <option value="master">Master Card</option>
+                  <option value="amex">American Express</option>
+               </select>
+            </div>
+            <div style="width: 100%;float:left;" class="create-row">
+               <div class="inputicon"><i class="fa fa-credit-card" aria-hidden="true"></i>
+               </div>
+               <input class="createinput" id="cardNumber" placeholder="Card Number">
+            </div>
+            <div style="width: 32%;float:left;" class="create-row">
+               <div class="inputicon"><i class="fas fa-calendar-alt"></i>
+               </div>
+               <select class="createinput" id="expiryMonth">
+                  <option value="MM">MM</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+               </select>
+            </div>
+            <div style="width: 32%;" class="create-row">
+               <div class="inputicon"><i class="fa fa-calendar" aria-hidden="true"></i>
+               </div>
+               <select class="createinput" id="expiryYear">
+                  <option value="YY">YY</option>
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+               </select>
+            </div>
+            <div style="width: 32%;float:right;" class="create-row">
+               <div class="inputicon"><i class="fa fa-key" aria-hidden="true"></i>
+               </div>
+               <input class="createinput" id="CVV" placeholder="CVV">
+            </div>
+			
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton pmin1">BACK</div>
+                  <div class="createbumbutton refro" data-toggle="tooltip" data-placement="top" title="Save Profile" id="saveProfile">SAVE</div>
+                  <div class="canclerow"><span class="pcancel">cancel</span></div>
+               </div>
+
+            </div>
+
+            <div style="display: none;" class="proDetails5">
+               <div class="midtitle">Profile name</div>
+               <div class="midtitleinfo">Input the name of your new profile!</div>
+
+               <div class="shoe-container">
+
+                  <div style="height: 200px;position: relative;" class="new-meta">
+
+                     <div style="margin-top: -10px;margin-bottom: 30px;" class="proxy-gen-i">Enter your new profile's name.</div>
+               <div style="width:100%;float:left;" class="create-row">
+                  <div class="inputicon"><i class="fa fa-user" aria-hidden="true"></i>
+                  </div>
+                  <input class="createinput" id="newProfileName" placeholder="Profile Name">
+               </div>
+
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton pcancel">BACK</div>
+                  <div class="createbumbutton pnext2" data-toggle="tooltip" data-placement="top" title="New profile" id="newProfile">NEXT</div>
+                  <div class="canclerow"><span class="pcancel">cancel</span></div>
+               </div>
+
+
+            </div>			
+	
+
+            </div>
+         </div>
+
+      <div class="proxies">
+
+         <div id="Proxies" style="top: 150px;" class="main tabcontent">
+            <div class="twonav">
+               <div class="two-left">
+                  <div id="addprox" class="two-item">Add proxy(s)</div>
+                  <div class="two-item" id="checkAllProxies">Check all</div>
+               </div>
+               <div class="two-right">
+                  <div class="two-item" id="removeFailed">Remove failed</div>
+                  <div class="two-item" id="saveProxies">Save all</div>
+               </div>
+            </div>
+            <table style="width: 100%;margin-bottom: 10px;">
+               <tbody class="proxbod" id="proxies">
+                  <tr style="background: #0e0e0e;">
+                     <th>IP</th>
+                     <th>PORT</th>
+                     <th>RESULT</th>
+                     <th>ACTION</th>
+                  </tr>
+
+                  <!--          <tr>
+                  <td>localhost</td>
+                  <td>host</td>
+                  <td>124ms</td>
+                  <td>
+                     <button class="action-butt"><i class="fa fa-play" aria-hidden="true"></i>
+                     </button>
+                     <button class="action-butt"><i class="fa fa-trash" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr> -->
+
+               </tbody>
+            </table>
+            <div class="proxcount"><b id="proxycount">0</b> proxies in list <span style="float: right;color: #fff;"
+                  id="deleteAllProxies">Delete all</span></div>
+
+         </div>
+
+
+         <div class="aprox">
+
+            <div id="Addprox" style="padding: 90px 0px 0px 0px;" class="main tabcontent">
+               <!-- <div class="lefts">
+            <div style="padding: 20px;margin-bottom: 10px;" class="setterhat">
+            <div class="settit">Generate proxies</div>
+            <div class="setinfo">Generate proxies from all regions!</div>
+            </div>
+            <span class="helper"> Select the amount of proxies to generate.</span>
+            <br>
+            <div class="slidecontainer">
+            <input id="rangeInput" type="range" min="1" max="30" value="15" class="slider" oninput="amount.value=rangeInput.value">
+            </div>
+            <br>
+            <span class="announceme">15 proxies</span>
+            <br>
+            
+            <div style="height: 170px;" class="realsetter2">
+            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
+            <div class="settit">UK</div>
+            <div class="setinfo">United Kingdom</div>
+            </div>
+            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> UK based proxy.</div>
+            <div class="setterbum">
+            <div class="price-it-gen">Generate UK</div>
+            </div>
+            </div>
+            <div style="height: 170px;" class="realsetter2">
+            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
+            <div class="settit">US</div>
+            <div class="setinfo">United states</div>
+            </div>
+            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> US based proxy.</div>
+            <div class="setterbum">
+            <div class="price-it-gen">Generate US</div>
+            </div>
+            </div>
+            <div style="height: 170px;" class="realsetter2">
+            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
+            <div class="settit">DE</div>
+            <div class="setinfo">German</div>
+            </div>
+            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> DE based proxy.</div>
+            <div class="setterbum">
+            <div class="price-it-gen">Generate DE</div>
+            </div>
+            </div>
+            <div style="height: 170px;" class="realsetter2">
+            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
+            <div class="settit">ES</div>
+            <div class="setinfo">Spain</div>
+            </div>
+            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> ES based proxy.</div>
+            <div class="setterbum">
+            <div class="price-it-gen">Generate ES</div>
+            </div>
+            </div>
+            <div style="height: 170px;" class="realsetter2">
+            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
+            <div class="settit">FR</div>
+            <div class="setinfo">France</div>
+            </div>
+            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> FR based proxy.</div>
+            <div class="setterbum">
+            <div class="price-it-gen">Generate FR</div>
+            </div>
+            </div>
+            <div style="height: 170px;" class="realsetter2">
+            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
+            <div class="settit">RU</div>
+            <div class="setinfo">Russia</div>
+            </div>
+            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> RU based proxy.</div>
+            <div class="setterbum">
+            <div class="price-it-gen">Generate RU</div>
+            </div>
+            </div>
+            
+            </div> -->
+
+
+
+               <div style="overflow-y: auto;" class="lefts">
+
+                  <!-- <div class="proxy-gen-h">Proxy generation</div>
+		<div class="proxy-gen-i">Select your favourite proxy brand to generate safe proxies!</div> -->
+
+                  <div style="width: 100%; margin-left: 0%;background: rgba(0,0,0,0.5);" class="setterhat">
+                     <div class="settit">Scrape Proxies</div>
+                     <div class="setinfo">Easily scrape the web for proxies. <b>These proxies should only be used for
+                           raffles that don't require sensitive information.</b></div>
+                  </div>
+
+                  <div style="margin-top: 2%;" class="proxy-brand-con noselect">
+                     <div class="proxy-brand-button prox-sel" id="usap" data-country="us"><input class="proxCover"
+                           data-toggle="tooltip" data-placement="top" title="United states" id="usapb" type="radio"
+                           name="proxc" checked><img class="proxy-brand-image" src="css/img/flags/usa.png"></div>
+                     <div class="proxy-brand-button" id="ukp" data-country="gb"><input class="proxCover"
+                           data-toggle="tooltip" data-placement="top" title="United Kingdom" id="ukpb" type="radio"
+                           name="proxc"><img class="proxy-brand-image" src="css/img/flags/uk.png"></div>
+                     <div class="proxy-brand-button" id="dep" data-country="de"><input class="proxCover" id="depb"
+                           data-toggle="tooltip" data-placement="top" title="Germany" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/de.png"></div>
+                     <div class="proxy-brand-button" id="esp" data-country="es"><input class="proxCover" id="espb"
+                           data-toggle="tooltip" data-placement="top" title="Spain" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/es.png"></div>
+                     <div class="proxy-brand-button" id="frp" data-country="fr"><input class="proxCover" id="frpb"
+                           data-toggle="tooltip" data-placement="top" title="France" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/fr.png"></div>
+                     <div class="proxy-brand-button" id="rup" data-country="ru"><input class="proxCover" id="rupb"
+                           data-toggle="tooltip" data-placement="top" title="Russia" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/ru.png"></div>
+                     <div class="proxy-brand-button" id="chinap" data-country="cn"><input class="proxCover" id="chinapb"
+                           data-toggle="tooltip" data-placement="top" title="China" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/china.png"></div>
+                     <div class="proxy-brand-button" id="aup" data-country="au"><input class="proxCover" id="aupb"
+                           data-toggle="tooltip" data-placement="top" title="Australia" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/au.png"></div>
+                  </div>
+
+
+                  <div style="margin-top: 20px;margin-bottom: 10px;" class="proxy-gen-i">Scrape <b
+                        id="proxyscrapeShow">15</b> Proxies</div>
+                  <div class="slidecontainer">
+                     <input id="proxyQuantity" type="range" min="0" max="30" value="15" class="slider">
+                  </div>
+
+
+
+                  <div class="setterbummer">
+                     <div style="margin-top: 10px;width: 30%;" class="price-it-up" id="scrapeProxies">Scrape Proxies
+                     </div>
+                  </div>
+
+               </div>
+
+               <div style="background: transparent;padding: 0;" class="rights">
+                  <div style="margin-top: 0px;height: 100%;" class="right-prox">
+                     <div style="width: 100%; margin-left: 0%;background: rgba(0,0,0,0.5);" class="setterhat">
+                        <div class="settit">Add proxies</div>
+                        <div class="setinfo">Input proxies you would like to use for raffles.</div>
+                     </div>
+                     <div class="addcon" style="margin-top: 0;">
+                        <textarea style="height: 410px;margin-top: 2%;" class="barea" id="proxiesToAdd" placeholder="ip:port:user:pass
+ip:port:user:pass
+ip:port
+ip:port"></textarea>
+                        <div class="setterbummer">
+                           <div style="margin-top: 10px;width: 30%;" id="addProxies" class="price-it-up">Add Proxies
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+
+
+            </div>
+         </div>
+
+
+      </div>
+
+      <div class="settings">
+
+         <div style="display:none;" class="low-c">
+            Performance mode
+            <br>
+            <label style="margin-top: 10px;" class="switch">
+               <input id="sickomode" type="checkbox">
+               <span class="sliderf roundf"></span>
+            </label>
+
+         </div>
+
+         <div id="Settings" style="padding-top: 2%;" class="main tabcontent">
+            <div class="sethold">
+               <!--		<div class="realsetter">
+               <div class="setterhat">
+               	<div class="settit">Proxy generation</div>
+               	<div class="setinfo">The amount of proxy to generate.</div>
+               </div>
+               <div class="bingbangbong">This value determins the amount of proxies that will generate in the proxy tab.</div>
+               <div style="margin-top: 0px;padding-left: 3%;" class="c-c r">Proxy amount</div>
+               <input type="number" id="amount" class="shinput l" style="width: 94%;height: 30px;margin-left: 3%;" placeholder="5" oninput="rangeInput.value=amount.value">
+               <div class="slidecontainer">
+               	<input id="rangeInput" type="range" min="1" max="20" value="10" class="slider" oninput="amount.value=rangeInput.value">
+               </div>
+               <div class="setterbum">
+               	<div class="price-it-up">Set Value</div>
+               </div>
+               </div> -->
+               <div style="height: 335px;" class="realsetter">
+                  <div style="padding: 20px 20px 33px 20px;" class="setterhat">
+                     <div class="settit">Retry delay</div>
+                     <div class="setinfo">This value determines the delay the bot will have before retrying after an
+                        error.</div>
+                  </div>
+                  <div style="opacity: 1;" class="bingbangbong">Editing this will change your retry delay.</div>
+                  <div style="margin-top: 10px;padding-left: 3%;" class="c-c r">Retry Delay</div>
+
+                  <div style="width: 94%;float:left;margin-left: 3%;" class="create-row">
+                     <div class="inputicon"><i class="fas fa-stopwatch"></i>
+                     </div>
+                     <input class="createinput" id="amountr" placeholder="500ms"
+                        oninput="settingsRetryDelay.value=amountr.value">
+                  </div>
+
+                  <div class="slidecontainer">
+                     <input id="settingsRetryDelay" type="range" min="500" max="5000" value="500" class="slider"
+                        oninput="amountr.value=settingsRetryDelay.value">
+                  </div>
+                  <div class="setterbum">
+                     <div class="price-it-up" id="saveRetryDelay">Set Delay</div>
+                  </div>
+               </div>
+               <div style="height: 335px;" class="realsetter">
+                  <div style="padding: 20px 20px 33px 20px;" class="setterhat">
+                     <div class="settit">Discord webhook</div>
+                     <div class="setinfo">Having a discord webhook active will more than likely spam.</div>
+                  </div>
+                  <div class="bingbangbong">Setting this will let you receive discord notifications on each successful
+                     entry.</div>
+                  <div style="margin-top: 10px;padding-left: 3%;" class="c-c r">Discord Webhook</div>
+
+                  <div style="width: 94%;float:left;margin-left: 3%;" class="create-row">
+                     <div class="inputicon"><i class="fab fa-discord"></i>
+                     </div>
+                     <input class="createinput" id="webhookUrl" placeholder="Discord Webhook">
+                  </div>
+
+                  <div class="slidecontainer">
+                  </div>
+                  <div class="setterbum">
+                     <div class="price-it-up" id="saveWebhook">Set Webhook</div>
+                  </div>
+               </div>
+               <div style="height: 335px;" class="realsetter">
+                  <div style="padding: 20px 20px 33px 20px;" class="setterhat">
+                     <div class="settit">Captcha</div>
+                     <div class="setinfo">Captcha API / Secret key for Anti Captcha</div>
+                  </div>
+                  <div class="bingbangbong">API / Secret key for captcha services like Anti Captcha. Below, you can also
+                     open your Captcha harvester</div>
+                  <div style="margin-top: 10px;padding-left: 3%;" class="c-c r">API / Secret Key</div>
+                  <div style="width: 94%;float:left;margin-left: 3%;" class="create-row">
+                     <div class="inputicon"><i class="fas fa-key"></i>
+                     </div>
+                     <input class="createinput" id="capAPIKey" placeholder="API / Secret Key">
+                  </div>
+                  <div class="setterbum" style="bottom: 65px;">
+                     <div class="price-it-up" id="saveCapAPIKey">Save</div>
+                  </div>
+                  <div class="setterbum">
+                     <div class="price-it-up" id="openHarvester">Open Harvester</div>
+                  </div>
+               </div>
+               <!-- 				<div class="realsetter">
+               <div class="setterhat">
+               	<div class="settit">MEMBERSHIP INFO</div>
+               	<div class="setinfo">Info about your membership.</div>
+               </div>
+               <div class="bingbangbong">Your raffleaio membership will expire in <b>12</b> day(s).</div>
+               <div class="slidecontainer"></div>
+               <div style="bottom: 65px;" class="setterbum">
+               	<div class="price-it-up">Extend Membership</div>
+               </div>
+               <div class="setterbum">
+               	<div class="price-it-up">Cancel Membership</div>
+               </div>
+               </div> -->
+            </div>
+         </div>
+
+      </div>
+
+      <div class="ctask">
+
+         <div id="Addtask" style="overflow: hidden;padding-top: 20px;" class="main tabcontent">
+            <!--  <div class="caro">
+            <div class="releases-container caro">
+            </div>
+         </div>
+         <div style="margin-top: -165px;height:315px;" class="creater">
+            <!-- <div class="setterhat">
+               <div class="settit">Task Settings</div>
+               
+               <div class="setinfo">Configer your task settings</div>
+               
+               </div> -->
+            <!--   <div class="crat l">
+               <div class="create-row">
+                  <div data-toggle="tooltip" data-placement="top" title="Select site!" class="inputicon"><i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                  </div>
+                  <select class="createinput" id="taskSiteSelect">
+                     <option value="default">Sites</option>
+                     <option class="taskSiteOption" value="dsmny" disabled>DSMNY</option>
+                     <option class="taskSiteOption" value="dsml" disabled>DSML</option>
+                     <option class="taskSiteOption" value="footpatroluk" disabled>FootPatrol (UK Only)</option>
+                     <option class="taskSiteOption" value="nakedcph" disabled>Naked</option>
+                     <option class="taskSiteOption" value="ymeuniverse" disabled>YMEuniverse</option>
+                     <option class="taskSiteOption" value="vooberlin" disabled>VooBerlin</option>
+                     <option class="taskSiteOption" value="footshop" disabled>FootShop</option>
+                     <option class="taskSiteOption" value="oneblockdown" disabled>OneBlockDown</option>
+                     <option class="taskSiteOption" value="wishatl" disabled>WishATL</option>
+                     <option class="taskSiteOption" value="supplystore" disabled>SupplyStore (AU)</option>
+                     <option class="taskSiteOption" value="bdgastore" disabled>BDGAStore</option>
+                  </select>
+               </div>
+               <div class="create-row">
+                  <div data-toggle="tooltip" data-placement="top" title="Task profile!" class="inputicon"><i class="fa fa-user" aria-hidden="true"></i>
+                  </div>
+                  <select class="createinput" id="taskProfile">
+                  </select>
+               </div>
+               <div class="create-row">
+                  <div data-toggle="tooltip" data-placement="top" title="Email type!" class="inputicon"><i class="far fa-envelope"></i>
+                  </div>
+                  <select class="createinput" id="taskTypeOfEmail">
+                     <option value="default">Email Type</option>
+                     <option value="saved">Saved Emails</option>
+                     <option value="newEmail">New email</option>
+                  </select>
+               </div>
+            </div>
+            <div class="crat r">
+               <div class="create-row">
+                  <div data-toggle="tooltip" data-placement="top" title="Item size!" class="inputicon"><i class="fas fa-sort-amount-up"></i>
+                  </div>
+                  <select class="createinput" id="taskSizeSelect">
+                     <option value="default">Sizes</option>
+                     <option class="taskSizeOptionMass" value="selectOnWin" disabled>Selected on Win</option>
+                     <option class="taskSizeOptionMass" value="4" disabled>4</option>
+                     <option class="taskSizeOptionMass" value="4.5" disabled>4.5</option>
+                     <option class="taskSizeOptionMass" value="5" disabled>5</option>
+                     <option class="taskSizeOptionMass" value="5.5" disabled>5.5</option>
+                     <option class="taskSizeOptionMass" value="6" disabled>6</option>
+                     <option class="taskSizeOptionMass" value="6.5" disabled>6.5</option>
+                     <option class="taskSizeOptionMass" value="7" disabled>7</option>
+                     <option class="taskSizeOptionMass" value="7.5" disabled>7.5</option>
+                     <option class="taskSizeOptionMass" value="8" disabled>8</option>
+                     <option class="taskSizeOptionMass" value="8.5" disabled>8.5</option>
+                     <option class="taskSizeOptionMass" value="9" disabled>9</option>
+                     <option class="taskSizeOptionMass" value="9.5" disabled>9.5</option>
+                     <option class="taskSizeOptionMass" value="10" disabled>10</option>
+                     <option class="taskSizeOptionMass" value="10.5" disabled>10.5</option>
+                     <option class="taskSizeOptionMass" value="11" disabled>11</option>
+                     <option class="taskSizeOptionMass" value="11.5" disabled>11.5</option>
+                     <option class="taskSizeOptionMass" value="12" disabled>12</option>
+                  </select>
+               </div>
+               <div class="create-row">
+                  <div data-toggle="tooltip" data-placement="top" title="Task specific proxy!" class="inputicon"><i class="fa fa-globe" aria-hidden="true"></i>
+                  </div>
+                  <input class="createinput" id="taskSpecificProxy" placeholder="Specific Proxy">
+               </div>
+               <div class="create-row">
+                  <div data-toggle="tooltip" data-placement="top" title="Task quantity!" class="inputicon"><i class="fas fa-sort-numeric-down"></i>
+                  </div>
+                  <input class="createinput" id="taskQuantity" placeholder="Quantity" type="number" min="1" max="20" value="1">
+               </div>
+            </div>
+            <div style="margin-top: -20px;" class="cratz">
+               <div style="margin-top: -8px;" class="create-row">
+                  <div data-toggle="tooltip" data-placement="top" title="Task email!" class="inputicon"><i class="fa fa-envelope" aria-hidden="true"></i>
+                  </div>
+                  <input class="createinput" id="taskEmail" placeholder="Email Address" disabled>
+               </div>
+            </div>
+            <div class="setterbummer">
+               <div style="margin-top: -5px;width: 30%;" id="createTaskButton" class="price-it-up">Create Task(s)</div>
+            </div> -->
+
+
+
+
+            <div style="display: block;" class="sneaksel">
+               <div class="midtitle">Pick a sneaker!</div>
+               <div class="midtitleinfo">Select the shoe that you want to mass enter a raffle for</div>
+
+               <div class="shoe-container releases">
+
+
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton plus1">NEXT</div>
+                  <div class="canclerow"><span class="ccreate">cancel</span></div>
+               </div>
+
+            </div>
+
+
+            <div style="display: none;" class="details1">
+               <div class="midtitle">Select the details</div>
+               <div class="midtitleinfo">raffle entry details</div>
+
+               <div class="shoe-container">
+
+                  <div class="new-meta">
+
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Task profile!" class="inputicon"><i
+                              class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <select class="createinput" id="taskProfile">
+                        </select>
+                     </div>
+
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Select site!" class="inputicon"><i
+                              class="fa fa-shopping-bag" aria-hidden="true"></i>
+                        </div>
+                        <select class="createinput" id="taskSiteSelect">
+                           <option value="default">Sites</option>
+                           <option class="taskSiteOption" value="shelta" disabled>Shelta</option>
+                           <option class="taskSiteOption" value="hervia" disabled>Hervia</option>
+                           <option class="taskSiteOption" value="vitkac" disabled>Vitkac</option>
+                           <option class="taskSiteOption" value="chmielna" disabled>Chmielna</option>
+                           <option class="taskSiteOption" value="renarts" disabled>Renarts</option>
+                           <option class="taskSiteOption" value="stayrooted" disabled>Stay-rooted</option>
+                           <option class="taskSiteOption" value="extrabutter" disabled>ExtraButter</option>
+                           <option class="taskSiteOption" value="crusoeandsons" disabled>Crusoeandsons</option>
+                           <option class="taskSiteOption" value="dsmny" disabled>DSMNY</option>
+                           <option class="taskSiteOption" value="dsml" disabled>DSML</option>
+                           <option class="taskSiteOption" value="dsmla" disabled>DSMLA</option>
+                           <option class="taskSiteOption" value="footpatroluk" disabled>FootPatrol (UK Only)</option>
+                           <option class="taskSiteOption" value="nakedcph" disabled>Naked</option>
+                           <option class="taskSiteOption" value="ymeuniverse" disabled>YMEuniverse</option>
+                           <option class="taskSiteOption" value="vooberlin" disabled>VooBerlin</option>
+                           <option class="taskSiteOption" value="footshop" disabled>FootShop</option>
+                           <option class="taskSiteOption" value="oneblockdown" disabled>OneBlockDown</option>
+                           <option class="taskSiteOption" value="wishatl" disabled>WishATL</option>
+                           <option class="taskSiteOption" value="supplystore" disabled>SupplyStore (AU)</option>
+                           <option class="taskSiteOption" value="bdgastore" disabled>BDGAStore</option>
+                        </select>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Item size!" class="inputicon"><i
+                              class="fas fa-sort-amount-up"></i>
+                        </div>
+                        <select class="createinput" id="taskSizeSelect">
+                           <option value="default">Sizes</option>
+                           <option value="random">Random</option>
+                           <option class="taskSizeOptionMass" value="nosize" disabled>No Size</option>
+                           <option class="taskSizeOptionMass" value="selectOnWin" disabled>Selected on Win</option>
+                           <option class="taskSizeOptionMass" value="4" disabled>4</option>
+                           <option class="taskSizeOptionMass" value="4.5" disabled>4.5</option>
+                           <option class="taskSizeOptionMass" value="5" disabled>5</option>
+                           <option class="taskSizeOptionMass" value="5.5" disabled>5.5</option>
+                           <option class="taskSizeOptionMass" value="6" disabled>6</option>
+                           <option class="taskSizeOptionMass" value="6.5" disabled>6.5</option>
+                           <option class="taskSizeOptionMass" value="7" disabled>7</option>
+                           <option class="taskSizeOptionMass" value="7.5" disabled>7.5</option>
+                           <option class="taskSizeOptionMass" value="8" disabled>8</option>
+                           <option class="taskSizeOptionMass" value="8.5" disabled>8.5</option>
+                           <option class="taskSizeOptionMass" value="9" disabled>9</option>
+                           <option class="taskSizeOptionMass" value="9.5" disabled>9.5</option>
+                           <option class="taskSizeOptionMass" value="10" disabled>10</option>
+                           <option class="taskSizeOptionMass" value="10.5" disabled>10.5</option>
+                           <option class="taskSizeOptionMass" value="11" disabled>11</option>
+                           <option class="taskSizeOptionMass" value="11.5" disabled>11.5</option>
+                           <option class="taskSizeOptionMass" value="12" disabled>12</option>
+                        </select>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Captcha mode" class="inputicon"><i
+                              class="fas fa-robot"></i>
+                        </div>
+                        <select class="createinput" id="captchaHandler">
+                           <option value="manual">Manual captcha</option>
+                           <option value="anticaptcha">Anti Captcha</option>
+                           <option value="2captcha">2Captcha</option>
+                        </select>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton min1">BACK</div>
+                  <div class="createbumbutton plus1">NEXT</div>
+                  <div class="canclerow"><span class="ccreate">cancel</span></div>
+               </div>
+
+            </div>
+
+
+
+            <div style="display: none;" class="details2">
+               <div class="midtitle">Email & Proxies</div>
+               <div class="midtitleinfo">Choose email modes and proxy</div>
+
+               <div class="shoe-container">
+
+                  <div class="new-meta">
+
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Email type!" class="inputicon"><i
+                              class="far fa-envelope"></i>
+                        </div>
+                        <select class="createinput" id="taskTypeOfEmail">
+                           <option value="default">Email Type</option>
+                           <option value="catchall">Catchall</option>
+                           <option value="saved">Saved Emails</option>
+                           <option value="newEmail">New email</option>
+                        </select>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Task email!" class="inputicon"><i
+                              class="fa fa-envelope" aria-hidden="true"></i>
+                        </div>
+                        <input class="createinput" id="taskEmail" placeholder="Email Address" disabled>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Proxy options" class="inputicon"><i
+                              class="fas fa-globe"></i>
+                        </div>
+                        <select class="createinput" id="taskTypeOfProxy">
+                           <option value="default">Proxies</option>
+                           <option value="noProxy">No Proxy</option>
+                           <option value="savedProxies">Saved proxies</option>
+                           <option value="specificProxy">Specific proxy</option>
+                        </select>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Task specific proxy!" class="inputicon">
+                           <i class="fa fa-globe" aria-hidden="true"></i>
+                        </div>
+                        <input class="createinput" id="taskSpecificProxy" placeholder="Specific Proxy" disabled>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton min1">BACK</div>
+                  <div class="createbumbutton plus1">NEXT</div>
+                  <div class="canclerow"><span class="ccreate">cancel</span></div>
+               </div>
+
+            </div>
+
+
+            <div style="display: none;" class="details3">
+               <div class="midtitle">Task quantity</div>
+               <div class="midtitleinfo">The amount of tasks you want to create.</div>
+
+               <div class="shoe-container">
+
+                  <div class="new-meta">
+
+                     <div style="margin-top: 20px;margin-bottom: 10px;" class="proxy-gen-i">Use the <b>slider</b> to
+                        choose the number of tasks.</div>
+                     <form>
+                        <div style="margin-top: 25px;margin-bottom: 30px;" class="slidecontainer">
+                           <input id="taskQuantity" name="amountRange" type="range" min="0" max="300" value="1"
+                              class="slider" oninput="this.form.amountInput.value=this.value">
+                        </div>
+
+                        <div class="create-row">
+                           <div data-toggle="tooltip" data-placement="top" title="Task quantity!" class="inputicon"><i
+                                 class="fas fa-sort-numeric-down"></i>
+                           </div>
+                           <input class="createinput" name="amountInput" id="taskQ" placeholder="Quantity" type="number"
+                              min="1" max="300" value="1" oninput="this.form.amountRange.value=this.value">
+                        </div>
+                     </form>
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton min1">BACK</div>
+                  <div class="createbumbutton craterv2" id="createTaskButton">CREATE</div>
+                  <div class="canclerow"><span class="ccreate">cancel</span></div>
+               </div>
+
+            </div>
+
+
+
+
+
+         </div>
+      </div>
+
+   </div>
+
+   </div>
+
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'></script>
+   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
+   <script src="js/index.js"></script>
+   <script src="js/tab.js"></script>
+   <script src="js/main.js"></script>
+</body>
+
+</html>
