@@ -546,15 +546,15 @@ body {
 .trippple-butt:first-child { 
 	border-top-left-radius: 50px;
 	border-bottom-left-radius: 50px;
-	border-left: 0.1px solid rgba(244,244,244,1);
-	border-right: 0.1px solid rgba(244,244,244,1);
+	border-left: 0.1px solid rgba(0,0,0,0);
+	border-right: 0.1px solid rgba(0,0,0,0);
 }
 
 .trippple-butt:last-child { 
 	border-top-right-radius: 50px;
 	border-bottom-right-radius: 50px;
-	border-left: 0.1px solid rgba(244,244,244,1);
-	border-right: 0.1px solid rgba(244,244,244,1);
+	border-left: 0.1px solid rgba(0,0,0,0);
+	border-right: 0.1px solid rgba(0,0,0,0);
 }
 
 .cannecle {

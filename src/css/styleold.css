@@ -140,15 +140,15 @@ tr:nth-child(odd) {
 	border-top-right-radius: 50px;
 	border-bottom-right-radius: 50px;
 	margin-right: 7.5px;
-	border-left: 0.1px solid rgba(244,244,244,1);
-	border-right: 0.1px solid rgba(244,244,244,1);
+	border-left: 0.1px solid rgba(0,0,0,0.1);
+	border-right: 0.1px solid rgba(0,0,0,0.1);
 }
 
 .action-butt:last-child { 
 	border-top-left-radius: 50px;
 	border-bottom-left-radius: 50px;
-	border-left: 0.1px solid rgba(244,244,244,1);
-	border-right: 0.1px solid rgba(244,244,244,1);
+	border-left: 0.1px solid rgba(0,0,0,0.1);
+	border-right: 0.1px solid rgba(0,0,0,0.1);
 }
 
 
