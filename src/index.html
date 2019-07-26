@@ -1,238 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
 <head>
-   <meta charset="UTF-8">
-   <title>Codeyellow Raffle Bot</title>
-   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
-   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'>
-   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-   <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
-   <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>A Pen by  Yummy</title>
+  
+  
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdn.linearicons.com/free/1.0.0/icon-font.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway&amp;display=swap'>
+
+      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="css/styleold.css">
    <script src="js/hammer.js" onload="window.Hammer = module.exports;"></script>
    <script>
       window.$ = window.jQuery = require('./js/jquery.js');
    </script>
-   <script src="js/materialize.js"></script>
 </head>
 
-<body>
-   <div class="drag-top"></div>
-   <div class="window-options noselect">
-      <div id="closeM" class="window-icon"><span class="lnr lnr-cross"></span>
+<body class="antidrag antiselect">
+
+  <div class="drag-top"></div>
+<div class="sec-nav test">
+  
+  <div class="tasks2nav 2navtask shownav">
+  <div class="sec-navt releases second-active"><a>releases</a></div>
+<div class="sec-navt massentry"><a>mass entry</a></div>  
+  </div>
+  
+    <div class="tasks2nav 2navproxies">
+  <div style="width: 25%;float: left;" class="sec-navt aproxz"><a>add proxies</a></div>
+  <div style="width: 25%;float: left;" class="sec-navt"><a>check all</a></div>  
+  <div style="width: 25%;float: left;" class="sec-navt"><a>remove failed</a></div>
+  <div style="width: 25%;float: left;" class="sec-navt"><a>save all</a></div>  
+    </div>
+  
+</div>
+
+
+<div class="bot-size">
+<div class="bot-window">
+  <div class="window-c">－</div>
+  <div class="window-c"><span class="lnr lnr-cross"></div>
+</div>   
+  
+<div class="nav-base">
+  
+  <div class="nav-ground"></div>
+  
+  <div id="defaultOpen" class="nav-item refro tasks active tragictest"><a>tasks</a></div> 
+  
+  <div id="profilesTab" class="nav-item refro profiles tragictest"><a>profiles</a></div>
+  
+  <div id="proxiesTab" class="nav-item refro proxies tragictest"><a>proxies</a></div> 
+  
+  <div id="settingsTab" class="nav-item refro settings tragictest"><a>settings</a></div> 
+</div>  
+<div class="bot-logo"><img src="css/img/new_logo.png" class="brandlogo"></div>
+<div class="bot-title">
+<div class="title-top">welcome back, Yummy</div>
+  <div class="title-bottom">you have entered <b>901</b> raffles</div> 
+  
+
+  
+</div>  
+  
+ <div class="entriesgang"> 
+  
+  <div style="top: 0px;" class="mainr releases-main btab showpage">
+    
+	<div class="release-container">
+      <div class="release-item">
+        <div class="release-title">footshop</div>
+          <img class="release-image" src="https://codeyellow.io/img/yeezy-350-v2-antlia.png">
+        <div class="release-button">mass enter</div>
+          <div class="release-date">ends on 7th of june</div>
       </div>
-      <div id="minimizeM" class="window-icon">－</div>
-   </div>
-
-   <div class="under-line"></div>
-
-   <div class="nav-me noselect">
-      <div class="left-me">
-         <div id="defaultOpen" class="nav-item refro">Tasks</div>
-         <div id="profilesTab" class="nav-item refro">Profiles</div>
-      </div>
-      <a href="#">
-         <div data-toggle="tooltip" title="Update available!" class="update-dot updateav"><i
-               class="fas fa-download"></i></div>
-      </a>
-      <img class="middle-me" src="css/img/logo.png">
-      <div class="right-me">
-         <div id="proxiesTab" class="nav-item refro">Proxies</div>
-         <div id="settingsTab" class="nav-item refro">Settings</div>
-      </div>
-   </div>
-   <div class="tasks">
-
-      <div id="Tasks" style="top: 150px;" class="main tabcontent">
-         <!--        <div class="twonav">
-            <div class="two-left">
-               <div id="creattask" class="two-item">Create task</div>
-               <div class="two-item" id="startAllTasks">Start all</div>
-            </div>
-            <div class="two-right">
-               <div class="two-item" style="opacity: 0.3;">Stop all</div>
-               <div class="two-item" id="deleteAllTasks">Delete all</div>
-            </div>
-         </div>
-         <table style="width: 100%;margin-bottom: 10px;">
-            <tbody id="tasks">
-               <tr style="background: #0e0e0e;">
-                  <th>ID</th>
-                  <th>SITE</th>
-                  <th>PROFILE</th>
-                  <th>STATUS</th>
-				  <th>PROXY</th>
-                  <th>ACTION</th>
-               </tr>
-            </tbody>
-         </table> -->
-
-
-
-
-         <div id="autoenterx" style="padding-top: 100px;text-align: center;" class="main tabcontent">
-
-            <div class="twonav">
-               <div class="two-left">
-                  <div style="width: 100%;" class="two-item singleenter twoactive">One-click Entry</div>
-               </div>
-               <div class="two-right">
-                  <div style="width: 100%;" class="two-item massenter">Mass Entry</div>
-               </div>
-            </div>
-
-            <!--	 <div class="altnav">
-			<div class="altnavi">Setup</div>
-			<div class="altnavi">Enter all</div>
-			<div class="altnavi">Setup</div>
-			<div class="altnavi">Enter all</div>
-         </div> -->
-
-            <div class="altnav">
-               <div style="float: left;" class="nav-row">
-                  <div class="nav-icon"><img src="css/img/shoeicon.png"
-                        style="width: 80%;image-rendering: -webkit-optimize-contrast;">
-                  </div>
-                  <select class="nav-input" id="oneClickFilter"
-                     style="background: rgba(14, 14, 14, 0) !important;color: #000 !important;">
-                     <option value="default">Filter</option>
-
-                  </select>
-               </div>
-
-               <div style="float: left;" class="nav-row">
-                  <div class="nav-icon"><i class="fa fa-user" aria-hidden="true"></i>
-                  </div>
-                  <select class="nav-input" id="oneClicktaskProfile"
-                     style="background: rgba(14, 14, 14, 0) !important;color: #000 !important;">
-                  </select>
-               </div>
-
-               <div style="float: left;" class="nav-row">
-                  <div class="nav-icon"><i class="fas fa-mail-bulk"></i>
-                  </div>
-                  <input class="nav-input" id="oneClicktaskEmail"
-                     style="background: rgba(14, 14, 14, 0) !important;color: #000 !important;" placeholder="Email">
-               </div>
-
-
-               <div style="float: right;" class="nav-row">
-                  <div class="nav-icon"><i class="fa fa-globe" aria-hidden="true"></i>
-                  </div>
-                  <input class="nav-input" id="oneClicktaskSpecificProxy"
-                     style="background: rgba(14, 14, 14, 0) !important;color: #000 !important;"
-                     placeholder="Task Proxy">
-               </div>
-
-            </div>
-
-            <div class="oneclick-container">
-
-               <!-- <div style="height: 400px;" class="raffle-enter-container">
+    </div>
+   
+  </div>
+  
+    <div class="massenter-main">
+    
+		<div class="tripleactionx"> 
+		<div class="trippple-butt cmasstz" data-toggle="tooltip" data-placement="bottom" title="create task "><i class="fas fa-plus"></i></div>
+		<div class="trippple-butt ewmailz" data-toggle="tooltip" data-placement="bottom" title="email configuration"><i class="fas fa-envelope"></i></div>
+		<div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="start all tasks"><i class="fas fa-play"></i></div>
+		<div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="delete all tasks"><i class="fas fa-trash"></i></div> 
+		</div>
 		
-                     <div class="raffle-im" ><img class="raffle-item" src="https://codeyellow.io/img/adidas-yeezy-700-analog.png"></div>
-                     <div class="raff-t">Naked raffle</div>
-                     <div class="feature">
-                        <div class="fcon"><i class="fas fa-clock"></i></div>
-                        27th April
-                     </div>
-					 
-					 <div class="feature">
-                     <div style="width: 100%;float:left;" class="create-row">
-                        <div class="inputicon"><i class="fas fa-sort-amount-down" aria-hidden="true"></i>
-                        </div>
-                        <select class="createinput" id="cardType">
-                              <option class="taskSizeOption" value="selectOnWin">Selected on Win</option>
-                              <option class="taskSizeOption" value="4">4</option>
-                              <option class="taskSizeOption" value="4.5">4.5</option>
-                              <option class="taskSizeOption" value="5">5</option>
-                              <option class="taskSizeOption" value="5.5">5.5</option>
-                              <option class="taskSizeOption" value="6">6</option>
-                              <option class="taskSizeOption" value="6.5">6.5</option>
-                              <option class="taskSizeOption" value="7">7</option>
-                              <option class="taskSizeOption" value="7.5">7.5</option>
-                              <option class="taskSizeOption" value="8">8</option>
-                              <option class="taskSizeOption" value="8.5">8.5</option>
-                              <option class="taskSizeOption" value="9">9</option>
-                              <option class="taskSizeOption" value="9.5">9.5</option>
-                              <option class="taskSizeOption" value="10">10</option>
-                              <option class="taskSizeOption" value="10.5">10.5</option>
-                              <option class="taskSizeOption" value="11">11</option>
-                              <option class="taskSizeOption" value="11.5">11.5</option>
-                              <option class="taskSizeOption" value="12">12</option>
-                        </select>
-                     </div>
-                     </div>
-					 
-                     <a target="_blank">
-                        <div class="feature enter-r">
-                           Enter Raffle
-                        </div>
-                     </a>
-        </div>-->
-            </div>
-
-         </div>
-
-         <div id="massenter" style="padding-top: 130px;text-align: center;display:none;" class="main tabcontent">
-
-            <div class="twonav">
-               <div class="two-left">
-                  <div style="width: 100%;" class="two-item singleenter">One-click Entry</div>
-               </div>
-               <div class="two-right">
-                  <div style="width: 100%;" class="two-item massenter twoactive">Mass Entry</div>
-               </div>
-            </div>
-
-
-            <div class="altnav">
-
-               <div style="width: 50%;" class="two-left">
-                  <div id="creattask" class="altnavi">Create Task</div>
-                  <div id="eeconfig" class="altnavi">Configure emails</div>
-               </div>
-               <div style="width: 50%;" class="two-right">
-                  <div class="altnavi" id="startAllTasks">Start All</div>
-                  <div class="altnavi" id="deleteAllTasks">Delete All</div>
-               </div>
-
-            </div>
-
-            <table style="width: 100%;margin-bottom: 10px;">
-               <tbody id="tasks">
+		<div style="float:right;padding-left: 15px;padding-right:15px;font-size: 14px;color: #eee;line-height: 20px;width: 200px;" class="tripleactionx"><span style="margin-top: 10px;"><b style="font-size: 18px;">123</b><br>Successfull entries</span></div>
+	
+		<table style="width: 100%;margin-bottom: 10px;">
+               <tbody class="proxbod" id="proxies">
+			   
                   <tr style="background: #0e0e0e;">
-                     <th>ID</th>
-                     <th>SITE</th>
-                     <th>PROFILE</th>
-                     <th>STATUS</th>
-                     <th>PROXY</th>
-                     <th>ACTION</th>
+				     <th class="leftsidetable" style="width: 50px;"></th>
+                     <th>id</th>
+                     <th>site</th>
+                     <th>profile</th>
+					 <th style="width: 200px;">email</th>
+                     <th>status</th>
+                     <th class="rightsidetable" style="width: 110px;"></th>
                   </tr>
+
+                 <tr>
+				  <td class="leftsidetable"><div class="proxie-butt proxgo"><i class="fas fa-bolt"></i></div></td>
+                  <td>localhost</td>
+                  <td>host</td>
+                  <td>demo</td>
+				  <td>example@catchall.com</td>
+                  <td>entered</td>
+                  <td class="rightsidetable">
+                     <button class="action-butt"><i class="fa fa-trash" aria-hidden="true"></i>
+                     </button>
+                     <button class="action-butt"><i class="fa fa-play" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr>
+			   
+
                </tbody>
-            </table>
+        </table>
+   
+    </div>
+  
+  
+</div>
+	
+  <div style="top: 30px;display: none;z-index: 1;" class="mainr email-tab">
 
-         </div>
+         <div id="Addprox" style="padding-top: 35px;">
+
+               <div style="margin-top: -10px;" class="midtitle">email config</div>
+               <div class="midtitleinfo">configurate and jig your emails for your email list here.</div>
+
+				<div class="cannecle"><span class="tasks">back</span></div>
 
 
-
-
-
-
-      </div>
-
-      <div class="Econf">
-         <div id="Addprox" style="padding: 90px 0px 0px 0px;" class="main tabcontent">
-
-            <div style="overflow-y: auto;" class="lefts">
+            <div style="overflow-y: auto;background: transparent;" class="lefts">
 
                <!-- <div class="proxy-gen-h">Proxy generation</div>
 		<div class="proxy-gen-i">Select your favourite proxy brand to generate safe proxies!</div> -->
-
-               <div style="width: 100%; margin-left: 0%;background: rgba(0,0,0,0.5);" class="setterhat">
-                  <div class="settit">Generate Emails</div>
-                  <div class="setinfo">Jig your current email address or setup a catch here!</div>
-               </div>
 
                <div style="padding: 2% 2% 6% 2%;margin-top: 2%;" class="email-gen-hold-con">
 
@@ -248,7 +158,7 @@
 
                   <div style="margin-top: 40px;" class="proxy-gen-i">Generate <b id="gmailLimitShow">15</b> emails</div>
                   <div style="margin-top: 45px;" class="slidecontainer">
-                     <input id="gmailLimit" type="range" min="0" max="100" value="15" class="slider">
+                     <input id="gmailLimit" type="range" min="0" max="100" value="50" class="slider">
                   </div>
                   <div class="setterbummer">
                      <div style="margin-top: 10px;width: 30%;margin-bottom: 2%;" id="generateGmails"
@@ -272,7 +182,7 @@
                   <div style="margin-top: 40px;" class="proxy-gen-i">Generate <b id="catchallLimitShow">15</b> emails
                   </div>
                   <div style="margin-top: 45px;" class="slidecontainer">
-                     <input id="catchallLimit" type="range" min="0" max="100" value="15" class="slider">
+                     <input id="catchallLimit" type="range" min="0" max="100" value="50" class="slider">
                   </div>
                   <div class="setterbummer">
                      <div style="margin-top: 10px;width: 30%;margin-bottom: 2%;" id="generateCatchalls"
@@ -284,16 +194,13 @@
             </div>
 
             <div class="rights">
-               <div style="width: 100%; margin-left: 0%;background: rgba(0,0,0,0.5);" class="setterhat">
-                  <div class="settit">Input Emails</div>
-                  <div class="setinfo">input emails here or use our generation to easilly jig your emails!</div>
-               </div>
+
                <div class="addcon" style="margin-top: 2%;">
                   <!--    					<div style="padding: 20px;margin-bottom: 0px;background:rgba(0,0,0,0.6);" class="setterhat">
                   <div class="settit">Input proxies</div>
                   <div class="setinfo">Input your proxies here!</div>
                   </div> -->
-                  <textarea style="height: 410px;" class="barea" id="emailsToSave" placeholder="email@email.com
+                  <textarea style="height: 380px;" class="barea" id="emailsToSave" placeholder="email@email.com
 email@email.com
 email@email.com
 email@email.com
@@ -303,7 +210,7 @@ email@email.com
 email@email.com
 email@email.com"></textarea>
                   <div class="setterbummer">
-                     <div style="margin-top: 10px;width: 30%;" id="saveEmailList" class="price-it-up">Save email list
+                     <div style="margin-top: 10px;width: 30%;" id="saveEmailList" class="price-it-up tasks">Save email list
                      </div>
                   </div>
                </div>
@@ -314,11 +221,324 @@ email@email.com"></textarea>
          </div>
 
 
-      </div>
+  </div>
 
-	  <div class="profiles">
+  <div style="top: 50px;display: none;z-index: 1;" class="mainr addproxy-tab">
 
-			<div id="Profiles" style="padding-top: 10px;" class="main tabcontent">
+	            <div id="Addprox">
+
+				<div style="margin-top: -10px;" class="midtitle">add proxies</div>
+               <div class="midtitleinfo">scrape proxies or add your own generated proxies here.</div>
+
+				<div class="cannecle"><span class="proxies">back</span></div>
+
+
+               <div class="lefts">
+
+
+                  <div style="margin-top: 2%;" class="proxy-brand-con noselect">
+                     <div class="proxy-brand-button prox-sel" id="usap" data-country="us"><input class="proxCover"
+                           data-toggle="tooltip" data-placement="top" title="United states" id="usapb" type="radio"
+                           name="proxc" checked><img class="proxy-brand-image" src="css/img/flags/usa.png"></div>
+                     <div class="proxy-brand-button" id="ukp" data-country="gb"><input class="proxCover"
+                           data-toggle="tooltip" data-placement="top" title="United Kingdom" id="ukpb" type="radio"
+                           name="proxc"><img class="proxy-brand-image" src="css/img/flags/uk.png"></div>
+                     <div class="proxy-brand-button" id="dep" data-country="de"><input class="proxCover" id="depb"
+                           data-toggle="tooltip" data-placement="top" title="Germany" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/de.png"></div>
+                     <div class="proxy-brand-button" id="esp" data-country="es"><input class="proxCover" id="espb"
+                           data-toggle="tooltip" data-placement="top" title="Spain" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/es.png"></div>
+                     <div class="proxy-brand-button" id="frp" data-country="fr"><input class="proxCover" id="frpb"
+                           data-toggle="tooltip" data-placement="top" title="France" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/fr.png"></div>
+                     <div class="proxy-brand-button" id="rup" data-country="ru"><input class="proxCover" id="rupb"
+                           data-toggle="tooltip" data-placement="top" title="Russia" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/ru.png"></div>
+                     <div class="proxy-brand-button" id="chinap" data-country="cn"><input class="proxCover" id="chinapb"
+                           data-toggle="tooltip" data-placement="top" title="China" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/china.png"></div>
+                     <div class="proxy-brand-button" id="aup" data-country="au"><input class="proxCover" id="aupb"
+                           data-toggle="tooltip" data-placement="top" title="Australia" type="radio" name="proxc"><img
+                           class="proxy-brand-image" src="css/img/flags/au.png"></div>
+                  </div>
+
+
+                  <div style="margin-top: 20px;margin-bottom: 10px;" class="proxy-gen-i">Scrape <b
+                        id="proxyscrapeShow">15</b> Proxies</div>
+                  <div class="slidecontainer">
+                     <input id="proxyQuantity" type="range" min="0" max="30" value="15" class="slider">
+                  </div>
+
+
+
+                  <div class="setterbummer">
+                     <div style="margin-top: 10px;width: 30%;" class="price-it-up" id="scrapeProxies">Scrape Proxies
+                     </div>
+                  </div>
+
+               </div>
+
+               <div style="background: transparent;padding: 0;" class="rights">
+                  <div style="margin-top: 0px;height: 100%;" class="right-prox">
+
+                     <div class="addcon" style="margin-top: 0;">
+                        <textarea style="height: 410px;margin-top: 2%;" class="barea" id="proxiesToAdd" placeholder="ip:port:user:pass
+ip:port:user:pass
+ip:port
+ip:port"></textarea>
+                        <div class="setterbummer">
+                           <div style="margin-top: 10px;width: 30%;" id="addProxies" class="price-it-up proxies">Add Proxies
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+
+
+            </div>
+       
+  </div>
+
+  <div style="top: 30px;display: none;z-index: 1;" class="mainr createmass-tab">
+
+         <div id="Addtask">
+
+            <div style="display: block;" class="sneaksel">
+               <div class="midtitle">Pick a sneaker!</div>
+               <div class="midtitleinfo">Select the shoe that you want to mass enter a raffle for</div>
+
+               <div class="shoe-container releases">
+
+				<div style="height: 340px;width: 230px;margin-top: 20px;" class="raffle-enter-container">
+			<div style="font-size: 19px;" class="raff-t"><div style="width: 220px;" class="release-title">Yeezy 350 V2 Antlia</div></div>
+			<div style="width: 230px;" class="raffle-im"><img class="raffle-item" src="https://codeyellow.io/img/yeezy-350-v2-antlia.png"></div>
+			<div class="feature"><div class="fcon"><i class="fas fa-clock"></i></div>22nd June</div>
+			<a target="_blank"><div style="margin-top: 20px;" class="price-it-up selectQuick" id="0">SELECT</div></a>	
+		</div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton plus1">NEXT</div>
+                  <div class="canclerow"><span class="ccreate">cancel</span></div>
+               </div>
+
+            </div>
+
+
+            <div style="display: none;" class="details1">
+               <div class="midtitle">Select the details</div>
+               <div class="midtitleinfo">raffle entry details</div>
+
+               <div class="shoe-container">
+
+                  <div class="new-meta">
+
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Task profile!" class="inputicon"><i
+                              class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                        <select class="createinput" id="taskProfile">
+                        </select>
+                     </div>
+
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Select site!" class="inputicon"><i
+                              class="fa fa-shopping-bag" aria-hidden="true"></i>
+                        </div>
+                        <select class="createinput" id="taskSiteSelect">
+                           <option value="default">Sites</option>
+                           <option class="taskSiteOption" value="shelta" disabled>Shelta</option>
+                           <option class="taskSiteOption" value="hervia" disabled>Hervia</option>
+                           <option class="taskSiteOption" value="vitkac" disabled>Vitkac</option>
+                           <option class="taskSiteOption" value="chmielna" disabled>Chmielna</option>
+                           <option class="taskSiteOption" value="renarts" disabled>Renarts</option>
+                           <option class="taskSiteOption" value="stayrooted" disabled>Stay-rooted</option>
+                           <option class="taskSiteOption" value="extrabutter" disabled>ExtraButter</option>
+                           <option class="taskSiteOption" value="crusoeandsons" disabled>Crusoeandsons</option>
+                           <option class="taskSiteOption" value="dsmny" disabled>DSMNY</option>
+                           <option class="taskSiteOption" value="dsml" disabled>DSML</option>
+                           <option class="taskSiteOption" value="dsmla" disabled>DSMLA</option>
+                           <option class="taskSiteOption" value="footpatroluk" disabled>FootPatrol (UK Only)</option>
+                           <option class="taskSiteOption" value="nakedcph" disabled>Naked</option>
+                           <option class="taskSiteOption" value="ymeuniverse" disabled>YMEuniverse</option>
+                           <option class="taskSiteOption" value="vooberlin" disabled>VooBerlin</option>
+                           <option class="taskSiteOption" value="footshop" disabled>FootShop</option>
+                           <option class="taskSiteOption" value="oneblockdown" disabled>OneBlockDown</option>
+                           <option class="taskSiteOption" value="wishatl" disabled>WishATL</option>
+                           <option class="taskSiteOption" value="supplystore" disabled>SupplyStore (AU)</option>
+                           <option class="taskSiteOption" value="bdgastore" disabled>BDGAStore</option>
+                        </select>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Item size!" class="inputicon"><i
+                              class="fas fa-sort-amount-up"></i>
+                        </div>
+                        <select class="createinput" id="taskSizeSelect">
+                           <option value="default">Sizes</option>
+                           <option value="random">Random</option>
+                           <option class="taskSizeOptionMass" value="nosize" disabled>No Size</option>
+                           <option class="taskSizeOptionMass" value="selectOnWin" disabled>Selected on Win</option>
+                           <option class="taskSizeOptionMass" value="4" disabled>4</option>
+                           <option class="taskSizeOptionMass" value="4.5" disabled>4.5</option>
+                           <option class="taskSizeOptionMass" value="5" disabled>5</option>
+                           <option class="taskSizeOptionMass" value="5.5" disabled>5.5</option>
+                           <option class="taskSizeOptionMass" value="6" disabled>6</option>
+                           <option class="taskSizeOptionMass" value="6.5" disabled>6.5</option>
+                           <option class="taskSizeOptionMass" value="7" disabled>7</option>
+                           <option class="taskSizeOptionMass" value="7.5" disabled>7.5</option>
+                           <option class="taskSizeOptionMass" value="8" disabled>8</option>
+                           <option class="taskSizeOptionMass" value="8.5" disabled>8.5</option>
+                           <option class="taskSizeOptionMass" value="9" disabled>9</option>
+                           <option class="taskSizeOptionMass" value="9.5" disabled>9.5</option>
+                           <option class="taskSizeOptionMass" value="10" disabled>10</option>
+                           <option class="taskSizeOptionMass" value="10.5" disabled>10.5</option>
+                           <option class="taskSizeOptionMass" value="11" disabled>11</option>
+                           <option class="taskSizeOptionMass" value="11.5" disabled>11.5</option>
+                           <option class="taskSizeOptionMass" value="12" disabled>12</option>
+                        </select>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Captcha mode" class="inputicon"><i
+                              class="fas fa-robot"></i>
+                        </div>
+                        <select class="createinput" id="captchaHandler">
+                           <option value="manual">Manual captcha</option>
+                           <option value="anticaptcha">Anti Captcha</option>
+                           <option value="2captcha">2Captcha</option>
+                        </select>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton min1">BACK</div>
+                  <div class="createbumbutton plus1">NEXT</div>
+                  <div class="canclerow"><span class="ccreate">cancel</span></div>
+               </div>
+
+            </div>
+
+
+
+            <div style="display: none;" class="details2">
+               <div class="midtitle">Email & Proxies</div>
+               <div class="midtitleinfo">Choose email modes and proxy</div>
+
+               <div class="shoe-container">
+
+                  <div class="new-meta">
+
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Email type!" class="inputicon"><i
+                              class="far fa-envelope"></i>
+                        </div>
+                        <select class="createinput" id="taskTypeOfEmail">
+                           <option value="default">Email Type</option>
+                           <option value="catchall">Catchall</option>
+                           <option value="saved">Saved Emails</option>
+                           <option value="newEmail">New email</option>
+                        </select>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Task email!" class="inputicon"><i
+                              class="fa fa-envelope" aria-hidden="true"></i>
+                        </div>
+                        <input class="createinput" id="taskEmail" placeholder="Email Address" disabled>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Proxy options" class="inputicon"><i
+                              class="fas fa-globe"></i>
+                        </div>
+                        <select class="createinput" id="taskTypeOfProxy">
+                           <option value="default">Proxies</option>
+                           <option value="noProxy">No Proxy</option>
+                           <option value="savedProxies">Saved proxies</option>
+                           <option value="specificProxy">Specific proxy</option>
+                        </select>
+                     </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Task specific proxy!" class="inputicon">
+                           <i class="fa fa-globe" aria-hidden="true"></i>
+                        </div>
+                        <input class="createinput" id="taskSpecificProxy" placeholder="Specific Proxy" disabled>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton min1">BACK</div>
+                  <div class="createbumbutton plus1">NEXT</div>
+                  <div class="canclerow"><span class="ccreate">cancel</span></div>
+               </div>
+
+            </div>
+
+
+            <div style="display: none;" class="details3">
+               <div class="midtitle">Task quantity</div>
+               <div class="midtitleinfo">The amount of tasks you want to create.</div>
+
+               <div class="shoe-container">
+
+                  <div class="new-meta">
+
+                     <div style="margin-top: 20px;margin-bottom: 10px;" class="proxy-gen-i">Use the <b>slider</b> to
+                        choose the number of tasks.</div>
+                     <form>
+                        <div style="margin-top: 25px;margin-bottom: 30px;" class="slidecontainer">
+                           <input id="taskQuantity" name="amountRange" type="range" min="0" max="300" value="1"
+                              class="slider" oninput="this.form.amountInput.value=this.value">
+                        </div>
+
+                        <div class="create-row">
+                           <div data-toggle="tooltip" data-placement="top" title="Task quantity!" class="inputicon"><i
+                                 class="fas fa-sort-numeric-down"></i>
+                           </div>
+                           <input class="createinput" name="amountInput" id="taskQ" placeholder="Quantity" type="number"
+                              min="1" max="300" value="1" oninput="this.form.amountRange.value=this.value">
+                        </div>
+                     </form>
+
+                  </div>
+
+               </div>
+
+               <div class="buttonbar">
+                  <div class="createbumbutton min1">BACK</div>
+                  <div class="createbumbutton craterv2" id="createTaskButton">CREATE</div>
+                  <div class="canclerow"><span class="ccreate">cancel</span></div>
+               </div>
+
+            </div>
+
+
+
+
+
+         </div>
+
+  </div>
+
+  <div style="top: 70px;" class="mainr profile-tab btab">
+
+	<div id="Profiles" class="mainrr">
 
 
             <div class="proDetails">
@@ -330,7 +550,8 @@ email@email.com"></textarea>
                   <div style="height: 200px;position: relative;" class="new-meta">
 
                      <div style="margin-top: -10px;margin-bottom: 30px;" class="proxy-gen-i">Select a profile to Edit, Export or delete!</div>
-                     <div class="create-row">
+                     
+					 <div class="create-row">
                         <div data-toggle="tooltip" data-placement="top" title="Task profile!" class="inputicon"><i
                               class="fa fa-user" aria-hidden="true"></i>
                         </div>
@@ -1174,41 +1395,49 @@ email@email.com"></textarea>
 	
 
             </div>
-         </div>
 
-      <div class="proxies">
+    
+  </div>  
 
-         <div id="Proxies" style="top: 150px;" class="main tabcontent">
-            <div class="twonav">
-               <div class="two-left">
-                  <div id="addprox" class="two-item">Add proxy(s)</div>
-                  <div class="two-item" id="checkAllProxies">Check all</div>
-               </div>
-               <div class="two-right">
-                  <div class="two-item" id="removeFailed">Remove failed</div>
-                  <div class="two-item" id="saveProxies">Save all</div>
-               </div>
-            </div>
+  <div class="mainr proxies-tab btab">
+
+         <div id="Proxies" style="top: 70px;" class="tabcontent">
             <table style="width: 100%;margin-bottom: 10px;">
                <tbody class="proxbod" id="proxies">
+			   
                   <tr style="background: #0e0e0e;">
+				     <th class="leftsidetable" style="width: 50px;"></th>
                      <th>IP</th>
                      <th>PORT</th>
                      <th>RESULT</th>
-                     <th>ACTION</th>
+                     <th class="rightsidetable" style="width: 110px;"></th>
                   </tr>
 
-                  <!--          <tr>
+                 <tr>
+				  <td class="leftsidetable"><div class="proxie-butt proxgo"><i class="fas fa-bolt"></i></div></td>
                   <td>localhost</td>
                   <td>host</td>
                   <td>124ms</td>
-                  <td>
-                     <button class="action-butt"><i class="fa fa-play" aria-hidden="true"></i>
-                     </button>
+                  <td class="rightsidetable">
                      <button class="action-butt"><i class="fa fa-trash" aria-hidden="true"></i>
                      </button>
+                     <button class="action-butt"><i class="fa fa-play" aria-hidden="true"></i>
+                     </button>
                   </td>
-               </tr> -->
+               </tr>
+			   
+			                    <tr>
+				  <td class="leftsidetable"><div class="proxie-butt proxno"><i class="fas fa-bolt"></i></div></td>
+                  <td>localhost</td>
+                  <td>host</td>
+                  <td>124ms</td>
+                  <td class="rightsidetable">
+                     <button class="action-butt"><i class="fa fa-trash" aria-hidden="true"></i>
+                     </button>
+                     <button class="action-butt"><i class="fa fa-play" aria-hidden="true"></i>
+                     </button>
+                  </td>
+               </tr>
 
                </tbody>
             </table>
@@ -1218,616 +1447,71 @@ email@email.com"></textarea>
          </div>
 
 
-         <div class="aprox">
+  </div>
+
+  <div style="top: 70px;" class="mainr settings-tab btab">
+
+	<div class="settingsleftmenu">
+	
+		<div class="settingnavtitle">settings</div>
+		
+		<div class="settingnav" onclick="openCity(event, 'general')" id="defaultGOGO" >general</div>
+		
+		<div class="settingnav" onclick="openCity(event, 'advanced')">advanced</div>
+		
+		<div class="settingnav" onclick="openCity(event, 'captcha')">captcha</div>
+		
+		<div class="settingnav" onclick="openCity(event, 'account')">my account</div>
+		
+		<div style="bottom: 55px;position: absolute;left: 0;" class="settingnav">guides</div>
+		
+		<div style="bottom: 0;position: absolute;left: 0;" class="settingnav">deactivate</div>
+		
+	</div>
+    
+	<div class="setting-side tabbard" id="general">
+	
+	general
+	
+	<div class="settingtitlelarger">software settings</div>
+	<div class="settingtitleinfo" style="width: 100%;">software version 0.2.0 <span class="update-avaliablex">update avaliable</span></div>
+	<br>
+	<div class="settingtitlelarger">setters</div>
+	<div class="settingtitleinfo" style="width: 100%;">edit retry delay and discord webhook</div>
+	</div>
+    
+	<div class="setting-side tabbard" id="advanced">
+	
+	advanced
+	
+	</div>	
+    
+	<div class="setting-side tabbard" id="captcha">
+	
+	captcha
+	
+	</div>	
+    
+	<div class="setting-side tabbard" id="account">
+	
+	account
+	
+	</div>	
+  </div>
+  
+</div>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+
+  
+
+    <script  src="js/script.js"></script>
+	<script  src="js/tab.js"></script>
 
-            <div id="Addprox" style="padding: 90px 0px 0px 0px;" class="main tabcontent">
-               <!-- <div class="lefts">
-            <div style="padding: 20px;margin-bottom: 10px;" class="setterhat">
-            <div class="settit">Generate proxies</div>
-            <div class="setinfo">Generate proxies from all regions!</div>
-            </div>
-            <span class="helper"> Select the amount of proxies to generate.</span>
-            <br>
-            <div class="slidecontainer">
-            <input id="rangeInput" type="range" min="1" max="30" value="15" class="slider" oninput="amount.value=rangeInput.value">
-            </div>
-            <br>
-            <span class="announceme">15 proxies</span>
-            <br>
-            
-            <div style="height: 170px;" class="realsetter2">
-            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
-            <div class="settit">UK</div>
-            <div class="setinfo">United Kingdom</div>
-            </div>
-            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> UK based proxy.</div>
-            <div class="setterbum">
-            <div class="price-it-gen">Generate UK</div>
-            </div>
-            </div>
-            <div style="height: 170px;" class="realsetter2">
-            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
-            <div class="settit">US</div>
-            <div class="setinfo">United states</div>
-            </div>
-            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> US based proxy.</div>
-            <div class="setterbum">
-            <div class="price-it-gen">Generate US</div>
-            </div>
-            </div>
-            <div style="height: 170px;" class="realsetter2">
-            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
-            <div class="settit">DE</div>
-            <div class="setinfo">German</div>
-            </div>
-            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> DE based proxy.</div>
-            <div class="setterbum">
-            <div class="price-it-gen">Generate DE</div>
-            </div>
-            </div>
-            <div style="height: 170px;" class="realsetter2">
-            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
-            <div class="settit">ES</div>
-            <div class="setinfo">Spain</div>
-            </div>
-            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> ES based proxy.</div>
-            <div class="setterbum">
-            <div class="price-it-gen">Generate ES</div>
-            </div>
-            </div>
-            <div style="height: 170px;" class="realsetter2">
-            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
-            <div class="settit">FR</div>
-            <div class="setinfo">France</div>
-            </div>
-            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> FR based proxy.</div>
-            <div class="setterbum">
-            <div class="price-it-gen">Generate FR</div>
-            </div>
-            </div>
-            <div style="height: 170px;" class="realsetter2">
-            <div style="padding: 10px;margin-bottom: 10px;" class="setterhat">
-            <div class="settit">RU</div>
-            <div class="setinfo">Russia</div>
-            </div>
-            <div style="text-align: center;" class="setinfo">This will generate <b class="toutput">5</b> RU based proxy.</div>
-            <div class="setterbum">
-            <div class="price-it-gen">Generate RU</div>
-            </div>
-            </div>
-            
-            </div> -->
 
 
-
-               <div style="overflow-y: auto;" class="lefts">
-
-                  <!-- <div class="proxy-gen-h">Proxy generation</div>
-		<div class="proxy-gen-i">Select your favourite proxy brand to generate safe proxies!</div> -->
-
-                  <div style="width: 100%; margin-left: 0%;background: rgba(0,0,0,0.5);" class="setterhat">
-                     <div class="settit">Scrape Proxies</div>
-                     <div class="setinfo">Easily scrape the web for proxies. <b>These proxies should only be used for
-                           raffles that don't require sensitive information.</b></div>
-                  </div>
-
-                  <div style="margin-top: 2%;" class="proxy-brand-con noselect">
-                     <div class="proxy-brand-button prox-sel" id="usap" data-country="us"><input class="proxCover"
-                           data-toggle="tooltip" data-placement="top" title="United states" id="usapb" type="radio"
-                           name="proxc" checked><img class="proxy-brand-image" src="css/img/flags/usa.png"></div>
-                     <div class="proxy-brand-button" id="ukp" data-country="gb"><input class="proxCover"
-                           data-toggle="tooltip" data-placement="top" title="United Kingdom" id="ukpb" type="radio"
-                           name="proxc"><img class="proxy-brand-image" src="css/img/flags/uk.png"></div>
-                     <div class="proxy-brand-button" id="dep" data-country="de"><input class="proxCover" id="depb"
-                           data-toggle="tooltip" data-placement="top" title="Germany" type="radio" name="proxc"><img
-                           class="proxy-brand-image" src="css/img/flags/de.png"></div>
-                     <div class="proxy-brand-button" id="esp" data-country="es"><input class="proxCover" id="espb"
-                           data-toggle="tooltip" data-placement="top" title="Spain" type="radio" name="proxc"><img
-                           class="proxy-brand-image" src="css/img/flags/es.png"></div>
-                     <div class="proxy-brand-button" id="frp" data-country="fr"><input class="proxCover" id="frpb"
-                           data-toggle="tooltip" data-placement="top" title="France" type="radio" name="proxc"><img
-                           class="proxy-brand-image" src="css/img/flags/fr.png"></div>
-                     <div class="proxy-brand-button" id="rup" data-country="ru"><input class="proxCover" id="rupb"
-                           data-toggle="tooltip" data-placement="top" title="Russia" type="radio" name="proxc"><img
-                           class="proxy-brand-image" src="css/img/flags/ru.png"></div>
-                     <div class="proxy-brand-button" id="chinap" data-country="cn"><input class="proxCover" id="chinapb"
-                           data-toggle="tooltip" data-placement="top" title="China" type="radio" name="proxc"><img
-                           class="proxy-brand-image" src="css/img/flags/china.png"></div>
-                     <div class="proxy-brand-button" id="aup" data-country="au"><input class="proxCover" id="aupb"
-                           data-toggle="tooltip" data-placement="top" title="Australia" type="radio" name="proxc"><img
-                           class="proxy-brand-image" src="css/img/flags/au.png"></div>
-                  </div>
-
-
-                  <div style="margin-top: 20px;margin-bottom: 10px;" class="proxy-gen-i">Scrape <b
-                        id="proxyscrapeShow">15</b> Proxies</div>
-                  <div class="slidecontainer">
-                     <input id="proxyQuantity" type="range" min="0" max="30" value="15" class="slider">
-                  </div>
-
-
-
-                  <div class="setterbummer">
-                     <div style="margin-top: 10px;width: 30%;" class="price-it-up" id="scrapeProxies">Scrape Proxies
-                     </div>
-                  </div>
-
-               </div>
-
-               <div style="background: transparent;padding: 0;" class="rights">
-                  <div style="margin-top: 0px;height: 100%;" class="right-prox">
-                     <div style="width: 100%; margin-left: 0%;background: rgba(0,0,0,0.5);" class="setterhat">
-                        <div class="settit">Add proxies</div>
-                        <div class="setinfo">Input proxies you would like to use for raffles.</div>
-                     </div>
-                     <div class="addcon" style="margin-top: 0;">
-                        <textarea style="height: 410px;margin-top: 2%;" class="barea" id="proxiesToAdd" placeholder="ip:port:user:pass
-ip:port:user:pass
-ip:port
-ip:port"></textarea>
-                        <div class="setterbummer">
-                           <div style="margin-top: 10px;width: 30%;" id="addProxies" class="price-it-up">Add Proxies
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-
-
-            </div>
-         </div>
-
-
-      </div>
-
-      <div class="settings">
-
-         <div style="display:none;" class="low-c">
-            Performance mode
-            <br>
-            <label style="margin-top: 10px;" class="switch">
-               <input id="sickomode" type="checkbox">
-               <span class="sliderf roundf"></span>
-            </label>
-
-         </div>
-
-         <div id="Settings" style="padding-top: 2%;" class="main tabcontent">
-            <div class="sethold">
-               <!--		<div class="realsetter">
-               <div class="setterhat">
-               	<div class="settit">Proxy generation</div>
-               	<div class="setinfo">The amount of proxy to generate.</div>
-               </div>
-               <div class="bingbangbong">This value determins the amount of proxies that will generate in the proxy tab.</div>
-               <div style="margin-top: 0px;padding-left: 3%;" class="c-c r">Proxy amount</div>
-               <input type="number" id="amount" class="shinput l" style="width: 94%;height: 30px;margin-left: 3%;" placeholder="5" oninput="rangeInput.value=amount.value">
-               <div class="slidecontainer">
-               	<input id="rangeInput" type="range" min="1" max="20" value="10" class="slider" oninput="amount.value=rangeInput.value">
-               </div>
-               <div class="setterbum">
-               	<div class="price-it-up">Set Value</div>
-               </div>
-               </div> -->
-               <div style="height: 335px;" class="realsetter">
-                  <div style="padding: 20px 20px 33px 20px;" class="setterhat">
-                     <div class="settit">Retry delay</div>
-                     <div class="setinfo">This value determines the delay the bot will have before retrying after an
-                        error.</div>
-                  </div>
-                  <div style="opacity: 1;" class="bingbangbong">Editing this will change your retry delay.</div>
-                  <div style="margin-top: 10px;padding-left: 3%;" class="c-c r">Retry Delay</div>
-
-                  <div style="width: 94%;float:left;margin-left: 3%;" class="create-row">
-                     <div class="inputicon"><i class="fas fa-stopwatch"></i>
-                     </div>
-                     <input class="createinput" id="amountr" placeholder="500ms"
-                        oninput="settingsRetryDelay.value=amountr.value">
-                  </div>
-
-                  <div class="slidecontainer">
-                     <input id="settingsRetryDelay" type="range" min="500" max="5000" value="500" class="slider"
-                        oninput="amountr.value=settingsRetryDelay.value">
-                  </div>
-                  <div class="setterbum">
-                     <div class="price-it-up" id="saveRetryDelay">Set Delay</div>
-                  </div>
-               </div>
-               <div style="height: 335px;" class="realsetter">
-                  <div style="padding: 20px 20px 33px 20px;" class="setterhat">
-                     <div class="settit">Discord webhook</div>
-                     <div class="setinfo">Having a discord webhook active will more than likely spam.</div>
-                  </div>
-                  <div class="bingbangbong">Setting this will let you receive discord notifications on each successful
-                     entry.</div>
-                  <div style="margin-top: 10px;padding-left: 3%;" class="c-c r">Discord Webhook</div>
-
-                  <div style="width: 94%;float:left;margin-left: 3%;" class="create-row">
-                     <div class="inputicon"><i class="fab fa-discord"></i>
-                     </div>
-                     <input class="createinput" id="webhookUrl" placeholder="Discord Webhook">
-                  </div>
-
-                  <div class="slidecontainer">
-                  </div>
-                  <div class="setterbum">
-                     <div class="price-it-up" id="saveWebhook">Set Webhook</div>
-                  </div>
-               </div>
-               <div style="height: 335px;" class="realsetter">
-                  <div style="padding: 20px 20px 33px 20px;" class="setterhat">
-                     <div class="settit">Captcha</div>
-                     <div class="setinfo">Captcha API / Secret key for Anti Captcha</div>
-                  </div>
-                  <div class="bingbangbong">API / Secret key for captcha services like Anti Captcha. Below, you can also
-                     open your Captcha harvester</div>
-                  <div style="margin-top: 10px;padding-left: 3%;" class="c-c r">API / Secret Key</div>
-                  <div style="width: 94%;float:left;margin-left: 3%;" class="create-row">
-                     <div class="inputicon"><i class="fas fa-key"></i>
-                     </div>
-                     <input class="createinput" id="capAPIKey" placeholder="API / Secret Key">
-                  </div>
-                  <div class="setterbum" style="bottom: 65px;">
-                     <div class="price-it-up" id="saveCapAPIKey">Save</div>
-                  </div>
-                  <div class="setterbum">
-                     <div class="price-it-up" id="openHarvester">Open Harvester</div>
-                  </div>
-               </div>
-               <!-- 				<div class="realsetter">
-               <div class="setterhat">
-               	<div class="settit">MEMBERSHIP INFO</div>
-               	<div class="setinfo">Info about your membership.</div>
-               </div>
-               <div class="bingbangbong">Your raffleaio membership will expire in <b>12</b> day(s).</div>
-               <div class="slidecontainer"></div>
-               <div style="bottom: 65px;" class="setterbum">
-               	<div class="price-it-up">Extend Membership</div>
-               </div>
-               <div class="setterbum">
-               	<div class="price-it-up">Cancel Membership</div>
-               </div>
-               </div> -->
-            </div>
-         </div>
-
-      </div>
-
-      <div class="ctask">
-
-         <div id="Addtask" style="overflow: hidden;padding-top: 20px;" class="main tabcontent">
-            <!--  <div class="caro">
-            <div class="releases-container caro">
-            </div>
-         </div>
-         <div style="margin-top: -165px;height:315px;" class="creater">
-            <!-- <div class="setterhat">
-               <div class="settit">Task Settings</div>
-               
-               <div class="setinfo">Configer your task settings</div>
-               
-               </div> -->
-            <!--   <div class="crat l">
-               <div class="create-row">
-                  <div data-toggle="tooltip" data-placement="top" title="Select site!" class="inputicon"><i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                  </div>
-                  <select class="createinput" id="taskSiteSelect">
-                     <option value="default">Sites</option>
-                     <option class="taskSiteOption" value="dsmny" disabled>DSMNY</option>
-                     <option class="taskSiteOption" value="dsml" disabled>DSML</option>
-                     <option class="taskSiteOption" value="footpatroluk" disabled>FootPatrol (UK Only)</option>
-                     <option class="taskSiteOption" value="nakedcph" disabled>Naked</option>
-                     <option class="taskSiteOption" value="ymeuniverse" disabled>YMEuniverse</option>
-                     <option class="taskSiteOption" value="vooberlin" disabled>VooBerlin</option>
-                     <option class="taskSiteOption" value="footshop" disabled>FootShop</option>
-                     <option class="taskSiteOption" value="oneblockdown" disabled>OneBlockDown</option>
-                     <option class="taskSiteOption" value="wishatl" disabled>WishATL</option>
-                     <option class="taskSiteOption" value="supplystore" disabled>SupplyStore (AU)</option>
-                     <option class="taskSiteOption" value="bdgastore" disabled>BDGAStore</option>
-                  </select>
-               </div>
-               <div class="create-row">
-                  <div data-toggle="tooltip" data-placement="top" title="Task profile!" class="inputicon"><i class="fa fa-user" aria-hidden="true"></i>
-                  </div>
-                  <select class="createinput" id="taskProfile">
-                  </select>
-               </div>
-               <div class="create-row">
-                  <div data-toggle="tooltip" data-placement="top" title="Email type!" class="inputicon"><i class="far fa-envelope"></i>
-                  </div>
-                  <select class="createinput" id="taskTypeOfEmail">
-                     <option value="default">Email Type</option>
-                     <option value="saved">Saved Emails</option>
-                     <option value="newEmail">New email</option>
-                  </select>
-               </div>
-            </div>
-            <div class="crat r">
-               <div class="create-row">
-                  <div data-toggle="tooltip" data-placement="top" title="Item size!" class="inputicon"><i class="fas fa-sort-amount-up"></i>
-                  </div>
-                  <select class="createinput" id="taskSizeSelect">
-                     <option value="default">Sizes</option>
-                     <option class="taskSizeOptionMass" value="selectOnWin" disabled>Selected on Win</option>
-                     <option class="taskSizeOptionMass" value="4" disabled>4</option>
-                     <option class="taskSizeOptionMass" value="4.5" disabled>4.5</option>
-                     <option class="taskSizeOptionMass" value="5" disabled>5</option>
-                     <option class="taskSizeOptionMass" value="5.5" disabled>5.5</option>
-                     <option class="taskSizeOptionMass" value="6" disabled>6</option>
-                     <option class="taskSizeOptionMass" value="6.5" disabled>6.5</option>
-                     <option class="taskSizeOptionMass" value="7" disabled>7</option>
-                     <option class="taskSizeOptionMass" value="7.5" disabled>7.5</option>
-                     <option class="taskSizeOptionMass" value="8" disabled>8</option>
-                     <option class="taskSizeOptionMass" value="8.5" disabled>8.5</option>
-                     <option class="taskSizeOptionMass" value="9" disabled>9</option>
-                     <option class="taskSizeOptionMass" value="9.5" disabled>9.5</option>
-                     <option class="taskSizeOptionMass" value="10" disabled>10</option>
-                     <option class="taskSizeOptionMass" value="10.5" disabled>10.5</option>
-                     <option class="taskSizeOptionMass" value="11" disabled>11</option>
-                     <option class="taskSizeOptionMass" value="11.5" disabled>11.5</option>
-                     <option class="taskSizeOptionMass" value="12" disabled>12</option>
-                  </select>
-               </div>
-               <div class="create-row">
-                  <div data-toggle="tooltip" data-placement="top" title="Task specific proxy!" class="inputicon"><i class="fa fa-globe" aria-hidden="true"></i>
-                  </div>
-                  <input class="createinput" id="taskSpecificProxy" placeholder="Specific Proxy">
-               </div>
-               <div class="create-row">
-                  <div data-toggle="tooltip" data-placement="top" title="Task quantity!" class="inputicon"><i class="fas fa-sort-numeric-down"></i>
-                  </div>
-                  <input class="createinput" id="taskQuantity" placeholder="Quantity" type="number" min="1" max="20" value="1">
-               </div>
-            </div>
-            <div style="margin-top: -20px;" class="cratz">
-               <div style="margin-top: -8px;" class="create-row">
-                  <div data-toggle="tooltip" data-placement="top" title="Task email!" class="inputicon"><i class="fa fa-envelope" aria-hidden="true"></i>
-                  </div>
-                  <input class="createinput" id="taskEmail" placeholder="Email Address" disabled>
-               </div>
-            </div>
-            <div class="setterbummer">
-               <div style="margin-top: -5px;width: 30%;" id="createTaskButton" class="price-it-up">Create Task(s)</div>
-            </div> -->
-
-
-
-
-            <div style="display: block;" class="sneaksel">
-               <div class="midtitle">Pick a sneaker!</div>
-               <div class="midtitleinfo">Select the shoe that you want to mass enter a raffle for</div>
-
-               <div class="shoe-container releases">
-
-
-
-               </div>
-
-               <div class="buttonbar">
-                  <div class="createbumbutton plus1">NEXT</div>
-                  <div class="canclerow"><span class="ccreate">cancel</span></div>
-               </div>
-
-            </div>
-
-
-            <div style="display: none;" class="details1">
-               <div class="midtitle">Select the details</div>
-               <div class="midtitleinfo">raffle entry details</div>
-
-               <div class="shoe-container">
-
-                  <div class="new-meta">
-
-
-                     <div class="create-row">
-                        <div data-toggle="tooltip" data-placement="top" title="Task profile!" class="inputicon"><i
-                              class="fa fa-user" aria-hidden="true"></i>
-                        </div>
-                        <select class="createinput" id="taskProfile">
-                        </select>
-                     </div>
-
-
-                     <div class="create-row">
-                        <div data-toggle="tooltip" data-placement="top" title="Select site!" class="inputicon"><i
-                              class="fa fa-shopping-bag" aria-hidden="true"></i>
-                        </div>
-                        <select class="createinput" id="taskSiteSelect">
-                           <option value="default">Sites</option>
-                           <option class="taskSiteOption" value="shelta" disabled>Shelta</option>
-                           <option class="taskSiteOption" value="hervia" disabled>Hervia</option>
-                           <option class="taskSiteOption" value="vitkac" disabled>Vitkac</option>
-                           <option class="taskSiteOption" value="chmielna" disabled>Chmielna</option>
-                           <option class="taskSiteOption" value="renarts" disabled>Renarts</option>
-                           <option class="taskSiteOption" value="stayrooted" disabled>Stay-rooted</option>
-                           <option class="taskSiteOption" value="extrabutter" disabled>ExtraButter</option>
-                           <option class="taskSiteOption" value="crusoeandsons" disabled>Crusoeandsons</option>
-                           <option class="taskSiteOption" value="dsmny" disabled>DSMNY</option>
-                           <option class="taskSiteOption" value="dsml" disabled>DSML</option>
-                           <option class="taskSiteOption" value="dsmla" disabled>DSMLA</option>
-                           <option class="taskSiteOption" value="footpatroluk" disabled>FootPatrol (UK Only)</option>
-                           <option class="taskSiteOption" value="nakedcph" disabled>Naked</option>
-                           <option class="taskSiteOption" value="ymeuniverse" disabled>YMEuniverse</option>
-                           <option class="taskSiteOption" value="vooberlin" disabled>VooBerlin</option>
-                           <option class="taskSiteOption" value="footshop" disabled>FootShop</option>
-                           <option class="taskSiteOption" value="oneblockdown" disabled>OneBlockDown</option>
-                           <option class="taskSiteOption" value="wishatl" disabled>WishATL</option>
-                           <option class="taskSiteOption" value="supplystore" disabled>SupplyStore (AU)</option>
-                           <option class="taskSiteOption" value="bdgastore" disabled>BDGAStore</option>
-                        </select>
-                     </div>
-
-                     <div class="create-row">
-                        <div data-toggle="tooltip" data-placement="top" title="Item size!" class="inputicon"><i
-                              class="fas fa-sort-amount-up"></i>
-                        </div>
-                        <select class="createinput" id="taskSizeSelect">
-                           <option value="default">Sizes</option>
-                           <option value="random">Random</option>
-                           <option class="taskSizeOptionMass" value="nosize" disabled>No Size</option>
-                           <option class="taskSizeOptionMass" value="selectOnWin" disabled>Selected on Win</option>
-                           <option class="taskSizeOptionMass" value="4" disabled>4</option>
-                           <option class="taskSizeOptionMass" value="4.5" disabled>4.5</option>
-                           <option class="taskSizeOptionMass" value="5" disabled>5</option>
-                           <option class="taskSizeOptionMass" value="5.5" disabled>5.5</option>
-                           <option class="taskSizeOptionMass" value="6" disabled>6</option>
-                           <option class="taskSizeOptionMass" value="6.5" disabled>6.5</option>
-                           <option class="taskSizeOptionMass" value="7" disabled>7</option>
-                           <option class="taskSizeOptionMass" value="7.5" disabled>7.5</option>
-                           <option class="taskSizeOptionMass" value="8" disabled>8</option>
-                           <option class="taskSizeOptionMass" value="8.5" disabled>8.5</option>
-                           <option class="taskSizeOptionMass" value="9" disabled>9</option>
-                           <option class="taskSizeOptionMass" value="9.5" disabled>9.5</option>
-                           <option class="taskSizeOptionMass" value="10" disabled>10</option>
-                           <option class="taskSizeOptionMass" value="10.5" disabled>10.5</option>
-                           <option class="taskSizeOptionMass" value="11" disabled>11</option>
-                           <option class="taskSizeOptionMass" value="11.5" disabled>11.5</option>
-                           <option class="taskSizeOptionMass" value="12" disabled>12</option>
-                        </select>
-                     </div>
-
-                     <div class="create-row">
-                        <div data-toggle="tooltip" data-placement="top" title="Captcha mode" class="inputicon"><i
-                              class="fas fa-robot"></i>
-                        </div>
-                        <select class="createinput" id="captchaHandler">
-                           <option value="manual">Manual captcha</option>
-                           <option value="anticaptcha">Anti Captcha</option>
-                           <option value="2captcha">2Captcha</option>
-                        </select>
-                     </div>
-
-
-                  </div>
-
-               </div>
-
-               <div class="buttonbar">
-                  <div class="createbumbutton min1">BACK</div>
-                  <div class="createbumbutton plus1">NEXT</div>
-                  <div class="canclerow"><span class="ccreate">cancel</span></div>
-               </div>
-
-            </div>
-
-
-
-            <div style="display: none;" class="details2">
-               <div class="midtitle">Email & Proxies</div>
-               <div class="midtitleinfo">Choose email modes and proxy</div>
-
-               <div class="shoe-container">
-
-                  <div class="new-meta">
-
-
-                     <div class="create-row">
-                        <div data-toggle="tooltip" data-placement="top" title="Email type!" class="inputicon"><i
-                              class="far fa-envelope"></i>
-                        </div>
-                        <select class="createinput" id="taskTypeOfEmail">
-                           <option value="default">Email Type</option>
-                           <option value="catchall">Catchall</option>
-                           <option value="saved">Saved Emails</option>
-                           <option value="newEmail">New email</option>
-                        </select>
-                     </div>
-
-                     <div class="create-row">
-                        <div data-toggle="tooltip" data-placement="top" title="Task email!" class="inputicon"><i
-                              class="fa fa-envelope" aria-hidden="true"></i>
-                        </div>
-                        <input class="createinput" id="taskEmail" placeholder="Email Address" disabled>
-                     </div>
-
-                     <div class="create-row">
-                        <div data-toggle="tooltip" data-placement="top" title="Proxy options" class="inputicon"><i
-                              class="fas fa-globe"></i>
-                        </div>
-                        <select class="createinput" id="taskTypeOfProxy">
-                           <option value="default">Proxies</option>
-                           <option value="noProxy">No Proxy</option>
-                           <option value="savedProxies">Saved proxies</option>
-                           <option value="specificProxy">Specific proxy</option>
-                        </select>
-                     </div>
-
-                     <div class="create-row">
-                        <div data-toggle="tooltip" data-placement="top" title="Task specific proxy!" class="inputicon">
-                           <i class="fa fa-globe" aria-hidden="true"></i>
-                        </div>
-                        <input class="createinput" id="taskSpecificProxy" placeholder="Specific Proxy" disabled>
-                     </div>
-
-
-                  </div>
-
-               </div>
-
-               <div class="buttonbar">
-                  <div class="createbumbutton min1">BACK</div>
-                  <div class="createbumbutton plus1">NEXT</div>
-                  <div class="canclerow"><span class="ccreate">cancel</span></div>
-               </div>
-
-            </div>
-
-
-            <div style="display: none;" class="details3">
-               <div class="midtitle">Task quantity</div>
-               <div class="midtitleinfo">The amount of tasks you want to create.</div>
-
-               <div class="shoe-container">
-
-                  <div class="new-meta">
-
-                     <div style="margin-top: 20px;margin-bottom: 10px;" class="proxy-gen-i">Use the <b>slider</b> to
-                        choose the number of tasks.</div>
-                     <form>
-                        <div style="margin-top: 25px;margin-bottom: 30px;" class="slidecontainer">
-                           <input id="taskQuantity" name="amountRange" type="range" min="0" max="300" value="1"
-                              class="slider" oninput="this.form.amountInput.value=this.value">
-                        </div>
-
-                        <div class="create-row">
-                           <div data-toggle="tooltip" data-placement="top" title="Task quantity!" class="inputicon"><i
-                                 class="fas fa-sort-numeric-down"></i>
-                           </div>
-                           <input class="createinput" name="amountInput" id="taskQ" placeholder="Quantity" type="number"
-                              min="1" max="300" value="1" oninput="this.form.amountRange.value=this.value">
-                        </div>
-                     </form>
-
-                  </div>
-
-               </div>
-
-               <div class="buttonbar">
-                  <div class="createbumbutton min1">BACK</div>
-                  <div class="createbumbutton craterv2" id="createTaskButton">CREATE</div>
-                  <div class="canclerow"><span class="ccreate">cancel</span></div>
-               </div>
-
-            </div>
-
-
-
-
-
-         </div>
-      </div>
-
-   </div>
-
-   </div>
-
-   <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'></script>
-   <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
-   <script src="js/index.js"></script>
-   <script src="js/tab.js"></script>
-   <script src="js/main.js"></script>
 </body>
 
 </html>

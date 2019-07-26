@@ -450,20 +450,22 @@ function openBot(onReady) {
 	if (onReady) {
 		app.on('ready', function () {
 			module.exports.mainBotWin = new BrowserWindow({
-				width: 1100,
-				height: 685,
+				width: 1150,
+				height: 705,
 				resizable: false,
-				frame: false
+				frame: false,
+				transparent: true, 
 			});
 			//win.setMenu(null);
 			module.exports.mainBotWin.loadURL(`file://${__dirname}/src/index.html`);
 		});
 	} else {
 		module.exports.mainBotWin = new BrowserWindow({
-			width: 1100,
-			height: 685,
+			width: 1150,
+			height: 705,
 			resizable: false,
-			frame: false
+			frame: false,
+			transparent: true
 		});
 		//win.setMenu(null);
 		module.exports.mainBotWin.loadURL(`file://${__dirname}/src/index.html`);
