@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>A Pen by  Yummy</title>
+  <title>codeyellowraffle</title>
   
   
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
@@ -17,6 +17,7 @@
    <script>
       window.$ = window.jQuery = require('./js/jquery.js');
    </script>
+   <script src="js/materialize.js"></script>
 </head>
 
 <body class="antidrag antiselect">
@@ -31,9 +32,9 @@
   
     <div class="tasks2nav 2navproxies">
   <div style="width: 25%;float: left;" class="sec-navt aproxz"><a>add proxies</a></div>
-  <div style="width: 25%;float: left;" class="sec-navt"><a>check all</a></div>  
-  <div style="width: 25%;float: left;" class="sec-navt"><a>remove failed</a></div>
-  <div style="width: 25%;float: left;" class="sec-navt"><a>save all</a></div>  
+  <div style="width: 25%;float: left;" class="sec-navt" id="checkAllProxies"><a>check all</a></div>  
+  <div style="width: 25%;float: left;" class="sec-navt" id="removeFailed"><a>remove failed</a></div>
+  <div style="width: 25%;float: left;" class="sec-navt" id="saveProxies"><a>save all</a></div>  
     </div>
   
 </div>
@@ -41,8 +42,8 @@
 
 <div class="bot-size">
 <div class="bot-window">
-  <div class="window-c">－</div>
-  <div class="window-c"><span class="lnr lnr-cross"></div>
+  <div class="window-c" id="minimizeM">－</div>
+  <div class="window-c" id="closeM"><span class="lnr lnr-cross"></div>
 </div>   
   
 <div class="nav-base">
@@ -86,14 +87,14 @@
 		<div class="tripleactionx"> 
 		<div class="trippple-butt cmasstz" data-toggle="tooltip" data-placement="bottom" title="create task "><i class="fas fa-plus"></i></div>
 		<div class="trippple-butt ewmailz" data-toggle="tooltip" data-placement="bottom" title="email configuration"><i class="fas fa-envelope"></i></div>
-		<div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="start all tasks"><i class="fas fa-play"></i></div>
-		<div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="delete all tasks"><i class="fas fa-trash"></i></div> 
+		<div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="start all tasks" id="startAllTasks"><i class="fas fa-play"></i></div>
+		<div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="delete all tasks" id="deleteAllTasks"><i class="fas fa-trash"></i></div> 
 		</div>
 		
 		<div style="float:right;padding-left: 15px;padding-right:15px;font-size: 14px;color: #eee;line-height: 20px;width: 200px;" class="tripleactionx"><span style="margin-top: 10px;"><b style="font-size: 18px;">123</b><br>Successfull entries</span></div>
 	
 		<table style="width: 100%;margin-bottom: 10px;">
-               <tbody class="proxbod" id="proxies">
+               <tbody id="tasks">
 			   
                   <tr style="background: #0e0e0e;">
 				     <th class="leftsidetable" style="width: 50px;"></th>
@@ -104,21 +105,6 @@
                      <th>status</th>
                      <th class="rightsidetable" style="width: 110px;"></th>
                   </tr>
-
-                 <tr>
-				  <td class="leftsidetable"><div class="proxie-butt proxgo"><i class="fas fa-bolt"></i></div></td>
-                  <td>localhost</td>
-                  <td>host</td>
-                  <td>demo</td>
-				  <td>example@catchall.com</td>
-                  <td>entered</td>
-                  <td class="rightsidetable">
-                     <button class="action-butt"><i class="fa fa-trash" aria-hidden="true"></i>
-                     </button>
-                     <button class="action-butt"><i class="fa fa-play" aria-hidden="true"></i>
-                     </button>
-                  </td>
-               </tr>
 			   
 
                </tbody>
@@ -1413,31 +1399,6 @@ ip:port"></textarea>
                      <th class="rightsidetable" style="width: 110px;"></th>
                   </tr>
 
-                 <tr>
-				  <td class="leftsidetable"><div class="proxie-butt proxgo"><i class="fas fa-bolt"></i></div></td>
-                  <td>localhost</td>
-                  <td>host</td>
-                  <td>124ms</td>
-                  <td class="rightsidetable">
-                     <button class="action-butt"><i class="fa fa-trash" aria-hidden="true"></i>
-                     </button>
-                     <button class="action-butt"><i class="fa fa-play" aria-hidden="true"></i>
-                     </button>
-                  </td>
-               </tr>
-			   
-			                    <tr>
-				  <td class="leftsidetable"><div class="proxie-butt proxno"><i class="fas fa-bolt"></i></div></td>
-                  <td>localhost</td>
-                  <td>host</td>
-                  <td>124ms</td>
-                  <td class="rightsidetable">
-                     <button class="action-butt"><i class="fa fa-trash" aria-hidden="true"></i>
-                     </button>
-                     <button class="action-butt"><i class="fa fa-play" aria-hidden="true"></i>
-                     </button>
-                  </td>
-               </tr>
 
                </tbody>
             </table>
@@ -1509,6 +1470,7 @@ ip:port"></textarea>
 
     <script  src="js/script.js"></script>
 	<script  src="js/tab.js"></script>
+   <script src="js/main.js"></script>
 
 
 

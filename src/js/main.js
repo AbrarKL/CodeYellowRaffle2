@@ -1,19 +1,3 @@
-/*
-	Copyright (C) 2019 Code Yellow
-
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
-*/
 
 const electron = require('electron');
 const {
@@ -43,8 +27,9 @@ loadEmails(emails);
 
 $('#webhookUrl').val(require('electron').remote.getGlobal('settings').discordWebhook);
 $('#capAPIKey').val(require('electron').remote.getGlobal('settings').capAPIKey);
-settingsRetryDelay.value = require('electron').remote.getGlobal('settings').retryDelay;
-amountr.value = require('electron').remote.getGlobal('settings').retryDelay;
+// RE ADD BOTH BELOW LINES WHEN ALEX ADDS SETTINGS
+//settingsRetryDelay.value = require('electron').remote.getGlobal('settings').retryDelay;
+//amountr.value = require('electron').remote.getGlobal('settings').retryDelay;
 
 // Loads all releases in the quick task area
 
@@ -291,15 +276,19 @@ function loadProxies(proxiesToAdd, addToArray) {
 		}
 		if (proxyIP != undefined && proxyPort != undefined) {
 			$("tbody#proxies").append(
-				`<tr class="proxyInput" id="${proxyFormat}" data-uid="${randProxyID}" data-ip="${proxiesToAdd[i]}">
-				<td class="nob-l">${proxyIP}</td>
-				<td>${proxyPort}</td>
-				<td id="proxyResult${randProxyID}">RESULT</td>
-				<td>
-                     <button class="action-butt testProxy" id="${randProxyID}"><i class="fa fa-play" aria-hidden="true"></i></button>
-                     <button class="action-butt deleteProxy"><i class="fa fa-trash" aria-hidden="true"></i></button>
+				`
+				<tr class="proxyInput" id="${proxyFormat}" data-uid="${randProxyID}" data-ip="${proxiesToAdd[i]}">
+				  <td class="leftsidetable"><div class="proxie-butt proxgo"><i class="fas fa-bolt"></i></div></td>
+                  <td>${proxyIP}</td>
+                  <td>${proxyPort}</td>
+				  <td id="proxyResult${randProxyID}">result</td>
+                  <td class="rightsidetable">
+                     <button class="action-butt deleteProxy"><i class="fa fa-trash" aria-hidden="true"></i>
+                     </button>
+                     <button class="action-butt testProxy" id="${randProxyID}"><i class="fa fa-play" aria-hidden="true"></i>
+                     </button>
                   </td>
-			</tr>`);
+               </tr>`);
 			if (addToArray) {
 				proxies.push(proxiesToAdd[i]);
 			}
@@ -354,7 +343,7 @@ $("#createTaskButton").click(function () {
 		Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
 		return;
 	}
-	var proxyUsed = '<td><i class="fas fa-bolt noprox"></i></td>';
+	var proxyUsed = '';
 	if (selectedQuickTaskRelease != undefined) {
 		if (taskSiteSelect != 'default') {
 			if (taskSizeSelect != 'default') {
@@ -456,7 +445,7 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 		}
 	}
 	if (proxy != '') {
-		proxyUsed = '<td><i class="fas fa-bolt isprox"></i></td>'
+		proxyUsed = '<div class="proxie-butt proxgo"><i class="fas fa-bolt"></i></div>'
 	}
 	if (taskTypeOfEmail != 'catchall') {
 		var variantName = taskSiteSelect + '_' + selectedQuickTaskRelease['filterID'];
@@ -632,19 +621,22 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 	}
 
 	$("tbody#tasks").append(
-		`<tr>
-		<td>${taskID}</td>
-		<td>${taskSiteSelect.toUpperCase()}</td>
-		<td>${taskProfile.toUpperCase()}</td>
-		<td id="taskResult${taskID}">IDLE</td>
-		${proxyUsed}
-		<td>
-			<button class="action-butt startTaskMass" id="${taskID}"><i class="fa fa-play" aria-hidden="true"></i>
-			</button>
-			<button class="action-butt deleteTask" id="${taskID}"><i class="fa fa-trash" aria-hidden="true"></i>
-			</button>
-		</td>
-	</tr>`);
+		`
+		<tr>
+			<td class="leftsidetable">${proxyUsed}</td>
+			<td>${taskID}</td>
+			<td>${taskSiteSelect.toLowerCase()}</td>
+			<td>${taskProfile.toLowerCase()}</td>
+			<td>${taskEmail.toLowerCase()}</td>
+			<td id="taskResult${taskID}">idle</td>
+			<td class="rightsidetable">
+				<button class="action-butt deleteTask" id="${taskID}"><i class="fa fa-trash" aria-hidden="true"></i>
+				</button>
+				<button class="action-butt startTaskMass" id="${taskID}"><i class="fa fa-play" aria-hidden="true"></i>
+				</button>
+			</td>
+		</tr>
+		`);
 }
 
 
@@ -830,14 +822,16 @@ function loadReleases() {
 		var sitesSupported = release['sites_supported'];
 		var sitesSupportedKeys = Object.keys(sitesSupported);
 		var filterID = release['filterID'];
-		var selectButton = release['closed'] == undefined ? `<div class="price-it-up selectQuick" id="${i}">SELECT</div>` : `<div class="price-it-up" style="font-weight: 600;">RELEASED</div>`;
-		$(".shoe-container.releases").append(
-			`<div style="height: 340px;width: 210px;margin-top: 20px;" class="raffle-enter-container">
-			<div style="width: 210px;" class="raffle-im"><img class="raffle-item" src="${release['image']}"></div>
-			<div style="font-size: 19px;" class="raff-t">${release['name']}</div>
-			<div class="feature"><div class="fcon"><i class="fas fa-clock"></i></div>${release['date']}</div>
+		var selectButton = release['closed'] == undefined ? `<div class="price-it-up selectQuick" id="${i}" style="margin-top: 20px;">SELECT</div>` : `<div class="price-it-up" style="margin-top: 20px;font-weight: 600;">RELEASED</div>`;
+		$(".shoe-container.releases").append(`
+		<div style="height: 340px;width: 230px;margin-top: 20px;" class="raffle-enter-container">
+			<div style="font-size: 19px;" class="raff-t"><div style="width: 220px;" class="release-title">${release['name'].toLowerCase()}</div></div>
+			<div style="width: 230px;" class="raffle-im"><img class="raffle-item" src="${release['image']}"></div>
+			<div class="feature"><div class="fcon"><i class="fas fa-clock"></i></div>${release['date'].toLowerCase()}</div>
 			<a target="_blank">${selectButton}</a>	
-		</div>`
+		</div>
+		
+		`
 		);
 		$('#oneClickFilter').append($('<option>', {
 			value: filterID,
@@ -875,31 +869,13 @@ function loadReleases() {
 						sizesHTML = sizesHTML + '<option class="taskSizeOption" value="' + sizes[z] + '">' + sizes[z] + '</option>\n';
 					}
 				}
-				$(".oneclick-container").append(`
-					<div style="height: 400px;" class="raffle-enter-container" data-filter="${filterID}">
-			
-						<div class="raffle-im" ><img class="raffle-item" src="${release['image']}"></div>
-						<div class="raff-t">${siteName.toUpperCase()}</div>
-						<div class="feature">
-						<div class="fcon"><i class="fas fa-clock"></i></div>
-							${release['date']}
-						</div>
-						
-						<div class="feature">
-							<div style="width: 100%;float:left;" class="create-row">
-							<div class="inputicon"><i class="fas fa-sort-amount-down" aria-hidden="true"></i>
-						</div>
-						<select class="createinput" id="oneClicktaskSize${taskID}">
-							<option class="taskSizeOption" value="default">Size</option>
-							${sizesHTML}
-						</select>
-					</div>
-				</div>
-				<a target="_blank">
-				<div class="feature enter-r enterRaffle" id="${taskID}">
-					Enter Raffle
-				</div>
-				</a>`);
+				$(".release-container").append(`
+				<div class="release-item">
+					<div class="release-title">${siteName.toLowerCase()}</div>
+					<img class="release-image" src="${release['image']}">
+					<div class="release-button">mass enter</div>
+					<div class="release-date">ends on ${release['date'].toLowerCase()}</div>
+				</div>`);
 				taskID += 1;
 			}
 		}
