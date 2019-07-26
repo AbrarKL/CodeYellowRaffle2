@@ -1,3 +1,23 @@
+::-webkit-scrollbar-track
+{
+	border-radius: 50px !important;
+	background: rgba(0,0,0,1);
+}
+
+::-webkit-scrollbar
+{
+	border-radius: 50px !important;
+	width: 3px;
+	height: 3px;
+	background: rgba(0,0,0,1);
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 50px !important;
+	background-color: #fbcf4d;
+}
+
 body {
   background: transparent;
   margin: 0 auto;
