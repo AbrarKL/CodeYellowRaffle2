@@ -526,6 +526,7 @@ hr {
 	background: rgba(40, 40, 46, 1);
 	resize: none;
 	font-size: 14px;
+	border-radius: 5px;
 }
 
 .rowul {
