@@ -146,6 +146,17 @@ $(".massentry").click(function () {
 });
 
 
+$(".bot-title").click(function () {
+	$(".myaccountx").click();
+	$(".myaccountx").addClass("setactive")
+	
+	console.log("testt");
+});
+
+
+$(window).click(function(e) {
+    $(".bot-title").removeClass("setactive")
+});
 
 
 
