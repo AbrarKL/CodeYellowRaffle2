@@ -47,7 +47,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 15;
+  z-index: 9999;
 }
 
 .brandlogo {
@@ -69,7 +69,7 @@ body {
   left: 0;
   padding-left: 85px;
   overflow: hidden;
-  z-index: 14;
+  z-index: 9998;
 }
 
 .bot-window {
@@ -87,7 +87,7 @@ body {
   text-align: center;
   padding-left: 15px;
   overflow: hidden;
-  z-index: 1000;
+  z-index: 99999;
 }
 
 .window-c {
@@ -139,7 +139,7 @@ body {
   text-align: center;
   color: #aaa;
   border-right: 100px solid #161619;
-  z-index: 10;
+  z-index: 9993;
 }
 
 .nav-item {
@@ -153,7 +153,7 @@ body {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  z-index: 11;
+  z-index: 9994;
 }
 
 .nav-item:hover {
@@ -241,7 +241,7 @@ body {
   display: inline-block;
   margin-left: -25px;
   border-radius: 35px;
-  z-index: 9999;
+  z-index: 9989;
 }
 
 .second-active {
@@ -739,6 +739,7 @@ body {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  cursor: pointer;
   border: 2px solid #fbcf4d;
 }
 
@@ -781,4 +782,8 @@ body {
 
 .setting-buttonr:hover {
 	font-weight: bold;
+}
+
+.cyollie {
+	background: red !important;
 }
