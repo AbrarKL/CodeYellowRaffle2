@@ -28,7 +28,7 @@ loadEmails(emails);
 $('#webhookUrl').val(require('electron').remote.getGlobal('settings').discordWebhook);
 $('#capAPIKey').val(require('electron').remote.getGlobal('settings').capAPIKey);
 // RE ADD BOTH BELOW LINES WHEN ALEX ADDS SETTINGS
-//settingsRetryDelay.value = require('electron').remote.getGlobal('settings').retryDelay;
+settingsRetryDelay.value = require('electron').remote.getGlobal('settings').retryDelay;
 //amountr.value = require('electron').remote.getGlobal('settings').retryDelay;
 
 // Loads all releases in the quick task area
