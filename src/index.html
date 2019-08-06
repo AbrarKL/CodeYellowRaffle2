@@ -88,7 +88,7 @@
 		<div class="tripleactionx"> 
 		<div class="trippple-butt cmasstz" data-toggle="tooltip" data-placement="bottom" title="create task "><i class="fas fa-plus"></i></div>
 		<div class="trippple-butt ewmailz" data-toggle="tooltip" data-placement="bottom" title="email configuration"><i class="fas fa-envelope"></i></div>
-		<div class="trippple-butt ewmailz" data-toggle="tooltip" data-placement="bottom" title="instagram scraper"><i class="fab fa-instagram"></i></div>
+		<div class="trippple-butt accounz" data-toggle="tooltip" data-placement="bottom" title="account configuration"><i class="fas fa-users-cog"></i></div>
 		<div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="start all tasks" id="startAllTasks"><i class="fas fa-play"></i></div>
 		<div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="delete all tasks" id="deleteAllTasks"><i class="fas fa-trash"></i></div> 
 		</div>
@@ -210,6 +210,104 @@ email@email.com"></textarea>
 
 
   </div>
+
+  <div style="top: 30px;display: none;z-index: 1;" class="mainr accountcon-tab">
+
+         <div id="Addprox" style="padding-top: 35px;">
+
+               <div style="margin-top: -10px;" class="midtitle">account config</div>
+               <div class="midtitleinfo">configurate and jig your emails for your email list here.</div>
+
+				<div class="cannecle"><span class="tasks">back</span></div>
+
+
+            <div style="overflow-y: auto;background: transparent;" class="lefts">
+
+               <!-- <div class="proxy-gen-h">Proxy generation</div>
+		<div class="proxy-gen-i">Select your favourite proxy brand to generate safe proxies!</div> -->
+
+               <div style="padding: 2% 2% 6% 2%;margin-top: 2%;" class="email-gen-hold-con">
+
+                  <div style="margin-bottom: 10px;margin-top: -10px;" class="proxy-gen-i">Enter a gmail email address
+                     that you want to jig!</div>
+
+                  <div style="width: 96%;float:left;margin-left: 2%;margin-top:2%;" class="create-row">
+                     <div class="inputicon"><i class="fa fa-envelope" aria-hidden="true"></i>
+                     </div>
+                     <input class="createinput" id="gmailJigInput" placeholder="Gmail to jig">
+                  </div>
+
+
+                  <div style="margin-top: 40px;" class="proxy-gen-i">Generate <b id="gmailLimitShow">15</b> emails</div>
+                  <div style="margin-top: 45px;" class="slidecontainer">
+                     <input id="gmailLimit" type="range" min="0" max="100" value="50" class="slider">
+                  </div>
+                  <div class="setterbummer">
+                     <div style="margin-top: 10px;width: 30%;margin-bottom: 2%;" id="generateGmails"
+                        class="price-it-up">Generate Emails</div>
+                  </div>
+               </div>
+
+
+               <div style="padding: 2% 2% 6% 2%;margin-top: 2%;" class="email-gen-hold-con">
+
+                  <div style="margin-bottom: 10px;margin-top: -10px;" class="proxy-gen-i">Input your catchall domain
+                     (example.com) and generate unique emails!</div>
+
+                  <div style="width: 96%;float:left;margin-left: 2%;margin-top:2%;" class="create-row">
+                     <div class="inputicon"><i class="fa fa-globe" aria-hidden="true"></i>
+                     </div>
+                     <input class="createinput" id="catchallJigInput" placeholder="Catchall to jig">
+                  </div>
+
+
+                  <div style="margin-top: 40px;" class="proxy-gen-i">Generate <b id="catchallLimitShow">15</b> emails
+                  </div>
+                  <div style="margin-top: 45px;" class="slidecontainer">
+                     <input id="catchallLimit" type="range" min="0" max="100" value="50" class="slider">
+                  </div>
+                  <div class="setterbummer">
+                     <div style="margin-top: 10px;width: 30%;margin-bottom: 2%;" id="generateCatchalls"
+                        class="price-it-up">Generate Emails</div>
+                  </div>
+               </div>
+
+
+            </div>
+
+            <div class="rights">
+
+               <div class="addcon" style="margin-top: 2%;">
+                  <!--    					<div style="padding: 20px;margin-bottom: 0px;background:rgba(0,0,0,0.6);" class="setterhat">
+                  <div class="settit">Input proxies</div>
+                  <div class="setinfo">Input your proxies here!</div>
+                  </div> -->
+                  <textarea style="height: 380px;" class="barea" id="emailsToSave" placeholder="email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com
+email@email.com"></textarea>
+                  <div class="setterbummer">
+                     <div style="margin-top: 10px;width: 30%;" id="saveEmailList" class="price-it-up tasks">Save email list
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+         </div>
+
+
+  </div>
+
+
+
+
 
   <div style="top: 50px;display: none;z-index: 1;" class="mainr addproxy-tab">
 
@@ -1442,6 +1540,8 @@ ip:port"></textarea>
 	<div class="settingtitlelarger">setters</div>
 	<div class="settingtitleinfo" style="width: 100%;">edit retry delay and discord webhook</div>
 	
+	<div class="settingtitleinfo" style="width: 100%;text-align: left;float: left;margin-top: 20px;margin-bottom: 10px;">other option thing</div>
+	
 	<div class="setting-inputl">
 	
 	<div style="width:50%;float:left;" class="create-rowset">
@@ -1473,11 +1573,27 @@ ip:port"></textarea>
 	<div style="margin-top: 2.5px;" class="setting-buttonr">set delay</div>
 
     </div>
-	
+	<br><br><br>
 	<div class="setting-seperate"></div>
 	
+		<div class="settingtitlelarger">Big boy mode</div>
+	<div class="settingtitleinfo" style="width: 100%;">use to toggle big boy mode     <div style="float: right;width: 27%;color: #000;margin-top: -10px;" class="half-check-con"><label style="margin-top: 10px;" class="switch">
+		 <input class="customCheckbx" type="checkbox">
+		 <span class="sliderf roundf"></span>
+		 </label></div></div>
+
+	<div class="setting-seperate"></div>
+	
+		<div class="settingtitlelarger">software settings</div>
+	<div class="settingtitleinfo" style="width: 100%;">software version 0.2.0 <div class="radioholdere"> <input name="radios" class="circle-radio" type="checkbox" id="radio1"/><label for="radio1"></label></div></div>
+	
+	
+	
+	
 	</div>
-    
+  
+
+  
 	<div class="setting-side tabbard" id="advanced">
 
 	</div>	

@@ -19,6 +19,7 @@ $(".tasks, .ccreate").click(function () {
 	$(".email-tab").get(0).style.setProperty("display", "none");
 	$(".addproxy-tab").get(0).style.setProperty("display", "none");
 	$(".createmass-tab").get(0).style.setProperty("display", "none");
+	$(".accountcon-tab").get(0).style.setProperty("display", "none");
 	
     window.setTimeout(function(){$(".sec-nav").addClass("test");}, 300);
   }
@@ -39,6 +40,7 @@ $(".profiles").click(function () {
 	$(".email-tab").get(0).style.setProperty("display", "none");
 	$(".addproxy-tab").get(0).style.setProperty("display", "none");
 	$(".createmass-tab").get(0).style.setProperty("display", "none");
+	$(".accountcon-tab").get(0).style.setProperty("display", "none");
 	
     window.setTimeout(function(){$(".sec-nav").addClass("second-nav-hidden");}, 300);
   }
@@ -63,6 +65,7 @@ $(".proxies").click(function () {
 	$(".email-tab").get(0).style.setProperty("display", "none");
 	$(".addproxy-tab").get(0).style.setProperty("display", "none");
 	$(".createmass-tab").get(0).style.setProperty("display", "none");
+	$(".accountcon-tab").get(0).style.setProperty("display", "none");
 	
     window.setTimeout(function(){$(".sec-nav").addClass("test");}, 300);
   }
@@ -83,6 +86,7 @@ $(".settings").click(function () {
 	$(".email-tab").get(0).style.setProperty("display", "none");
 	$(".addproxy-tab").get(0).style.setProperty("display", "none");
 	$(".createmass-tab").get(0).style.setProperty("display", "none");
+	$(".accountcon-tab").get(0).style.setProperty("display", "none");
 	
     window.setTimeout(function(){$(".sec-nav").addClass("second-nav-hidden");}, 300);
   }
@@ -120,6 +124,18 @@ $(".cmasstz").click(function () {
 	$(".sec-nav").removeClass("test")	
 
 	$(".createmass-tab").get(0).style.setProperty("display", "block");
+	
+    window.setTimeout(function(){$(".sec-nav").addClass("second-nav-hidden");}, 300);
+  }
+});
+
+$(".accounz").click(function () {
+  tabxn = 8;
+  if (tabxn = 8) {
+
+	$(".sec-nav").removeClass("test")	
+
+	$(".accountcon-tab").get(0).style.setProperty("display", "block");
 	
     window.setTimeout(function(){$(".sec-nav").addClass("second-nav-hidden");}, 300);
   }
