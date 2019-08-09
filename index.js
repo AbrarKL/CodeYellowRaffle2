@@ -247,7 +247,8 @@ function openActivation(onReady) {
 				width: 930,
 				height: 550,
 				resizable: false,
-				frame: false
+				frame: false,
+				transparent: true, 
 			});
 			win.setMenu(null);
 			win.loadURL(`file://${__dirname}/src/login.html`);
@@ -258,7 +259,8 @@ function openActivation(onReady) {
 			width: 930,
 			height: 550,
 			resizable: false,
-			frame: false
+			frame: false,
+			transparent: true, 
 		});
 		win.setMenu(null);
 		win.loadURL(`file://${__dirname}/src/login.html`);
