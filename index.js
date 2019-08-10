@@ -244,8 +244,8 @@ function openActivation(onReady) {
 	if (onReady) {
 		app.on('ready', function () {
 			win = new BrowserWindow({
-				width: 930,
-				height: 550,
+				width: 640,
+				height: 500,
 				resizable: false,
 				frame: false,
 				transparent: true, 
@@ -256,8 +256,8 @@ function openActivation(onReady) {
 		});
 	} else {
 		win = new BrowserWindow({
-			width: 930,
-			height: 550,
+			width: 640,
+			height: 500,
 			resizable: false,
 			frame: false,
 			transparent: true, 
