@@ -1,48 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>login window</title>
-  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway&amp;display=swap'>
-<link rel='stylesheet' href='https://cdn.linearicons.com/free/1.0.0/icon-font.min.css'>
-		<link rel="stylesheet" href="css/login.css">
-</head>
-<body class="antidrag antiselect">
-<!-- partial:index.partial.html -->
-<div class="login-window">
-  
-     <div class="drag-top"></div>
-  
-      <div class="bot-window">
-         <div class="window-c" id="minimizeM">－</div>
-         <div class="window-c" id="closeM"><span class="lnr lnr-cross"></div>
-      </div> 
-  
-      <div class="bot-logo"><img src="css/img/new_logo.png" class="brandlogo"></div>
-       
-        
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>login window</title>
+      <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.1/css/all.css'>
+      <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+      <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway&amp;display=swap'>
+      <link rel='stylesheet' href='https://cdn.linearicons.com/free/1.0.0/icon-font.min.css'>
+      <link rel="stylesheet" href="css/login.css">
+
+      
+		<script src="js/hammer.js" onload="window.Hammer = module.exports;"></script>
+    <script>window.$ = window.jQuery = require('./js/jquery.js');</script>
+    <script src="js/materialize.js"></script>
+    </head>
+
+    <body class="antidrag antiselect">
+      <!-- partial:index.partial.html -->
+      <div class="login-window">
+
+        <div class="drag-top"></div>
+
+        <div class="bot-window">
+          <div class="window-c" id="minimizeM">－</div>
+          <div class="window-c" id="closeM"><span class="lnr lnr-cross"></div>
+        </div>
+
+        <div class="bot-logo"><img src="css/img/new_logo.png" class="brandlogo"></div>
+
+
         <div class="center-stripe1"></div>
         <div class="center-stripe2"></div>
         <div class="center-stripe3"></div>
-        
-        <div class="activate-title">activation</div>
-        <div class="activate-info">activate your copy of <b>codeyellow</b> raffle bot 2.0, enter your activation key you recieveid via email to get started!</div>
-        
-        <div style="width:60%;margin-top: -10px;" class="create-row">
-        <div class="inputicon"><i class="fas fa-key"></i></div>
-       <input class="createinput" placeholder="activation key  xxxx-xxxx-xxxx-xxxx "></div>
-        
-        <div class="ordiscordsignin"><span>or sign in with <b>discord</b></span></div>
-        
-        <div class="activate-button">activate</div>
-        
-</div>
-<!-- partial -->
-  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
 
-</body>
+        <div class="activate-title">activation</div>
+        <div class="activate-info">activate your copy of <b>codeyellow</b> raffle bot 2.0, enter your activation key you
+          recieveid via email to get started!</div>
+
+        <div style="width:60%;margin-top: -10px;" class="create-row">
+          <div class="inputicon"><i class="fas fa-key"></i></div>
+          <input class="createinput" id="activationKey" placeholder="activation key  xxxx-xxxx-xxxx-xxxx ">
+        </div>
+
+        <div class="ordiscordsignin"><span>or sign in with <b>discord</b></span></div>
+
+        <div class="activate-button" id="activateButton">activate</div>
+
+      </div>
+      <!-- partial -->
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'></script>
+      <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+      <script>
+        const electron = require('electron');
+        const {
+          ipcRenderer
+        } = electron;
+        $("#activateButton").click(function () {
+          ipcRenderer.send('activateKey', $('#activationKey').val());
+          Materialize.toast("attempting activation", 3000, "rounded");
+        });
+        $("#signUpButton").click(function () {
+          //Materialize.toast("Opening sign up page", 2000, "rounded");
+          ipcRenderer.send('signUp');
+        });
+        ipcRenderer.on('notify', function (event, data) {
+                Materialize.toast(data.message, data.length, "rounded");
+        });
+        $("#closeM").click(function () {
+          ipcRenderer.send('closeM');
+        });
+        $("#minimizeM").click(function () {
+          ipcRenderer.send('minimizeM');
+        });
+      </script>
+    </body>
+
 </html>

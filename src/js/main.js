@@ -110,7 +110,7 @@ $('#saveCapAPIKey').click(function () {
 });
 
 // Opens captcha harvester
-$('#openHarvester').click(function () {
+$('.openHarvester').click(function () {
 	ipcRenderer.send('openHarvester')
 });
 

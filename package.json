@@ -27,6 +27,7 @@
     "fs": "0.0.1-security",
     "http-proxy-agent": "^2.1.0",
     "https-proxy-agent": "^2.2.1",
+    "node-machine-id": "^1.1.12",
     "open": "0.0.5",
     "proxy-lists": "^1.16.0",
     "request": "^2.88.0"
