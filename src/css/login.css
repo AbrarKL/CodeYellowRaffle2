@@ -5,6 +5,19 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+.logo-window {
+  position: fixed;
+  top: 90px;
+  left: 0px;
+  width: 640px;
+  height: 380px;
+  background: #1b1b1f;
+  border: 10px solid red;
+  border-radius: 50px;
+  z-index: 100;
+}
+
+
 .login-window {
   position: fixed;
   top: 90px;
@@ -99,6 +112,9 @@ body {
   text-align: center;
   display: inline-block;
   transition: .5s ease;
+  animation-name: onestripe;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
 }
 
 .center-stripe2 {
@@ -112,6 +128,9 @@ body {
   text-align: center;
   display: inline-block;
   transition: .5s ease;
+    animation-name: buttonflip;
+  animation-duration: .5s;
+  animation-timing-function: ease-in-out;
 }
 
 .center-stripe3 {
@@ -125,6 +144,9 @@ body {
   text-align: center;
   display: inline-block;
   transition: .5s ease;
+  animation-name: laststripe;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
 }
 
 .activate-title {
@@ -281,7 +303,17 @@ body {
   100% {transform: rotateX(0deg);}
 }
 
+@keyframes onestripe {
+  0%   {transform:translate(-100px);opacity: 0;}
+  50%  {opacity: 1;}
+  100% {transform:translate(0px);}
+}
 
+@keyframes laststripe {
+  0%   {transform:translate(100px);opacity: 0;}
+  50%  {opacity: 1;}
+  100% {transform:translate(0px);}
+}
 
 #toast-container {
   min-width: 8%;
