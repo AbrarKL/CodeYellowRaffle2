@@ -525,6 +525,38 @@ function openBot(onReady) {
 			message: 'Retry delay saved!'
 		});
 	});
+
+	ipcMain.on('deactivate', function (e) {
+		request({
+			url: 'https://codeyellow.io/api/v2/deactivate.php',
+			method: 'post',
+			headers: {
+				'x-auth-key': exports.getAuthHeader(machineIdSync(), global.settings.token, global.settings.key)
+			},
+			formData: {
+				'key': global.settings.key,
+				'token': global.settings.token,
+				'hwid': machineIdSync()
+			},
+		}, function (err, response, body) {
+			try {
+				var parsed = JSON.parse(body);
+				// IF CREDENTIALS ARE VALID
+				if (parsed.valid == true) {
+					console.log("Saved key: " + global.settings.key + " is now deactivated. Closing Bot.")
+					app.quit();
+				}
+				// IF CREDENTIALS ARE NOT VALID
+				else {
+					console.log("Saved key is not valid. Opening activation.")
+					openActivation(false);
+				}
+			} catch (error) {
+				console.log('Error verifying key details. Bot is not deactivated');
+			}
+		});
+	});
+
 	// Save webhook
 	ipcMain.on('saveWebhook', function (e, webHook) {
 		global.settings.discordWebhook = webHook;

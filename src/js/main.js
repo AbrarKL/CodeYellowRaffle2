@@ -114,7 +114,10 @@ $('.openHarvester').click(function () {
 	ipcRenderer.send('openHarvester')
 });
 
-
+// Deactivate copy
+$('#deactivateButton').click(function () {
+	ipcRenderer.send('deactivate')
+});
 
 
 
