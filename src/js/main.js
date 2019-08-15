@@ -681,6 +681,11 @@ for (var i = 0; i < profileKeys.length; i++) {
 		text: keyName
 	}));
 }
+$('#profileSelected').html($('#profileList option:first-child').val())
+
+$('#profileList').on('change', function() {
+  $('#profileSelected').html(this.value.slice(0, 8))
+});
 
 $("#newProfile").click(function () {
 	var profileName = $('#newProfileName').val();
