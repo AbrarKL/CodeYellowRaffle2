@@ -820,6 +820,10 @@ function openBot(onReady) {
 		open(global.downloadURL);
 	});
 
+	ipcMain.on('openGuides', function (e) {
+		open('https://codeyellow.io/v2/new_guides?token=' + global.settings.token);
+	});
+
 
 	// Utilities at the bottom
 	ipcMain.on('minimizeM', function (e) {

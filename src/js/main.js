@@ -77,6 +77,12 @@ $('.update-dot.updateav').click(function () {
 	ipcRenderer.send('downloadUpdate');
 });
 
+// To view guides
+$('#guidesButton').click(function () {
+	ipcRenderer.send('openGuides');
+});
+
+
 // Close bot
 $('#closeM').click(function () {
 	ipcRenderer.send('closeM');
