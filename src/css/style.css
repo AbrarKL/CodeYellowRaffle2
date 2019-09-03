@@ -790,3 +790,63 @@ body {
 .cyollie {
 	background: red !important;
 }
+
+.acc-gen-bn {
+	width: 100%;
+	padding: 2%;
+	text-align: center;
+	height: 40px;
+	line-height: 40px;
+	color: #fbcf4d;
+	text-align: center;
+	font-size: 50px;
+	margin-top: -10px;
+}
+
+
+
+.accounttable table {
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+    width: 100% !important;
+/* 	margin-left: 5%; */
+}
+
+
+.accounttable tr, th {
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 10px;
+    color: #fbcf4d;
+}
+
+.accounttable tr {
+  margin-top: 10px;
+  text-align: center;
+  padding: 8px;
+  height: 50px;
+  border-radius: 25px;
+  color: #fff;
+  text-transform: lowercase;
+}
+
+.accounttable tr:nth-child(even) {
+    background: #111113;
+}
+
+.accounttable tr:nth-child(odd) {
+    background: #111113;
+}
+
+.proxy-gen-ix {
+	width: 100%;
+	padding: 2%;
+	text-align: center;
+	height: 20px;
+	line-height: 20px;
+	color: #aaa;
+	text-align: center;
+	font-size: 13px;
+	margin-top: -10px;
+	position: relative;
+}

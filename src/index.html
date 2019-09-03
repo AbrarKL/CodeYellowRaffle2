@@ -88,20 +88,20 @@
             <div class="tripleactionx">
                <div class="trippple-butt cmasstz" data-toggle="tooltip" data-placement="bottom" title="create task "><i
                      class="fas fa-plus"></i></div>
-               <div class="trippple-butt ewmailz" data-toggle="tooltip" data-placement="bottom"
-                  title="email configuration"><i class="fas fa-envelope"></i></div>
-               <div class="trippple-butt accounz" data-toggle="tooltip" data-placement="bottom"
-                  title="account configuration"><i class="fas fa-users-cog"></i></div>
                <div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="start all tasks"
                   id="startAllTasks"><i class="fas fa-play"></i></div>
                <div class="trippple-butt" data-toggle="tooltip" data-placement="bottom" title="delete all tasks"
                   id="deleteAllTasks"><i class="fas fa-trash"></i></div>
+               <div class="trippple-butt ewmailz" data-toggle="tooltip" data-placement="bottom"
+                  title="email configuration"><i class="fas fa-envelope"></i></div>
+               <div class="trippple-butt accounz" data-toggle="tooltip" data-placement="bottom"
+                  title="account generation"><i class="fas fa-users-cog"></i></div>
+               <div class="trippple-butt accounz" data-toggle="tooltip" data-placement="bottom"
+                  title="instagram configuration"><i class="fab fa-instagram"></i></div>
             </div>
 
-            <div
-               style="float:right;padding-left: 15px;padding-right:15px;font-size: 14px;color: #eee;line-height: 20px;width: 200px;"
-               class="tripleactionx"><span style="margin-top: 10px;"><b style="font-size: 18px;">123</b><br>Successfull
-                  entries</span></div>
+            <div style="float:right;padding-left: 15px;padding-right:15px;font-size: 14px;color: #eee;line-height: 20px;width: 200px;"
+               class="tripleactionx"><span style="margin-top: 15px;"><b style="font-size: 18px;">123</b><br>tasks in list</span></div>
 
             <table style="width: 100%;margin-bottom: 10px;">
                <tbody id="tasks">
@@ -224,94 +224,98 @@ email@email.com"></textarea>
 
          <div id="Addprox" style="padding-top: 35px;">
 
-            <div style="margin-top: -10px;" class="midtitle">account config</div>
-            <div class="midtitleinfo">configurate and jig your emails for your email list here.</div>
+            <div style="margin-top: -10px;" class="midtitle">account generation</div>
+            <div class="midtitleinfo">configurate and generate your accounts for your email list here.</div>
 
             <div class="cannecle"><span class="tasks">back</span></div>
 
 
-            <div style="overflow-y: auto;background: transparent;" class="lefts">
+            <div style="height: 450px;background: transparent;" class="lefts">
 
                <!-- <div class="proxy-gen-h">Proxy generation</div>
 		<div class="proxy-gen-i">Select your favourite proxy brand to generate safe proxies!</div> -->
 
-               <div style="padding: 2% 2% 6% 2%;margin-top: 2%;" class="email-gen-hold-con">
+               <div style="padding: 2% 2% 6% 2%;margin-top: 2%;position: relative;" class="email-gen-hold-con">
 
-                  <div style="margin-bottom: 10px;margin-top: -10px;" class="proxy-gen-i">Enter a gmail email address
-                     that you want to jig!</div>
+                  <div style="margin-bottom: 10px;margin-top: -10px;" class="proxy-gen-i">Select the site for the accounts you want to generate!</div>
+				  
+				  <div style="width: 96%;float:left;margin-left: 2%;margin-top:2%;" class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Select site!" class="inputicon"><i
+                              class="fa fa-shopping-bag" aria-hidden="true"></i>
+                        </div>
+                        <select class="createinput" id="taskSiteSelect">
+                           <option value="default">Sites</option>
+                           <option class="taskSiteOption" value="shelta" disabled>Shelta</option>
+                        </select>
+                    </div>
+
 
                   <div style="width: 96%;float:left;margin-left: 2%;margin-top:2%;" class="create-row">
-                     <div class="inputicon"><i class="fa fa-envelope" aria-hidden="true"></i>
+                     <div class="inputicon"><i class="fas fa-envelope-open-text"></i>
                      </div>
-                     <input class="createinput" id="gmailJigInput" placeholder="Gmail to jig">
+                     <input class="createinput" id="catchallJigInput" placeholder="account catchall">
                   </div>
 
+                  <div style="width: 96%;float:left;margin-left: 2%;margin-top:2%;" class="create-row">
+                     <div class="inputicon"><i class="fas fa-key"></i>
+                     </div>
+                     <input class="createinput" id="catchallJigInput" placeholder="account password">
+                  </div>
 
-                  <div style="margin-top: 40px;" class="proxy-gen-i">Generate <b id="gmailLimitShow">15</b> emails</div>
-                  <div style="margin-top: 45px;" class="slidecontainer">
-                     <input id="gmailLimit" type="range" min="0" max="100" value="50" class="slider">
-                  </div>
-                  <div class="setterbummer">
-                     <div style="margin-top: 10px;width: 30%;margin-bottom: 2%;" id="generateGmails"
-                        class="price-it-up">Generate Emails</div>
-                  </div>
                </div>
+			   
+			<div style="padding: 2% 2% 6% 2%;margin-top: 2%;" class="email-gen-hold-con">
 
-
-               <div style="padding: 2% 2% 6% 2%;margin-top: 2%;" class="email-gen-hold-con">
-
-                  <div style="margin-bottom: 10px;margin-top: -10px;" class="proxy-gen-i">Input your catchall domain
-                     (example.com) and generate unique emails!</div>
-
-                  <div style="width: 96%;float:left;margin-left: 2%;margin-top:2%;" class="create-row">
-                     <div class="inputicon"><i class="fa fa-globe" aria-hidden="true"></i>
-                     </div>
-                     <input class="createinput" id="catchallJigInput" placeholder="Catchall to jig">
-                  </div>
-
-
-                  <div style="margin-top: 40px;" class="proxy-gen-i">Generate <b id="catchallLimitShow">15</b> emails
-                  </div>
+                  <div style="margin-bottom: 10px;margin-top: -10px;" class="proxy-gen-i">select how many accounts you want to generate for <b id="selectedSite">end</b></div>
+                  <div style="margin-top: 40px;" class="proxy-gen-i"></div>
+				<div style="margin-top: 75px;line-height:65px;" class="proxy-gen-ix">Generate <b id="gmailLimitShow">50</b> emails</div>
                   <div style="margin-top: 45px;" class="slidecontainer">
                      <input id="catchallLimit" type="range" min="0" max="100" value="50" class="slider">
                   </div>
                   <div class="setterbummer">
-                     <div style="margin-top: 10px;width: 30%;margin-bottom: 2%;" id="generateCatchalls"
-                        class="price-it-up">Generate Emails</div>
+                     <div style="margin-top: 10px;width: 40%;margin-bottom: 2%;" id="generateCatchalls"
+                        class="price-it-up">generate accounts</div>
                   </div>
                </div>
 
+               </div>
 
-            </div>
+
 
             <div class="rights">
+
+                  <div style="margin-bottom: 0px;margin-top: 10px;" class="proxy-gen-i">only displaying 50 generated accounts, view all on <b>dashboard</b>.</div>
+
 
                <div class="addcon" style="margin-top: 2%;">
                   <!--    					<div style="padding: 20px;margin-bottom: 0px;background:rgba(0,0,0,0.6);" class="setterhat">
                   <div class="settit">Input proxies</div>
                   <div class="setinfo">Input your proxies here!</div>
                   </div> -->
-                  <textarea style="height: 380px;" class="barea" id="emailsToSave" placeholder="email@email.com
-email@email.com
-email@email.com
-email@email.com
-email@email.com
-email@email.com
-email@email.com
-email@email.com
-email@email.com"></textarea>
-                  <div class="setterbummer">
-                     <div style="margin-top: 10px;width: 30%;" id="saveEmailList" class="price-it-up tasks">Save email
-                        list
-                     </div>
-                  </div>
+            <table style="width: 100%;margin-bottom: 10px;" class="accounttable">
+               <tbody id="tasks">
+
+                  <tr style="background: #0e0e0e;">
+                     <th class="leftsidetable">site</th>
+                     <th>email</th>
+                     <th class="rightsidetable">password</th>
+                  </tr>
+
+				<tr class="proxyInput">
+				  <td class="leftsidetable">obd</td>
+                  <td>test@catchall.com</td>
+                  <td class="rightsidetable">test                  
+                  </td>
+               </tr>
+
+               </tbody>
+            </table>
                </div>
             </div>
 
 
 
          </div>
-
 
       </div>
 
@@ -519,6 +523,15 @@ ip:port"></textarea>
                         </select>
                      </div>
 
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="Instagram jigs" class="inputicon"><i class="fab fa-instagram"></i>
+                        </div>
+                        <select class="createinput">
+                           <option value="cylist">CY scraped</option>
+                           <option value="mylist">insta list</option>
+                           <option value="Instajig">insta jig</option>
+                        </select>
+                     </div>
 
                   </div>
 
@@ -531,7 +544,6 @@ ip:port"></textarea>
                </div>
 
             </div>
-
 
 
             <div style="display: none;" class="details2">
@@ -2044,6 +2056,10 @@ ip:port"></textarea>
       <div class="mainr proxies-tab btab">
 
          <div id="Proxies" style="top: 70px;" class="tabcontent">
+		 
+            <div class="proxcount"><b id="proxycount">0</b> proxies in list <span style="float: right;color: #fff;"
+                  id="deleteAllProxies">Delete all</span></div>	 
+		 
             <table style="width: 100%;margin-bottom: 10px;">
                <tbody class="proxbod" id="proxies">
 
@@ -2058,8 +2074,6 @@ ip:port"></textarea>
 
                </tbody>
             </table>
-            <div class="proxcount"><b id="proxycount">0</b> proxies in list <span style="float: right;color: #fff;"
-                  id="deleteAllProxies">Delete all</span></div>
 
          </div>
 
