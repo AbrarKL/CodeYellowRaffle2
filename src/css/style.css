@@ -18,11 +18,19 @@
 	background-color: #fbcf4d;
 }
 
+::selection {
+  background: #fbcf4d !important; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #fbcf4d !important; /* Gecko Browsers */
+}
+
 body {
   background: transparent;
   margin: 0 auto;
   text-align: center;
   font-family: 'Raleway', sans-serif;
+
 }
 
 .bot-size {

@@ -887,7 +887,7 @@ function loadReleases() {
 				<div class="release-item">
 					<div class="release-title">${siteName.toLowerCase()}</div>
 					<img class="release-image" src="${release['image']}">
-					<div class="release-button">mass enter</div>
+					<div class="release-button">sting mode</div>
 					<div class="release-date">ends on ${release['date'].toLowerCase()}</div>
 				</div>`);
 				taskID += 1;
