@@ -927,7 +927,8 @@ $(".release-item").on('click', '.release-button', function () {
 	selectedQuickTaskRelease = releases[releaseID];
 	var sites = Object.keys(releases[releaseID]['sites_supported']);
 	for (var i = 0; i < sites.length; i++) {
-		var taskSiteSelect = sites[i];
+		var taskSiteSelect = sites[i]; 
+		console.log('creating 20 tasks for ' + taskSiteSelect)
 		var taskSizeSelect = require('electron').remote.getGlobal('settings').stingSize;
 		var taskProfile = require('electron').remote.getGlobal('settings').stingProfiles;
 		var taskSpecificProxy = '';
@@ -969,7 +970,7 @@ $(".release-item").on('click', '.release-button', function () {
 				if (taskSizeSelect != 'default') {
 					if (taskQuantity >= 1) {
 						if (validateEmail(taskEmail) != false || taskTypeOfEmail != 'newEmail') {
-							for (var i = 0; i < taskQuantity; i++) {
+							for (var x = 0; x < taskQuantity; x++) {
 								if (taskSizeSelect == 'random') {
 									tempTaskSize = Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect])[Math.floor(Math.random() * Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect]).length)];
 									var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][tempTaskSize];
@@ -993,16 +994,6 @@ $(".release-item").on('click', '.release-button', function () {
 
 							}
 
-							$('#defaultOpen').click()
-							$('#defaultOpen').attr('class', 'nav-item active')
-							selectedQuickTaskRelease = undefined;
-							$('.selectQuick').html('SELECT')
-							$('#taskSiteSelect').val('default')
-							$('#taskSizeSelect').val('default')
-							$('.taskSiteOption').prop('disabled', true);
-							$('.taskSizeOptionMass').prop('disabled', true);
-							$('#taskSpecificProxy').val('')
-							$('#taskEmail').val('')
 						} else {
 							Materialize.toast("Please input a valid Email", 2000, "rounded");
 						}
@@ -1018,6 +1009,12 @@ $(".release-item").on('click', '.release-button', function () {
 		} else {
 			Materialize.toast("Please select a Release", 2000, "rounded");
 
+		}
+		if(i == sites.length-1)
+		{
+			
+			$('.massentry').click()
+			selectedQuickTaskRelease = undefined;
 		}
 	}
 });
