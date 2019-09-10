@@ -177,6 +177,18 @@ $("#startAllTasks").click(function () {
 		var task = tasks[$(this).attr('id') - 1];
 		ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
 	});
+	/*var delay = 0;
+	var delayIncrease = 1000;
+	$.each($(".startTaskMass"), function (i) {
+		var taskId = $(this).attr('id');
+		var task = tasks[$(this).attr('id') - 1];
+		//console.log(delay)
+		$(`#taskResult${taskId}`).html('Starting task in ' + delay + 'ms');
+		delay = delay + delayIncrease;
+		setTimeout(function () {
+			ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+		}, delay);
+	});*/
 });
 
 $("body").on("click", ".deleteTask", function () {
@@ -927,7 +939,7 @@ $(".release-item").on('click', '.release-button', function () {
 	selectedQuickTaskRelease = releases[releaseID];
 	var sites = Object.keys(releases[releaseID]['sites_supported']);
 	for (var i = 0; i < sites.length; i++) {
-		var taskSiteSelect = sites[i]; 
+		var taskSiteSelect = sites[i];
 		console.log('creating 20 tasks for ' + taskSiteSelect)
 		var taskSizeSelect = require('electron').remote.getGlobal('settings').stingSize;
 		var taskProfile = require('electron').remote.getGlobal('settings').stingProfiles;
@@ -1010,9 +1022,8 @@ $(".release-item").on('click', '.release-button', function () {
 			Materialize.toast("Please select a Release", 2000, "rounded");
 
 		}
-		if(i == sites.length-1)
-		{
-			
+		if (i == sites.length - 1) {
+
 			$('.massentry').click()
 			selectedQuickTaskRelease = undefined;
 		}
