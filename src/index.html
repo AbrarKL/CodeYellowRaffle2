@@ -73,14 +73,7 @@
          <div style="top: 0px;" class="mainr releases-main btab showpage">
 
             <div class="release-container">
-               <div class="release-item">
-                  <div class="release-title">footshop</div>
-                  <img class="release-image" src="https://codeyellow.io/img/yeezy-350-v2-antlia.png">
-                  <div class="release-button">sting mode</div>
-                  <div class="release-date">ends on 7th of june</div>
                </div>
-            </div>
-
          </div>
 
          <div class="massenter-main">
@@ -243,7 +236,7 @@ email@email.com"></textarea>
                         <div data-toggle="tooltip" data-placement="top" title="Select site!" class="inputicon"><i
                               class="fa fa-shopping-bag" aria-hidden="true"></i>
                         </div>
-                        <select class="createinput" id="taskSiteSelect">
+                        <select class="createinput" id="taskSiteSelectGenerate">
                            <option value="default">Sites</option>
                            <option class="taskSiteOption" value="shelta" disabled>Shelta</option>
                         </select>
@@ -408,19 +401,7 @@ ip:port"></textarea>
 
                <div class="shoe-container releases">
 
-                  <div style="height: 340px;width: 230px;margin-top: 20px;" class="raffle-enter-container">
-                     <div style="font-size: 19px;" class="raff-t">
-                        <div style="width: 220px;" class="release-title">Yeezy 350 V2 Antlia</div>
-                     </div>
-                     <div style="width: 230px;" class="raffle-im"><img class="raffle-item"
-                           src="https://codeyellow.io/img/yeezy-350-v2-antlia.png"></div>
-                     <div class="feature">
-                        <div class="fcon"><i class="fas fa-clock"></i></div>22nd June
-                     </div>
-                     <a target="_blank">
-                        <div style="margin-top: 20px;" class="price-it-up selectQuick" id="0">SELECT</div>
-                     </a>
-                  </div>
+                  
 
                </div>
 
@@ -2285,32 +2266,53 @@ ip:port"></textarea>
    
                <div class="setting-seperate"></div>
    
+               
                <div class="setting-inputl">
    
                   <div style="width:50%;float:left;" class="create-rowset">
                      <div data-toggle="tooltip" data-placement="top" title="" class="inputiconset"
-                        data-original-title="Task profile!"><i class="fa fa-user" aria-hidden="true"></i>
+                        data-original-title="task profile"><i class="fa fa-user" aria-hidden="true"></i>
                      </div>
-                     <select class="createinputset">
-                        <option value="Demo">Demo</option>
-                        <option value="Example Profile">Example Profile</option>
-                        <option value="dsfgds">dsfgds</option>
-                        <option value="test">test</option>
+                     <select class="createinputset" id="stingProfiles">
                      </select>
                   </div>
                </div>
-              
+               <div class="setting-inputl">
+
+                  <div style="width:50%;float:left;" class="create-rowset">
+                     <div class="inputiconset"><i class="fa fa-envelope" aria-hidden="true"></i>
+                     </div>
+                     <input class="createinputset" id="stingCatchall" placeholder="catchall">
+                  </div>
+   
+   
+               </div>
                <div class="setting-inputl">
    
                   <div style="width:50%;float:left;" class="create-rowset">
                      <div data-toggle="tooltip" data-placement="top" title="" class="inputiconset"
-                        data-original-title="Task profile!"><i class="fas fa-sort-amount-up"></i>
+                        data-original-title="task size"><i class="fas fa-sort-amount-up"></i>
                      </div>
-                     <select class="createinputset">
-                        <option value="Demo">random</option>
-                        <option value="Example Profile">Example Profile</option>
-                        <option value="dsfgds">dsfgds</option>
-                        <option value="test">test</option>
+                     <select class="createinputset" id="stingSize">
+                        <option value="default">sizes</option>
+                        <option value="random">random</option>
+                        <optionvalue="4">4</option>
+                        <option value="4.5">4.5</option>
+                        <option value="5">5</option>
+                        <option value="5.5">5.5</option>
+                        <option value="6" >6</option>
+                        <option value="6.5">6.5</option>
+                        <option value="7">7</option>
+                        <option value="7.5">7.5</option>
+                        <option value="8">8</option>
+                        <option value="8.5">8.5</option>
+                        <option value="9">9</option>
+                        <option value="9.5">9.5</option>
+                        <option value="10">10</option>
+                        <option value="10.5">10.5</option>
+                        <option value="11">11</option>
+                        <option value="11.5">11.5</option>
+                        <option value="12">12</option>
                      </select>
                   </div> 
                </div>
@@ -2319,13 +2321,12 @@ ip:port"></textarea>
    
                   <div style="width:50%;float:left;" class="create-rowset">
                      <div data-toggle="tooltip" data-placement="top" title="" class="inputiconset"
-                        data-original-title="Task profile!"><i class="fas fa-robot"></i>
+                        data-original-title="task captcha"><i class="fas fa-robot"></i>
                      </div>
-                     <select class="createinputset">
-                        <option value="Demo">captcha</option>
-                        <option value="Example Profile">Example Profile</option>
-                        <option value="dsfgds">dsfgds</option>
-                        <option value="test">test</option>
+                     <select class="createinputset" id="stingCaptcha">
+                        <option value="manual">manual captcha</option>
+                        <option value="anticaptcha">anti captcha</option>
+                        <option value="2captcha">2captcha</option>
                      </select>
                   </div>
                </div>
@@ -2334,13 +2335,12 @@ ip:port"></textarea>
    
                   <div style="width:50%;float:left;" class="create-rowset">
                      <div data-toggle="tooltip" data-placement="top" title="" class="inputiconset"
-                        data-original-title="Task profile!"><i class="fab fa-instagram"></i>
+                        data-original-title="task instagram"><i class="fab fa-instagram"></i>
                      </div>
-                     <select class="createinputset">
-                        <option value="Demo">CY list</option>
-                        <option value="Example Profile">Example Profile</option>
-                        <option value="dsfgds">dsfgds</option>
-                        <option value="test">test</option>
+                     <select class="createinputset" id="stingIG">
+                           <option value="cylist">cy scraped</option>
+                           <option value="mylist">insta list</option>
+                           <option value="Instajig">insta jig</option>
                      </select>
                   </div>
                </div>
@@ -2349,33 +2349,21 @@ ip:port"></textarea>
    
                   <div style="width:50%;float:left;" class="create-rowset">
                      <div data-toggle="tooltip" data-placement="top" title="" class="inputiconset"
-                        data-original-title="Task profile!"><i class="fas fa-bolt"></i>
+                        data-original-title="task proxy"><i class="fas fa-bolt"></i>
                      </div>
-                     <select class="createinputset">
-                        <option value="Demo">no proxies</option>
-                        <option value="Example Profile">saved proxies</option>
-                        <option value="dsfgds">dsfgds</option>
-                        <option value="test">test</option>
+                     <select class="createinputset" id="stingProxytype">
+                        <option value="noProxy">no proxy</option>
+                        <option value="savedProxies">saved proxies</option>
+                        <option value="specificProxy">specific proxy</option>
                      </select>
                   </div>
    
                </div>
 
-				<div class="setting-inputl">
-
-               <div style="width:50%;float:left;" class="create-rowset">
-                  <div class="inputiconset"><i class="fa fa-stopwatch" aria-hidden="true"></i>
-                  </div>
-                  <input class="createinputset" id="settingsRetryDelafy" type="number" step="10" placeholder="retry delay">
-               </div>
-
-
-            </div>
-
             <div class="setting-seperate"></div>
 
 			<div class="settingtitlelarger">save settings</div>
-            <div class="settingtitleinfo" style="width: 100%;">save your sting mode settings. <div class="setting-buttonr openHarvester">
+            <div class="settingtitleinfo" style="width: 100%;">save your sting mode settings. <div class="setting-buttonr" id="saveStingSettings">
                   save settings</div>
             </div>
 

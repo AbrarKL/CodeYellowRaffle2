@@ -526,6 +526,38 @@ function openBot(onReady) {
 		});
 	});
 
+	
+	// Save sting settings
+	ipcMain.on('saveStingSettings', function (e, settingsToSave) {
+		console.log(settingsToSave);
+		if(settingsToSave['stingProfiles'] == 'Example Profile')
+		{
+			module.exports.mainBotWin.send('notify', {
+				length: 3000,
+				message: 'you can\'t use the example profile for tasks!'
+			});
+			return;
+		}
+		if (validateEmail('test@' + settingsToSave['stingCatchall']) != true) {
+			module.exports.mainBotWin.send('notify', {
+				length: 3000,
+				message: 'please input a valid catchall like example.com with no @'
+			});
+			return;
+		}
+		global.settings.stingProfiles = settingsToSave['stingProfiles'];
+		global.settings.stingSize = settingsToSave['stingSize'];
+		global.settings.stingCaptcha = settingsToSave['stingCaptcha'];
+		global.settings.stingIG = settingsToSave['stingIG'];
+		global.settings.stingProxytype = settingsToSave['stingProxytype'];
+		global.settings.stingCatchall = settingsToSave['stingCatchall'];
+		saveSettings();
+		module.exports.mainBotWin.send('notify', {
+			length: 3000,
+			message: 'sting settings saved!'
+		});
+	});
+
 	ipcMain.on('deactivate', function (e) {
 		request({
 			url: 'https://codeyellow.io/api/v2/deactivate.php',
@@ -1275,4 +1307,10 @@ exports.getAuthHeader = function (hwid, token, key) {
 		rawndom = Math.floor(Math.random()*salts.length);
 		return (crypto.createHash('sha256').update(token + key + hwid + salts[rawndom] + rawndom).digest('hex') + rawndom);
 	}
+}
+
+// Email validation
+function validateEmail(email) {
+	var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(String(email).toLowerCase());
 }

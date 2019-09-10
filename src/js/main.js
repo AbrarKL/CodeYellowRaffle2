@@ -1,4 +1,3 @@
-
 const electron = require('electron');
 const {
 	ipcRenderer
@@ -27,6 +26,23 @@ loadEmails(emails);
 
 $('#webhookUrl').val(require('electron').remote.getGlobal('settings').discordWebhook);
 $('#capAPIKey').val(require('electron').remote.getGlobal('settings').capAPIKey);
+
+
+if (require('electron').remote.getGlobal('settings').stingSize != null) {
+	$('#stingSize').val(require('electron').remote.getGlobal('settings').stingSize);
+}
+if (require('electron').remote.getGlobal('settings').stingCaptcha != null) {
+	$('#stingCaptcha').val(require('electron').remote.getGlobal('settings').stingCaptcha);
+}
+if (require('electron').remote.getGlobal('settings').stingIG != null) {
+	$('#stingIG').val(require('electron').remote.getGlobal('settings').stingIG);
+}
+if (require('electron').remote.getGlobal('settings').stingProxytype != null) {
+	$('#stingProxytype').val(require('electron').remote.getGlobal('settings').stingProxytype);
+}
+if (require('electron').remote.getGlobal('settings').stingCatchall != null) {
+	$('#stingCatchall').val(require('electron').remote.getGlobal('settings').stingCatchall);
+}
 // RE ADD BOTH BELOW LINES WHEN ALEX ADDS SETTINGS
 settingsRetryDelay.value = require('electron').remote.getGlobal('settings').retryDelay;
 //amountr.value = require('electron').remote.getGlobal('settings').retryDelay;
@@ -54,7 +70,7 @@ ipcRenderer.on('profilesImported', function (event, data) {
 				value: keyName,
 				text: keyName
 			}));
-			$('#oneClicktaskProfile').append($('<option>', {
+			$('#stingProfiles').append($('<option>', {
 				value: keyName,
 				text: keyName
 			}));
@@ -109,6 +125,18 @@ $('#saveWebhook').click(function () {
 	ipcRenderer.send('saveWebhook', $('#webhookUrl').val())
 });
 
+// Save webhook
+$('#saveStingSettings').click(function () {
+	ipcRenderer.send('saveStingSettings', {
+		stingProfiles: $('#stingProfiles').val(),
+		stingSize: $('#stingSize').val(),
+		stingCaptcha: $('#stingCaptcha').val(),
+		stingIG: $('#stingIG').val(),
+		stingProxytype: $('#stingProxytype').val(),
+		stingCatchall: $('#stingCatchall').val()
+	})
+});
+
 
 // Save Captcha solving API key
 $('#saveCapAPIKey').click(function () {
@@ -136,11 +164,7 @@ $('#deactivateButton').click(function () {
 
 // Update tasks
 ipcRenderer.on('taskUpdate', function (event, data) {
-	if (data.type == 'mass') {
-		$(`#taskResult${data.id}`).html(data.message.toUpperCase())
-	} else {
-		$(`.enterRaffle#${data.id}`).html(data.message)
-	}
+	$(`#taskResult${data.id}`).html(data.message.toUpperCase())
 });
 
 $("body").on("click", ".startTaskMass", function () {
@@ -676,15 +700,18 @@ for (var i = 0; i < profileKeys.length; i++) {
 		value: keyName,
 		text: keyName
 	}));
-	$('#oneClicktaskProfile').append($('<option>', {
+	$('#stingProfiles').append($('<option>', {
 		value: keyName,
 		text: keyName
 	}));
 }
+if (require('electron').remote.getGlobal('settings').stingProfiles != null) {
+	$('#stingProfiles').val(require('electron').remote.getGlobal('settings').stingProfiles);
+}
 $('#profileSelected').html($('#profileList option:first-child').val())
 
-$('#profileList').on('change', function() {
-  $('#profileSelected').html(this.value.slice(0, 8))
+$('#profileList').on('change', function () {
+	$('#profileSelected').html(this.value.slice(0, 8))
 });
 
 $("#newProfile").click(function () {
@@ -699,7 +726,7 @@ $("#newProfile").click(function () {
 				value: profileName,
 				text: profileName
 			}));
-			$('#oneClicktaskProfile').append($('<option>', {
+			$('#stingProfiles').append($('<option>', {
 				value: profileName,
 				text: profileName
 			}));
@@ -779,7 +806,7 @@ $("#deleteProfile").click(function () {
 		$('#profileList').val('Example Profile');
 		$('#profileList option[value="' + profileName + '"]').remove()
 		$('#taskProfile option[value="' + profileName + '"]').remove()
-		$('#oneClicktaskProfile option[value="' + profileName + '"]').remove()
+		$('#stingProfiles option[value="' + profileName + '"]').remove()
 	} else {
 		Materialize.toast("You can't modify the Example Profile!", 2000, "rounded");
 	}
@@ -838,61 +865,25 @@ function loadReleases() {
 		var filterID = release['filterID'];
 		var selectButton = release['closed'] == undefined ? `<div class="price-it-up selectQuick" id="${i}" style="margin-top: 20px;">SELECT</div>` : `<div class="price-it-up" style="margin-top: 20px;font-weight: 600;">RELEASED</div>`;
 		$(".shoe-container.releases").append(`
-		<div style="height: 340px;width: 230px;margin-top: 20px;" class="raffle-enter-container">
+		<div style="height: 340px;width: 230px;margin-top: 20px;" class="release-item">
 			<div style="font-size: 19px;" class="raff-t"><div style="width: 220px;" class="release-title">${release['name'].toLowerCase()}</div></div>
 			<div style="width: 230px;" class="raffle-im"><img class="raffle-item" src="${release['image']}"></div>
 			<div class="feature"><div class="fcon"><i class="fas fa-clock"></i></div>${release['date'].toLowerCase()}</div>
 			<a target="_blank">${selectButton}</a>	
 		</div>
 		
-		`
-		);
-		$('#oneClickFilter').append($('<option>', {
-			value: filterID,
-			text: release['name']
-		}));
-		for (var x = 0; x < sitesSupportedKeys.length; x++) {
-			var siteName = sitesSupportedKeys[x];
-			var variant = sitesSupported[siteName];
-			if (variant != 'closed') {
-				oneClickTasks.push({
-					taskSiteSelect: siteName,
-					variant: variant,
-					nakedcph: release['nakedcph'],
-					ymeuniverse: release['ymeuniverse'],
-					dsml: release['dsml'],
-					dsmny: release['dsmny'],
-					dsmla: release['dsmla'],
-					footshop: release['footshop'],
-					oneblockdown: release['oneblockdown'],
-					supplystore: release['supplystore'],
-					bdgastore: release['bdgastore'],
-					filterID: filterID,
-					fullRelease: release
-				});
-				var sizesHTML = '';
-				var sizes = Object.keys(release['sizes_supported_' + siteName]).sort(function (a, b) {
-					return a - b
-				});
-				for (var z = 0; z < sizes.length; z++) {
-					if (sizes[z] == 'selectOnWin') {
-						sizesHTML = sizesHTML + '<option class="taskSizeOption" value="' + sizes[z] + '">Selected on Win</option>\n';
-					} else if (sizes[z] == 'nosize') {
-						sizesHTML = sizesHTML + '<option class="taskSizeOption" value="' + sizes[z] + '">No Size</option>\n';
-					} else {
-						sizesHTML = sizesHTML + '<option class="taskSizeOption" value="' + sizes[z] + '">' + sizes[z] + '</option>\n';
-					}
-				}
-				$(".release-container").append(`
-				<div class="release-item">
-					<div class="release-title">${siteName.toLowerCase()}</div>
-					<img class="release-image" src="${release['image']}">
-					<div class="release-button">sting mode</div>
-					<div class="release-date">ends on ${release['date'].toLowerCase()}</div>
-				</div>`);
-				taskID += 1;
-			}
+		`);
+		if (releases[i]['closed'] != true) {
+			$(".release-container").append(`
+					<div class="release-item">
+						<div class="release-title">${release['name'].toLowerCase()}</div>
+						<img class="release-image" src="${release['image']}">
+						<div class="release-button" id="${i}">sting mode</div>
+						<div class="release-date">ends on ${release['date'].toLowerCase()}</div>
+					</div>`);
+			taskID += 1;
 		}
+
 	}
 }
 
@@ -916,7 +907,7 @@ $('#taskTypeOfProxy').on('change', function () {
 $('#oneClickFilter').on('change', function () {
 	var selectedVal = $('#oneClickFilter').val();
 	if (selectedVal != 'default') {
-		$.each($(".raffle-enter-container"), function () {
+		$.each($(".release-item"), function () {
 			var filter = $(this).data('filter')
 			if (filter == selectedVal) {
 				$(this).css('display', 'inline-block')
@@ -925,199 +916,109 @@ $('#oneClickFilter').on('change', function () {
 			}
 		});
 	} else {
-		$.each($(".raffle-enter-container"), function () {
+		$.each($(".release-item"), function () {
 			$(this).css('display', 'inline-block')
 		});
 	}
 });
 
-$(".raffle-enter-container").on('click', '.enterRaffle', function () {
-	var taskID = $(this).attr('id');
-	var oneClicktask = oneClickTasks[taskID];
-	var taskSiteSelect = oneClicktask['taskSiteSelect'];
-	var taskSizeSelect = $('#oneClicktaskSize' + taskID).val();
-	var taskProfile = $('#oneClicktaskProfile').val();
-	var taskSpecificProxy = $('#oneClicktaskSpecificProxy').val();
-	var taskEmail = $('#oneClicktaskEmail').val();
-	var taskSizeVariant = oneClicktask['fullRelease']['sizes_supported_' + taskSiteSelect][taskSizeSelect];
-	if (taskSiteSelect == 'footpatroluk' && profiles[taskProfile]['country'] != 'United Kingdom') {
-		Materialize.toast("The site you have selected is for UK profile only.", 3500, "rounded");
-		return;
-	}
-	if (taskSiteSelect == 'supplystore' && profiles[taskProfile]['country'] != 'Australia') {
-		Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
-		return;
-	}
-	if (profiles[taskProfile]['address'] == '') {
-		Materialize.toast("Profile does not have a saved address. Are you sure you clicked save?", 3500, "rounded");
-		return;
-	}
-	if (taskProfile != 'Example Profile') {
-		if (taskSiteSelect != 'default') {
-			if (taskSizeSelect != 'default') {
-				if (validateEmail(taskEmail) != false) {
-					proxy = taskSpecificProxy;
-					if (taskSiteSelect == 'nakedcph') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							nakedcph: oneClicktask['nakedcph']
-						}, profiles[taskProfile]);
-					} else if (taskSiteSelect == 'footshop') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							footshop: oneClicktask['footshop']
-						}, profiles[taskProfile]);
-					} else if (taskSiteSelect == 'ymeuniverse') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							ymeuniverse: oneClicktask['ymeuniverse']
-						}, profiles[taskProfile]);
-					} else if (taskSiteSelect == 'dsml') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							dsml: oneClicktask['dsml']
-						}, profiles[taskProfile]);
-					} else if (taskSiteSelect == 'dsmny') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							dsmny: oneClicktask['dsmny']
-						}, profiles[taskProfile]);
-					} else if (taskSiteSelect == 'dsmla') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							dsmla: oneClicktask['dsmla']
-						}, profiles[taskProfile]);
-					}  else if (taskSiteSelect == 'oneblockdown') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							oneblockdown: oneClicktask['oneblockdown']
-						}, profiles[taskProfile]);
-					} else if (taskSiteSelect == 'supplystore') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							supplystore: oneClicktask['supplystore']
-						}, profiles[taskProfile]);
-					} else if (taskSiteSelect == 'bdgastore') {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant'],
-							bdgastore: oneClicktask['bdgastore']
-						}, profiles[taskProfile]);
+$(".release-item").on('click', '.release-button', function () {
+	var releaseID = $(this).attr('id');
+	selectedQuickTaskRelease = releases[releaseID];
+	var sites = Object.keys(releases[releaseID]['sites_supported']);
+	for (var i = 0; i < sites.length; i++) {
+		var taskSiteSelect = sites[i];
+		var taskSizeSelect = require('electron').remote.getGlobal('settings').stingSize;
+		var taskProfile = require('electron').remote.getGlobal('settings').stingProfiles;
+		var taskSpecificProxy = '';
+		//TEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMP
+		var taskQuantity = 20; //TEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMP
+		//TEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMP
+		var taskEmail = require('electron').remote.getGlobal('settings').stingCatchall;
+		var taskTypeOfEmail = 'catchall';
+		var taskTypeOfProxy = require('electron').remote.getGlobal('settings').stingProxytype;
+		var captchaHandler = require('electron').remote.getGlobal('settings').stingCaptcha;
+		if (taskSiteSelect == 'footpatroluk' && profiles[taskProfile]['country'] != 'United Kingdom') {
+			Materialize.toast("The site you have selected is for UK profile only.", 3500, "rounded");
+			return;
+		}
+		if (taskSiteSelect == 'footshop' && profiles[taskProfile]['country'] == 'China') {
+			Materialize.toast("The site you have selected does not ship to China.", 3500, "rounded");
+			return;
+		}
+		if (taskSiteSelect == 'supplystore' && profiles[taskProfile]['country'] != 'Australia') {
+			Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
+			return;
+		}
+		if (profiles[taskProfile]['address'] == '') {
+			Materialize.toast("Profile does not have a saved address. Are you sure you clicked save?", 3500, "rounded");
+			return;
+		}
+		if (taskQuantity > Object.keys(emails).length && taskTypeOfEmail == 'saved') {
+			Materialize.toast("You only have " + Object.keys(emails).length + " emails saved, but want " + taskQuantity + " tasks", 3500, "rounded");
+			return;
+		}
+		if (taskProfile == 'Example Profile') {
+			Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
+			return;
+		}
+
+		var proxyUsed = '';
+		if (selectedQuickTaskRelease != undefined) {
+			if (taskSiteSelect != 'default') {
+				if (taskSizeSelect != 'default') {
+					if (taskQuantity >= 1) {
+						if (validateEmail(taskEmail) != false || taskTypeOfEmail != 'newEmail') {
+							for (var i = 0; i < taskQuantity; i++) {
+								if (taskSizeSelect == 'random') {
+									tempTaskSize = Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect])[Math.floor(Math.random() * Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect]).length)];
+									var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][tempTaskSize];
+									if (taskSizeVariant == undefined) {
+										Materialize.toast("Task size variant does not exist.", 3500, "rounded");
+										return;
+									}
+									if (createTask(taskSiteSelect, tempTaskSize, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
+										return;
+									}
+								} else {
+									var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][taskSizeSelect];
+									if (taskSizeVariant == undefined) {
+										Materialize.toast("Task size variant does not exist.", 3500, "rounded");
+										return;
+									}
+									if (createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
+										return;
+									}
+								}
+
+							}
+
+							$('#defaultOpen').click()
+							$('#defaultOpen').attr('class', 'nav-item active')
+							selectedQuickTaskRelease = undefined;
+							$('.selectQuick').html('SELECT')
+							$('#taskSiteSelect').val('default')
+							$('#taskSizeSelect').val('default')
+							$('.taskSiteOption').prop('disabled', true);
+							$('.taskSizeOptionMass').prop('disabled', true);
+							$('#taskSpecificProxy').val('')
+							$('#taskEmail').val('')
+						} else {
+							Materialize.toast("Please input a valid Email", 2000, "rounded");
+						}
 					} else {
-						ipcRenderer.send('startTask', {
-							taskID: taskID,
-							captchaHandler: 'manual',
-							type: 'oneclick',
-							filterID: oneClicktask['filterID'],
-							proxy: proxy,
-							taskSiteSelect: taskSiteSelect,
-							taskSizeSelect: taskSizeSelect,
-							taskSizeVariant: taskSizeVariant,
-							taskProfile: taskProfile,
-							taskEmail: taskEmail,
-							variant: oneClicktask['variant']
-						}, profiles[taskProfile]);
+						Materialize.toast("Please input a valid Quantity", 2000, "rounded");
 					}
 				} else {
-					Materialize.toast("Please input a valid Email", 2000, "rounded");
+					Materialize.toast("Please select a Size", 2000, "rounded");
 				}
 			} else {
-				Materialize.toast("Please select a Size", 2000, "rounded");
+				Materialize.toast("Please select a Site", 2000, "rounded");
 			}
 		} else {
-			Materialize.toast("Please select a Site", 2000, "rounded");
+			Materialize.toast("Please select a Release", 2000, "rounded");
+
 		}
-	} else {
-		Materialize.toast("You cannot enter a raffle with the example profile.", 2000, "rounded");
 	}
 });
 
