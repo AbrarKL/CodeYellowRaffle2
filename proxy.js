@@ -18,13 +18,14 @@ var HttpsProxyAgent = require('https-proxy-agent');
 var ProxyLists = require('proxy-lists');
 const request = require('request');
 exports.testProxy = function(proxy, callback) {
-	if(proxy != '')
+	if(proxy != '' || proxy != undefined)
 	{
 		var agent = new HttpsProxyAgent(proxy);
 	}
 	else
 	{
 		agent = '';
+		callback({ message: 'FAILED'});
 	}
    request.get({
 			headers: {

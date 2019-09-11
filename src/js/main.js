@@ -31,6 +31,9 @@ $('#capAPIKey').val(require('electron').remote.getGlobal('settings').capAPIKey);
 if (require('electron').remote.getGlobal('settings').stingSize != null) {
 	$('#stingSize').val(require('electron').remote.getGlobal('settings').stingSize);
 }
+if (require('electron').remote.getGlobal('settings').stingQuantity != null) {
+	$('#stingQuantity').val(require('electron').remote.getGlobal('settings').stingQuantity);
+}
 if (require('electron').remote.getGlobal('settings').stingCaptcha != null) {
 	$('#stingCaptcha').val(require('electron').remote.getGlobal('settings').stingCaptcha);
 }
@@ -130,6 +133,7 @@ $('#saveStingSettings').click(function () {
 	ipcRenderer.send('saveStingSettings', {
 		stingProfiles: $('#stingProfiles').val(),
 		stingSize: $('#stingSize').val(),
+		stingQuantity: $('#stingQuantity').val(),
 		stingCaptcha: $('#stingCaptcha').val(),
 		stingIG: $('#stingIG').val(),
 		stingProxytype: $('#stingProxytype').val(),
@@ -249,10 +253,13 @@ $("#checkAllProxies").click(function () {
 	$.each($(".proxyInput"), function () {
 		var proxyToTest = $(this).attr('id')
 		var proxyID = $(this).data('uid');
-		ipcRenderer.send('testProxy', {
+		if(proxyToTest != undefined)
+        {
+			ipcRenderer.send('testProxy', {
 			proxy: proxyToTest,
 			id: proxyID
 		})
+        }
 	});
 });
 
@@ -945,7 +952,7 @@ $(".release-item").on('click', '.release-button', function () {
 		var taskProfile = require('electron').remote.getGlobal('settings').stingProfiles;
 		var taskSpecificProxy = '';
 		//TEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMP
-		var taskQuantity = 20; //TEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMP
+		var taskQuantity = require('electron').remote.getGlobal('settings').stingQuantity; //TEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMP
 		//TEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMPTEMP
 		var taskEmail = require('electron').remote.getGlobal('settings').stingCatchall;
 		var taskTypeOfEmail = 'catchall';

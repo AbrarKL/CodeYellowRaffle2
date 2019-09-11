@@ -547,6 +547,7 @@ function openBot(onReady) {
 		}
 		global.settings.stingProfiles = settingsToSave['stingProfiles'];
 		global.settings.stingSize = settingsToSave['stingSize'];
+		global.settings.stingQuantity = settingsToSave['stingQuantity'];
 		global.settings.stingCaptcha = settingsToSave['stingCaptcha'];
 		global.settings.stingIG = settingsToSave['stingIG'];
 		global.settings.stingProxytype = settingsToSave['stingProxytype'];
