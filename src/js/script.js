@@ -184,69 +184,318 @@ $(".bot-title").click(function () {
 	console.log("testt");
 });
 
+$(".addprofile2").click(function () {
+    $(".profileaddrow2").get(0).style.setProperty("display", "block");
+	$(".addprofile2").get(0).style.setProperty("display", "none");
+	$(".multiprofilerow").get(0).style.setProperty("display", "none");
+	
+	$(".addprofile3").get(0).style.setProperty("display", "block")
+});
 
-$(window).click(function(e) {
-    $(".bot-title").removeClass("setactive")
+$(".addprofile3").click(function () {
+    $(".profileaddrow3").get(0).style.setProperty("display", "block");
+	$(".addprofile3").get(0).style.setProperty("display", "none");
+	$(".multiprofilerow").get(0).style.setProperty("display", "none");
+	
+	$(".addprofile2").get(0).style.setProperty("display", "none");
+	$(".addprofile4").get(0).style.setProperty("display", "block")
+	
+});
+
+$(".addprofile4").click(function () {
+    $(".profileaddrow4").get(0).style.setProperty("display", "block");
+	$(".addprofile4").get(0).style.setProperty("display", "none");
+	$(".multiprofilerow").get(0).style.setProperty("display", "none");
+
+	$(".addprofile3").get(0).style.setProperty("display", "none");
+	$(".addprofile5").get(0).style.setProperty("display", "block")
+});
+
+$(".addprofile5").click(function () {
+    $(".profileaddrow5").get(0).style.setProperty("display", "block");
+	$(".addprofile5").get(0).style.setProperty("display", "none");
 });
 
 
 
-$(".proxCover").click(function() {
+$(".delpro2").click(function () {
+    $(".profileaddrow2").get(0).style.setProperty("display", "none");
+
+	$(".addprofile2").get(0).style.setProperty("display", "none");
+	$(".addprofile3").get(0).style.setProperty("display", "none");
+	$(".addprofile4").get(0).style.setProperty("display", "none");
+	$(".addprofile5").get(0).style.setProperty("display", "none");
+	
+	$(".addprofile2").get(0).style.setProperty("display", "block");
+});
+
+$(".delpro3").click(function () {
+    $(".profileaddrow3").get(0).style.setProperty("display", "none");
+
+	$(".addprofile2").get(0).style.setProperty("display", "none");
+	$(".addprofile3").get(0).style.setProperty("display", "none");
+	$(".addprofile4").get(0).style.setProperty("display", "none");
+	$(".addprofile5").get(0).style.setProperty("display", "none");
+
+	$(".addprofile3").get(0).style.setProperty("display", "block");
+});
+
+$(".delpro4").click(function () {
+    $(".profileaddrow4").get(0).style.setProperty("display", "none");
+
+	$(".addprofile2").get(0).style.setProperty("display", "none");
+	$(".addprofile3").get(0).style.setProperty("display", "none");
+	$(".addprofile4").get(0).style.setProperty("display", "none");
+	$(".addprofile5").get(0).style.setProperty("display", "none");
+	
+	$(".addprofile4").get(0).style.setProperty("display", "block");
+});
+
+$(".delpro5").click(function () {
+    $(".profileaddrow5").get(0).style.setProperty("display", "none");
+
+	$(".addprofile2").get(0).style.setProperty("display", "none");
+	$(".addprofile3").get(0).style.setProperty("display", "none");
+	$(".addprofile4").get(0).style.setProperty("display", "none");
+	$(".addprofile5").get(0).style.setProperty("display", "none");
+	
+	$(".addprofile5").get(0).style.setProperty("display", "block");
+});
+
+
+
+	profilerow2 = 0;
+	profilerow3 = 0;
+	profilerow4 = 0;
+	profilerow5 = 0;
+
+	profilerowadd2 = 0;	
+	profilerowadd5 = 0;
+
+$(window).click(function(e) {
+	if ($('.addprofile2')[0].style.display != 'none') {
+		profilerowadd2 = 1;
+		console.log('add profile 2 is visible');
+	}
+
+	if ($('.addprofile5')[0].style.display != 'none') {
+		profilerowadd5 = 1;
+		console.log('add profile 5 is visible');
+	}	
+	
+	if ($('.profileaddrow2')[0].style.display != 'none') {
+		profilerow2 = 1;
+		console.log('i Have 2 and it is = to ' + profilerow2);
+	}
+	else {
+		profilerow2 = 0;
+		console.log('i dont Have 2 and it is = to ' + profilerow2);
+	}	
+	
+	if ($('.profileaddrow3')[0].style.display != 'none') {
+		profilerow3 = 1;
+		console.log('i Have 3 and it is = to ' + profilerow3);
+	}
+	else {
+		profilerow3 = 0;
+		console.log('i dont Have 3 and it is = to ' + profilerow3);
+	}	
+	
+	if ($('.profileaddrow4')[0].style.display != 'none') {
+		profilerow4 = 1;
+		console.log('i Have 4 and it is = to ' + profilerow4);
+	}
+	else {
+		profilerow4 = 0;
+		console.log('i dont Have 4 and it is = to ' + profilerow4);
+	}
+	
+	if ($('.profileaddrow5')[0].style.display != 'none') {
+		profilerow5 = 1;
+		console.log('i Have 5 and it is = to ' + profilerow5);
+	}
+	else {
+		profilerow5 = 0;
+		console.log('i dont Have 5 and it is = to ' + profilerow5);
+	}
+	
+	if (profilerow5 == 0 && profilerow2 == 0 && profilerow3 == 0 && profilerow4 == 0) {
+		$(".profileaddrow5").get(0).style.setProperty("display", "none");
+
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+	
+		$(".addprofile2").get(0).style.setProperty("display", "block");
+	}
+	
+		if (profilerow5 == 0 && profilerow2 == 0 && profilerow3 == 0 && profilerow4 == 1) {
+		$(".profileaddrow5").get(0).style.setProperty("display", "none");
+
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+	
+		$(".addprofile2").get(0).style.setProperty("display", "block");
+	}
+	
+		if (profilerow5 == 0 && profilerow2 == 0 && profilerow3 == 1 && profilerow4 == 1) {
+		$(".profileaddrow5").get(0).style.setProperty("display", "none");
+
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+	
+		$(".addprofile2").get(0).style.setProperty("display", "block");
+	}
+	
+		if (profilerow5 == 0 && profilerow2 == 1 && profilerow3 == 1 && profilerow4 == 1) {
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "block");
+	}
+	
+		if (profilerow5 == 0 && profilerow2 == 1 && profilerow3 == 0 && profilerow4 == 0) {
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+	
+		$(".addprofile3").get(0).style.setProperty("display", "block");
+	}
+	
+		if (profilerow5 == 0 && profilerow2 == 0 && profilerow3 == 1 && profilerow4 == 0) {
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+	
+		$(".addprofile2").get(0).style.setProperty("display", "block");
+	}
+	
+		if (profilerow5 == 0 && profilerow2 == 1 && profilerow3 == 1 && profilerow4 == 0) {
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "block");
+	}	
+	
+		if (profilerow5 == 0 && profilerow2 == 1 && profilerow3 == 1 && profilerow4 == 1) {
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+
+		$(".addprofile3").get(0).style.setProperty("display", "none");	
+		$(".addprofile5").get(0).style.setProperty("display", "block");
+	}
+	
+		if (profilerow5 == 0 && profilerow2 == 1 && profilerow3 == 1 && profilerow4 == 0 && profilerowadd5 == 1) {
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+
+		$(".addprofile5").get(0).style.setProperty("display", "none");	
+		$(".addprofile4").get(0).style.setProperty("display", "block");
+	}
+	
+		if (profilerow5 == 1 && profilerow2 == 1 && profilerow3 == 1 && profilerow4 == 1 && profilerowadd5 == 1) {
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+	}
+	
+		if (profilerow5 == 0 && profilerow2 == 1 && profilerow3 == 0 && profilerow4 == 1) {
+		$(".addprofile2").get(0).style.setProperty("display", "none");
+		$(".addprofile3").get(0).style.setProperty("display", "none");
+		$(".addprofile4").get(0).style.setProperty("display", "none");
+		$(".addprofile5").get(0).style.setProperty("display", "none");
+
+		$(".addprofile3").get(0).style.setProperty("display", "block");
+	}
+});
+
+
+
+
+
+
+
+//	profiletag = 0;
+	
+//$(".multiprofilerowtext").click(function () {
+//		profiletag++;
+//	$(".extrapofilesboys").append("<div class='create-row'> <div data-toggle='tooltip' data-placement='top' title='Task profile "+ profiletag +"!' class='inputicon'><i class='fa fa-user' aria-hidden='true'></i></div><select class='createinput' id='taskProfile"+ profiletag +"'><option class='profileremovce' value='remove'> remove profile </option></select></div>");
+//
+//		console.log(profiletag);
+//	console.log('testt');
+//});
+
+//$(window).click(function(e) {
+//    $(".bot-title").removeClass("setactive")
+//	  if (profiletag >= 4) {
+//			$(".multiprofilerowtext").get(0).style.setProperty("display", "none");
+//		}
+//});
+
+$('.proxCover').click(function() {
 
 if($('#usapb').is(':checked'))
 {
-  $("#usap").addClass("prox-sel");
+  $('#usap').addClass('prox-sel');
 } else {
-  $("#usap").removeClass("prox-sel");
+  $('#usap').removeClass('prox-sel');
 }
 
 if($('#ukpb').is(':checked'))
 {
-  $("#ukp").addClass("prox-sel");
+  $('#ukp').addClass('prox-sel');
 } else {
-  $("#ukp").removeClass("prox-sel");
+  $('#ukp').removeClass('prox-sel');
 }
 
 if($('#depb').is(':checked'))
 {
-  $("#dep").addClass("prox-sel");
+  $('#dep').addClass('prox-sel');
 } else {
-  $("#dep").removeClass("prox-sel");
+  $('#dep').removeClass('prox-sel');
 }
 
 if($('#espb').is(':checked'))
 {
-  $("#esp").addClass("prox-sel");
+  $('#esp').addClass('prox-sel');
 } else {
-  $("#esp").removeClass("prox-sel");
+  $('#esp').removeClass('prox-sel');
 }
 
 if($('#frpb').is(':checked'))
 {
-  $("#frp").addClass("prox-sel");
+  $('#frp').addClass('prox-sel');
 } else {
-  $("#frp").removeClass("prox-sel");
+  $('#frp').removeClass('prox-sel');
 }
 
 if($('#rupb').is(':checked'))
 {
-  $("#rup").addClass("prox-sel");
+  $('#rup').addClass('prox-sel');
 } else {
-  $("#rup").removeClass("prox-sel");
+  $('#rup').removeClass('prox-sel');
 }
 
 if($('#chinapb').is(':checked'))
 {
-  $("#chinap").addClass("prox-sel");
+  $('#chinap').addClass('prox-sel');
 } else {
-  $("#chinap").removeClass("prox-sel");
+  $('#chinap').removeClass('prox-sel');
 }
 
 if($('#aupb').is(':checked'))
 {
-  $("#aup").addClass("prox-sel");
+  $('#aup').addClass('prox-sel');
 } else {
-  $("#aup").removeClass("prox-sel");
+  $('#aup').removeClass('prox-sel');
 }
 });
 
@@ -256,17 +505,18 @@ if($('#aupb').is(':checked'))
 
 function openCity(evt, cityName) {
   var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabbard");
+  tabcontent = document.getElementsByClassName('tabbard');
   for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+    tabcontent[i].style.display = 'none';
   }
-  tablinks = document.getElementsByClassName("settingnav");
+  tablinks = document.getElementsByClassName('settingnav');
   for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" setactive", "");
+    tablinks[i].className = tablinks[i].className.replace(' setactive', '');
   }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " setactive";
+  document.getElementById(cityName).style.display = 'block';
+  evt.currentTarget.className += ' setactive';
 }
 
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultGOGO").click();
+// Get the element with id='defaultOpen' and click on it
+document.getElementById('defaultGOGO').click();
+

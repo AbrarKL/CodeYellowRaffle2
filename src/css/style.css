@@ -10,8 +10,8 @@
 	height: 7px;
 	background: rgba(0,0,0,1);
 }
-/*
-::-webkit-scrollbar:hover {
+
+/* ::-webkit-scrollbar:hover {
     width: 10px !important;
 	height: 10px !important;
 } */
@@ -20,6 +20,11 @@
 	border-radius: 50px !important;
 	background-color: #fbcf4d;
 }
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #bf9e3b;
+}
+
 
 ::selection {
   background: #fbcf4d !important; /* WebKit/Blink Browsers */
@@ -877,7 +882,6 @@ body {
 .disability {
 	opacity: 0.8;
 	filter: grayscale(100%);
-
 	position: relative;
 }
 
@@ -890,4 +894,61 @@ body {
 	content: '';
 	z-index: 99;
 	cursor: not-allowed;
+}
+
+.multiprofilerow {
+	width: 100%;
+	text-align: center;
+	color: #eee;
+	font-size: 14px;
+	height: 20px;
+	line-height: 20px;
+	position: relative;
+}
+
+.multiprofilerowtext {
+	cursor: pointer;
+	position: relative;
+	height: 20px;
+	display: inline-block;
+	text-align: center;
+}
+.multiprofilerowtext:hover {
+	font-weight: bold;
+}
+
+.extrapofilesboys {
+}
+
+.xstyling {
+	position: relative;
+}
+
+.xleg {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	right: -30px;
+	text-align: center;
+	line-height: 30px;
+	top: 10px;
+}
+
+.xspot {
+	color: #fff;
+	opacity: 0.5;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.xspot:hover {
+	opacity: 1;
+}
+
+input:disabled {
+	cursor: not-allowed !important;
+}
+
+select:disabled {
+	cursor: not-allowed !important;
 }

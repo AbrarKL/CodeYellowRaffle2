@@ -98,12 +98,12 @@ var createtabx = 1;
 
 
 $(".plus1").click(function () {
-  if (createtabx == 1) {
+  if (createtabx == 2) {
     if (selectedQuickTaskRelease == undefined) {
       Materialize.toast("Please select a Release", 2000, "rounded");
       return;
     }
-  } else if (createtabx == 2) {
+  } else if (createtabx == 4) {
     var taskProfile = $('#taskProfile').val();
     var taskSiteSelect = $('#taskSiteSelect').val();
     var taskSizeSelect = $('#taskSizeSelect').val();
@@ -145,7 +145,7 @@ $(".plus1").click(function () {
       Materialize.toast("Please select a Size", 2000, "rounded");
       return;
     }
-  } else if (createtabx == 3) {
+  } else if (createtabx == 2) {
     var taskTypeOfEmail = $('#taskTypeOfEmail').val();
     var taskTypeOfProxy = $('#taskTypeOfProxy').val();
 	var taskEmail = $('#taskEmail').val();
@@ -196,21 +196,43 @@ $(".min1, .plus1, .refro").click(function () {
     $(".details1").get(0).style.setProperty("display", "none");
     $(".details2").get(0).style.setProperty("display", "none");
     $(".details3").get(0).style.setProperty("display", "none");
+    $(".details4").get(0).style.setProperty("display", "none");
+    $(".details5").get(0).style.setProperty("display", "none");
   } else if (createtabx == 2) {
     $(".sneaksel").get(0).style.setProperty("display", "none");
     $(".details1").get(0).style.setProperty("display", "block");
     $(".details2").get(0).style.setProperty("display", "none");
     $(".details3").get(0).style.setProperty("display", "none");
+    $(".details4").get(0).style.setProperty("display", "none");
+    $(".details5").get(0).style.setProperty("display", "none");
   } else if (createtabx == 3) {
     $(".sneaksel").get(0).style.setProperty("display", "none");
     $(".details1").get(0).style.setProperty("display", "none");
     $(".details2").get(0).style.setProperty("display", "block");
     $(".details3").get(0).style.setProperty("display", "none");
+    $(".details4").get(0).style.setProperty("display", "none");
+    $(".details5").get(0).style.setProperty("display", "none");
   } else if (createtabx == 4) {
     $(".sneaksel").get(0).style.setProperty("display", "none");
     $(".details1").get(0).style.setProperty("display", "none");
     $(".details2").get(0).style.setProperty("display", "none");
     $(".details3").get(0).style.setProperty("display", "block");
+    $(".details4").get(0).style.setProperty("display", "none");
+    $(".details5").get(0).style.setProperty("display", "none");
+  } else if (createtabx == 5) {
+    $(".sneaksel").get(0).style.setProperty("display", "none");
+    $(".details1").get(0).style.setProperty("display", "none");
+    $(".details2").get(0).style.setProperty("display", "none");
+    $(".details3").get(0).style.setProperty("display", "none");
+    $(".details4").get(0).style.setProperty("display", "block");
+    $(".details5").get(0).style.setProperty("display", "none");
+  } else if (createtabx == 6) {
+    $(".sneaksel").get(0).style.setProperty("display", "none");
+    $(".details1").get(0).style.setProperty("display", "none");
+    $(".details2").get(0).style.setProperty("display", "none");
+    $(".details3").get(0).style.setProperty("display", "none");
+    $(".details4").get(0).style.setProperty("display", "none");
+    $(".details5").get(0).style.setProperty("display", "block");
   }
 });
 
