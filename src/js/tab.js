@@ -197,42 +197,30 @@ $(".min1, .plus1, .refro").click(function () {
     $(".details2").get(0).style.setProperty("display", "none");
     $(".details3").get(0).style.setProperty("display", "none");
     $(".details4").get(0).style.setProperty("display", "none");
-    $(".details5").get(0).style.setProperty("display", "none");
   } else if (createtabx == 2) {
     $(".sneaksel").get(0).style.setProperty("display", "none");
     $(".details1").get(0).style.setProperty("display", "block");
     $(".details2").get(0).style.setProperty("display", "none");
     $(".details3").get(0).style.setProperty("display", "none");
     $(".details4").get(0).style.setProperty("display", "none");
-    $(".details5").get(0).style.setProperty("display", "none");
   } else if (createtabx == 3) {
     $(".sneaksel").get(0).style.setProperty("display", "none");
     $(".details1").get(0).style.setProperty("display", "none");
     $(".details2").get(0).style.setProperty("display", "block");
     $(".details3").get(0).style.setProperty("display", "none");
     $(".details4").get(0).style.setProperty("display", "none");
-    $(".details5").get(0).style.setProperty("display", "none");
   } else if (createtabx == 4) {
     $(".sneaksel").get(0).style.setProperty("display", "none");
     $(".details1").get(0).style.setProperty("display", "none");
     $(".details2").get(0).style.setProperty("display", "none");
     $(".details3").get(0).style.setProperty("display", "block");
     $(".details4").get(0).style.setProperty("display", "none");
-    $(".details5").get(0).style.setProperty("display", "none");
   } else if (createtabx == 5) {
     $(".sneaksel").get(0).style.setProperty("display", "none");
     $(".details1").get(0).style.setProperty("display", "none");
     $(".details2").get(0).style.setProperty("display", "none");
     $(".details3").get(0).style.setProperty("display", "none");
     $(".details4").get(0).style.setProperty("display", "block");
-    $(".details5").get(0).style.setProperty("display", "none");
-  } else if (createtabx == 6) {
-    $(".sneaksel").get(0).style.setProperty("display", "none");
-    $(".details1").get(0).style.setProperty("display", "none");
-    $(".details2").get(0).style.setProperty("display", "none");
-    $(".details3").get(0).style.setProperty("display", "none");
-    $(".details4").get(0).style.setProperty("display", "none");
-    $(".details5").get(0).style.setProperty("display", "block");
   }
 });
 

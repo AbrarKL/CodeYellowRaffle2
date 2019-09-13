@@ -559,6 +559,20 @@ function openBot(onReady) {
 		});
 	});
 
+	// Save entry settings
+	ipcMain.on('saveEntrySettings', function (e, settingsToSave) {
+		console.log(settingsToSave);
+		global.settings.entryMode = settingsToSave['entryMode'];
+		global.settings.entryDelay = settingsToSave['entryDelay'];
+		global.settings.idleTime = settingsToSave['idleTime'];
+		global.settings.minimumDelay = settingsToSave['minimumDelay'];
+		global.settings.maximumDelay = settingsToSave['maximumDelay'];
+		saveSettings();
+		module.exports.mainBotWin.send('notify', {
+			length: 3000,
+			message: 'entry settings saved!'
+		});
+	});
 	ipcMain.on('deactivate', function (e) {
 		request({
 			url: 'https://codeyellow.io/api/v2/deactivate.php',

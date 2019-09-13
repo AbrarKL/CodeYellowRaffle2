@@ -28,6 +28,7 @@ $('#webhookUrl').val(require('electron').remote.getGlobal('settings').discordWeb
 $('#capAPIKey').val(require('electron').remote.getGlobal('settings').capAPIKey);
 
 
+// Load saved sting settings in inputs
 if (require('electron').remote.getGlobal('settings').stingSize != null) {
 	$('#stingSize').val(require('electron').remote.getGlobal('settings').stingSize);
 }
@@ -45,6 +46,28 @@ if (require('electron').remote.getGlobal('settings').stingProxytype != null) {
 }
 if (require('electron').remote.getGlobal('settings').stingCatchall != null) {
 	$('#stingCatchall').val(require('electron').remote.getGlobal('settings').stingCatchall);
+}
+
+
+
+// Load saved entry settings in inputs
+if (require('electron').remote.getGlobal('settings').entryMode != null) {
+	$('#entryMode').val(require('electron').remote.getGlobal('settings').entryMode);
+}
+if (require('electron').remote.getGlobal('settings').entryDelay != null) {
+	$('#entryDelay').val(require('electron').remote.getGlobal('settings').entryDelay);
+}
+if (require('electron').remote.getGlobal('settings').idleTime != null) {
+	$('#idleTime').val(require('electron').remote.getGlobal('settings').idleTime);
+}
+if (require('electron').remote.getGlobal('settings').minimumDelay != null) {
+	$('#minimumDelay').val(require('electron').remote.getGlobal('settings').minimumDelay);
+}
+if (require('electron').remote.getGlobal('settings').stingProxytype != null) {
+	$('#stingProxytype').val(require('electron').remote.getGlobal('settings').stingProxytype);
+}
+if (require('electron').remote.getGlobal('settings').maximumDelay != null) {
+	$('#maximumDelay').val(require('electron').remote.getGlobal('settings').maximumDelay);
 }
 // RE ADD BOTH BELOW LINES WHEN ALEX ADDS SETTINGS
 settingsRetryDelay.value = require('electron').remote.getGlobal('settings').retryDelay;
@@ -128,7 +151,7 @@ $('#saveWebhook').click(function () {
 	ipcRenderer.send('saveWebhook', $('#webhookUrl').val())
 });
 
-// Save webhook
+// Save sting settings
 $('#saveStingSettings').click(function () {
 	ipcRenderer.send('saveStingSettings', {
 		stingProfiles: $('#stingProfiles').val(),
@@ -141,6 +164,40 @@ $('#saveStingSettings').click(function () {
 	})
 });
 
+// Save entry settings
+$('#saveEntrySettings').click(function () {
+	ipcRenderer.send('saveEntrySettings', {
+		entryMode: $('#entryMode').val(),
+		entryDelay: $('#entryDelay').val(),
+		idleTime: $('#idleTime').val(),
+		minimumDelay: $('#minimumDelay').val(),
+		maximumDelay: $('#maximumDelay').val()
+	})
+});
+$('#entryMode').on('change', function () {
+	var type = $(this).val();
+	if (type == 'manual') {
+		$('#entryDelay').prop('disabled', true)
+		$('#idleTime').prop('disabled', true)
+		$('#minimumDelay').prop('disabled', true)
+		$('#maximumDelay').prop('disabled', true)
+	} else if (type == 'delayed') {
+		$('#entryDelay').prop('disabled', false)
+		$('#idleTime').prop('disabled', true)
+		$('#minimumDelay').prop('disabled', true)
+		$('#maximumDelay').prop('disabled', true)
+	} else if (type == 'idle') {
+		$('#entryDelay').prop('disabled', true)
+		$('#idleTime').prop('disabled', false)
+		$('#minimumDelay').prop('disabled', true)
+		$('#maximumDelay').prop('disabled', true)
+	} else if (type == 'human') {
+		$('#entryDelay').prop('disabled', true)
+		$('#idleTime').prop('disabled', true)
+		$('#minimumDelay').prop('disabled', false)
+		$('#maximumDelay').prop('disabled', false)
+	}
+});
 
 // Save Captcha solving API key
 $('#saveCapAPIKey').click(function () {
@@ -177,10 +234,54 @@ $("body").on("click", ".startTaskMass", function () {
 });
 
 $("#startAllTasks").click(function () {
-	$.each($(".startTaskMass"), function () {
-		var task = tasks[$(this).attr('id') - 1];
-		ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-	});
+	var entryMode = require('electron').remote.getGlobal('settings').entryMode;
+	if (entryMode == 'manual') {
+		$.each($(".startTaskMass"), function () {
+			var task = tasks[$(this).attr('id') - 1];
+			ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+		});
+	} else if (entryMode == 'delayed') {
+		var delay = 0;
+		var delayIncrease = parseInt(require('electron').remote.getGlobal('settings').entryDelay) * 1000;
+		$.each($(".startTaskMass"), function (i) {
+			var taskId = $(this).attr('id');
+			var task = tasks[$(this).attr('id') - 1];
+			if(i == 0)
+			{
+				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+			}
+			else
+			{
+				delay = delay + delayIncrease;
+				$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+				setTimeout(function () {
+					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+				}, delay);
+			}
+		});
+	} else if (entryMode == 'idle') {
+		//need to code this
+	} else if (entryMode == 'human') {
+		console.log('human');
+		var delay = 0;
+		$.each($(".startTaskMass"), function (i) {
+			var delayIncrease = (Math.floor(Math.random() * (parseInt(require('electron').remote.getGlobal('settings').maximumDelay) - parseInt(require('electron').remote.getGlobal('settings').minimumDelay) + 1)) + parseInt(require('electron').remote.getGlobal('settings').minimumDelay))* 1000;
+			var taskId = $(this).attr('id');
+			var task = tasks[$(this).attr('id') - 1];
+			if(i == 0)
+			{
+				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+			}
+			else
+			{
+				delay = delay + delayIncrease;
+				$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+				setTimeout(function () {
+					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+				}, delay);
+			}
+		});
+	}
 	/*var delay = 0;
 	var delayIncrease = 1000;
 	$.each($(".startTaskMass"), function (i) {
@@ -253,13 +354,12 @@ $("#checkAllProxies").click(function () {
 	$.each($(".proxyInput"), function () {
 		var proxyToTest = $(this).attr('id')
 		var proxyID = $(this).data('uid');
-		if(proxyToTest != undefined)
-        {
+		if (proxyToTest != undefined) {
 			ipcRenderer.send('testProxy', {
-			proxy: proxyToTest,
-			id: proxyID
-		})
-        }
+				proxy: proxyToTest,
+				id: proxyID
+			})
+		}
 	});
 });
 
@@ -728,6 +828,9 @@ if (require('electron').remote.getGlobal('settings').stingProfiles != null) {
 	$('#stingProfiles').val(require('electron').remote.getGlobal('settings').stingProfiles);
 }
 $('#profileSelected').html($('#profileList option:first-child').val())
+
+// Changes entry mode settings tab input so the disabled inputs get enabled
+$('#entryMode').change();
 
 $('#profileList').on('change', function () {
 	$('#profileSelected').html(this.value.slice(0, 8))
