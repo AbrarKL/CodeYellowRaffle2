@@ -60,12 +60,9 @@
       </div>
       <div class="bot-logo"><img src="css/img/new_logo.png" class="brandlogo"></div>
 
-      <div style="cursor: pointer;" class="bot-title settings" onclick="openCity(event, 'account')">
+      <div style="cursor: pointer;" id="gummybear" class="bot-title refro settings chadmode">
          <div class="title-top">welcome back, Yummy</div>
          <div class="title-bottom">you have entered <b>901</b> raffles</div>
-
-
-
       </div>
 
       <div class="entriesgang">
@@ -723,7 +720,7 @@ ip:port"></textarea>
 
             </div>
 
-
+<!--
             <div style="display: none;" class="details4">
                <div class="midtitle">Entry mode</div>
                <div class="midtitleinfo">select the type of entry mode you want for your mass tasks.</div>
@@ -781,9 +778,9 @@ ip:port"></textarea>
                </div>
 
             </div>
+-->
 
-
-            <div style="display: none;" class="details5">
+            <div style="display: none;" class="details4">
                <div class="midtitle">Task quantity</div>
                <div class="midtitleinfo">The amount of tasks you want to create.</div>
 
@@ -2264,13 +2261,15 @@ ip:port"></textarea>
 
             <div class="settingnav" onclick="openCity(event, 'general')" id="defaultGOGO">general</div>
 
+            <div class="settingnav" onclick="openCity(event, 'entrymode')">entry mode</div>
+
             <div class="settingnav" onclick="openCity(event, 'advanced')">advanced</div>
 
 			<div class="settingnav" onclick="openCity(event, 'sting')">sting</div>
 
             <div class="settingnav" onclick="openCity(event, 'captcha')">captcha</div>
 
-            <div class="settingnav myaccountx">my account</div>
+            <div class="settingnav myaccountx" id="shegotalotofcake" onclick="openCity(event, 'account')">my account</div>
 
             <div style="bottom: 55px;position: absolute;left: 0;" class="settingnav" id="guidesButton">guides</div>
 
@@ -2406,6 +2405,75 @@ ip:port"></textarea>
    
    
    
+         </div>
+
+         <div class="setting-side tabbard" id="entrymode">
+
+            <div class="settingtitlelarger">entry mode settings</div>
+            <div class="settingtitleinfo" style="width: 100%;">configure these setting for your mass task entry mode</div>
+   
+               <div class="setting-seperate"></div>
+   
+               
+               <div class="setting-inputl">
+   
+                  <div style="width:100%;" class="create-rowset">
+                     <div data-toggle="tooltip" data-placement="top" title="" class="inputiconset"
+                        data-original-title="entry mode"><i class="fas fa-step-forward"></i>
+                     </div>
+                     <select class="createinputset" id="entryMode">
+						<option class="entryModeOption" value="manual">Manual</option>
+						<option class="entryModeOption" value="delayed">Delayed</option>
+						<option class="entryModeOption" value="idle">Idle</option>
+						<option class="entryModeOption" value="human">"Human" Mode</option>
+                     </select>
+                  </div>
+	
+				</div>
+	
+	             <div class="setting-inputl">
+	
+                  <div style="width:100%;" class="create-rowset">
+                     <div class="inputiconset"><i class="fas fa-stopwatch"></i>
+                     </div>
+                     <input class="createinputset" id="entryDelay" placeholder="entry delay">
+                  </div>
+
+				</div>
+
+               <div class="setting-inputl">
+
+                  <div style="width:100%;" class="create-rowset">
+                     <div class="inputiconset"><i class="fas fa-hourglass-half"></i>
+                     </div>
+                     <input class="createinputset" id="idleTime" placeholder="idle time" disabled>
+                  </div>
+
+				</div>
+
+               <div class="setting-inputl">
+
+                  <div style="width:49%;float: left;" class="create-rowset">
+                     <div class="inputiconset"><i class="fas fa-hourglass-start"></i>
+                     </div>
+                     <input class="createinputset" id="minimumDelay" placeholder="minimum delay" disabled>
+                  </div>
+
+                  <div style="width:49%;float: right;" class="create-rowset">
+                     <div class="inputiconset"><i class="fas fa-hourglass-end"></i>
+                     </div>
+                     <input class="createinputset" id="maximumDelay" placeholder="maximum delay" disabled>
+                  </div>				  
+
+               </div>
+
+            <div class="setting-seperate"></div>
+
+			<div class="settingtitlelarger">save settings</div>
+            <div class="settingtitleinfo" style="width: 100%;">save your entry mode settings, this will effect all of your tasks. <div class="setting-buttonr" id="saveStingSettings">
+                  save settings</div>
+            </div>
+
          </div>
 
          <div class="setting-side tabbard" id="captcha">
@@ -2581,6 +2649,7 @@ ip:port"></textarea>
 
          <div class="setting-side tabbard" id="account">
 
+			<a style="color: #fff;">pull up to the place, bitches got alot to say</a>
 
          </div>
 

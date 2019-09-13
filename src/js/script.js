@@ -275,17 +275,17 @@ $(".delpro5").click(function () {
 $(window).click(function(e) {
 	if ($('.addprofile2')[0].style.display != 'none') {
 		profilerowadd2 = 1;
-		console.log('add profile 2 is visible');
+//		console.log('add profile 2 is visible');
 	}
 
 	if ($('.addprofile5')[0].style.display != 'none') {
 		profilerowadd5 = 1;
-		console.log('add profile 5 is visible');
+//		console.log('add profile 5 is visible');
 	}	
 	
 	if ($('.profileaddrow2')[0].style.display != 'none') {
 		profilerow2 = 1;
-		console.log('i Have 2 and it is = to ' + profilerow2);
+//		console.log('i Have 2 and it is = to ' + profilerow2);
 	}
 	else {
 		profilerow2 = 0;
@@ -294,29 +294,29 @@ $(window).click(function(e) {
 	
 	if ($('.profileaddrow3')[0].style.display != 'none') {
 		profilerow3 = 1;
-		console.log('i Have 3 and it is = to ' + profilerow3);
+//		console.log('i Have 3 and it is = to ' + profilerow3);
 	}
 	else {
 		profilerow3 = 0;
-		console.log('i dont Have 3 and it is = to ' + profilerow3);
+//		console.log('i dont Have 3 and it is = to ' + profilerow3);
 	}	
 	
 	if ($('.profileaddrow4')[0].style.display != 'none') {
 		profilerow4 = 1;
-		console.log('i Have 4 and it is = to ' + profilerow4);
+//		console.log('i Have 4 and it is = to ' + profilerow4);
 	}
 	else {
 		profilerow4 = 0;
-		console.log('i dont Have 4 and it is = to ' + profilerow4);
+//		console.log('i dont Have 4 and it is = to ' + profilerow4);
 	}
 	
 	if ($('.profileaddrow5')[0].style.display != 'none') {
 		profilerow5 = 1;
-		console.log('i Have 5 and it is = to ' + profilerow5);
+//		console.log('i Have 5 and it is = to ' + profilerow5);
 	}
 	else {
 		profilerow5 = 0;
-		console.log('i dont Have 5 and it is = to ' + profilerow5);
+//		console.log('i dont Have 5 and it is = to ' + profilerow5);
 	}
 	
 	if (profilerow5 == 0 && profilerow2 == 0 && profilerow3 == 0 && profilerow4 == 0) {
@@ -418,7 +418,11 @@ $(window).click(function(e) {
 });
 
 
-
+$("#gummybear").click(function () {
+	$("#shegotalotofcake").click();
+	$(".myaccountx").addClass("setactive").
+	console.log("do this working or noz?");
+});
 
 
 
@@ -439,6 +443,9 @@ $(window).click(function(e) {
 //			$(".multiprofilerowtext").get(0).style.setProperty("display", "none");
 //		}
 //});
+
+
+
 
 $('.proxCover').click(function() {
 

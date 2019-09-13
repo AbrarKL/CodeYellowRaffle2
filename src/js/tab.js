@@ -103,7 +103,7 @@ $(".plus1").click(function () {
       Materialize.toast("Please select a Release", 2000, "rounded");
       return;
     }
-  } else if (createtabx == 4) {
+  } else if (createtabx == 3) {
     var taskProfile = $('#taskProfile').val();
     var taskSiteSelect = $('#taskSiteSelect').val();
     var taskSizeSelect = $('#taskSizeSelect').val();
@@ -145,7 +145,7 @@ $(".plus1").click(function () {
       Materialize.toast("Please select a Size", 2000, "rounded");
       return;
     }
-  } else if (createtabx == 2) {
+  } else if (createtabx == 4) {
     var taskTypeOfEmail = $('#taskTypeOfEmail').val();
     var taskTypeOfProxy = $('#taskTypeOfProxy').val();
 	var taskEmail = $('#taskEmail').val();
