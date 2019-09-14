@@ -379,6 +379,10 @@ exports.captchaWorker = function (request, task, profile, postInputs) {
 									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 								}
+								if(body == undefined)
+								{
+									return setTimeout(() => capHandler(), 12000);
+								}
 								if (body.status == 0) {
 									if (body.request == 'CAPCHA_NOT_READY') {
 										return setTimeout(() => capHandler(), 5000);

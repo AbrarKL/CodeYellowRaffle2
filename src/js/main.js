@@ -269,19 +269,22 @@ $("#startAllTasks").click(function () {
 		var delayIncrease = parseInt(require('electron').remote.getGlobal('settings').entryDelay) * 1000;
 		$.each($(".startTaskMass"), function (i) {
 			var taskId = $(this).attr('id');
-			var task = tasks[$(this).attr('id') - 1];
-			if (i == 0) {
-				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-			} else {
-				delay = delay + delayIncrease;
-				if (delay >= 60000) {
-					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000) / 60 + 'm');
-				} else {
-					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
-				}
-				setTimeout(function () {
+			if($('#taskResult' + taskId).html().toLowerCase() == 'idle')
+			{
+				var task = tasks[$(this).attr('id') - 1];
+				if (i == 0) {
 					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-				}, delay);
+				} else {
+					delay = delay + delayIncrease;
+					if (delay >= 60000) {
+						$(`#taskResult${taskId}`).html('Starting task in ' + parseFloat((delay / 1000) / 60).toFixed(2).toString().replace('.', ':') + ' m');
+					} else {
+						$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+					}
+					setTimeout(function () {
+						ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+					}, delay);
+				}
 			}
 		});
 	} else if (entryMode == 'idle') {
@@ -291,19 +294,22 @@ $("#startAllTasks").click(function () {
 		var delayIncrease = parseInt(((minutes * 60) * 1000) / taskLength);
 		$.each($(".startTaskMass"), function (i) {
 			var taskId = $(this).attr('id');
-			var task = tasks[$(this).attr('id') - 1];
-			if (i == 0) {
-				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-			} else {
-				delay = delay + delayIncrease;
-				if (delay >= 60000) {
-					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000) / 60 + 'm');
-				} else {
-					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
-				}
-				setTimeout(function () {
+			if($('#taskResult' + taskId).html().toLowerCase() == 'idle')
+			{
+				var task = tasks[$(this).attr('id') - 1];
+				if (i == 0) {
 					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-				}, delay);
+				} else {
+					delay = delay + delayIncrease;
+					if (delay >= 60000) {
+						$(`#taskResult${taskId}`).html('Starting task in ' + parseFloat((delay / 1000) / 60).toFixed(2).toString().replace('.', ':') + ' m');
+					} else {
+						$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+					}
+					setTimeout(function () {
+						ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+					}, delay);
+				}
 			}
 		});
 
@@ -313,19 +319,22 @@ $("#startAllTasks").click(function () {
 		$.each($(".startTaskMass"), function (i) {
 			var delayIncrease = (Math.floor(Math.random() * (parseInt(require('electron').remote.getGlobal('settings').maximumDelay) - parseInt(require('electron').remote.getGlobal('settings').minimumDelay) + 1)) + parseInt(require('electron').remote.getGlobal('settings').minimumDelay)) * 1000;
 			var taskId = $(this).attr('id');
-			var task = tasks[$(this).attr('id') - 1];
-			if (i == 0) {
-				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-			} else {
-				delay = delay + delayIncrease;
-				if (delay >= 60000) {
-					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000) / 60 + 'm');
-				} else {
-					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
-				}
-				setTimeout(function () {
+			if($('#taskResult' + taskId).html().toLowerCase() == 'idle')
+			{
+				var task = tasks[$(this).attr('id') - 1];
+				if (i == 0) {
 					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-				}, delay);
+				} else {
+					delay = delay + delayIncrease;
+					if (delay >= 60000) {
+						$(`#taskResult${taskId}`).html('Starting task in ' + parseFloat((delay / 1000) / 60).toFixed(2).toString().replace('.', ':') + ' m');
+					} else {
+						$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+					}
+					setTimeout(function () {
+						ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+					}, delay);
+				}
 			}
 		});
 	} else {
@@ -369,6 +378,22 @@ $("#deleteAllTasks").click(function () {
 		}
 		$(this).parent().parent().remove();
 		$('#tasksInList').html($('#tasks tr').length - 1)
+	});
+});
+
+$("#deleteAllSubmittedTasks").click(function () {
+	$.each($(".deleteTask"), function () {
+		var task = tasks[$(this).attr('id') - 1];
+		//check if taskresult is 'idle' when starting delayed
+		if($('#taskResult' + $(this).attr('id')).html().toLowerCase().indexOf('submitted') >= 0 || $('#taskResult' + $(this).attr('id')).html().toLowerCase().indexOf('check email') >= 0){
+			tasks[$(this).attr('id') - 1] = {};
+			ipcRenderer.send('deleteTask', task);
+			if (task['taskTypeOfEmail'] != 'catchall') {
+				emailsForTasks[task['taskEmail']][task['taskSiteSelect'] + '_' + task['filterID']] = false;
+			}
+			$(this).parent().parent().remove();
+			$('#tasksInList').html($('#tasks tr').length - 1)
+		}
 	});
 });
 

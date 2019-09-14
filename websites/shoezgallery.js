@@ -306,6 +306,10 @@ exports.captchaWorker = function (request, task, profile) {
 					mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 					return;
 				}
+				if(body == undefined)
+				{
+					return setTimeout(() => exports.captchaWorker(request, task, profile), 12000);
+				}
 				if (body.status == 0) {
 					console.log(JSON.stringify(body));
 					mainBot.mainBotWin.send('taskUpdate', {
@@ -340,6 +344,10 @@ exports.captchaWorker = function (request, task, profile) {
 									});
 									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+								}
+								if(body == undefined)
+								{
+									return setTimeout(() => capHandler(), 12000);
 								}
 								if (body.status == 0) {
 									if (body.request == 'CAPCHA_NOT_READY') {

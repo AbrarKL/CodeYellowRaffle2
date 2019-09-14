@@ -332,7 +332,7 @@ exports.captchaWorker = function (request, task, profile) {
 							});
 							console.log('Checking for Captcha token (2Captcha Task ID: ' + taskId + ')');
 							request({
-								url: 'https://2captcha.com/res.php?key=' + global.settings.antiCapAPIKey + '&action=get&id=' + taskId + '&json=1',
+								url: 'https://2captcha.com/res.php?key=' + global.settings['2capAPIKey'] + '&action=get&id=' + taskId + '&json=1',
 								method: 'GET',
 								json: true
 							}, function (error, response, body) {
@@ -345,7 +345,7 @@ exports.captchaWorker = function (request, task, profile) {
 									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 								}
-								if(!body)
+								if(body == undefined)
 								{
 									return setTimeout(() => capHandler(), 12000);
 								}

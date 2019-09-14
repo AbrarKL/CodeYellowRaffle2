@@ -433,6 +433,15 @@ exports.captchaWorker = function (request, task, profile, csrftoken) {
 					});
 					return setTimeout(() => exports.captchaWorker(request, task, profile, csrftoken), 15000);
 				}
+				if(body == undefined)
+				{
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: '2Captcha error. Retrying in 12s'
+					});
+					return setTimeout(() => exports.captchaWorker(request, task, profile, csrftoken), 12000);
+				}
 				if (body.status == 0) {
 					console.log(JSON.stringify(body));
 					mainBot.mainBotWin.send('taskUpdate', {

@@ -350,7 +350,7 @@ exports.captchaWorker = function (request, task, profile) {
 								}
 								if(body == undefined)
 								{
-									return setTimeout(() => capHandler(), 10000);
+									return setTimeout(() => capHandler(), 12000);
 								}
 								else if (body.status == 0) {
 									if (body.request == 'CAPCHA_NOT_READY') {

@@ -353,7 +353,7 @@ exports.captchaWorker = function (request, task, profile, viewkey) {
 				}
 			});
 		} else if (task['captchaHandler'] == '2captcha') {
-			if (global.settings.antiCapAPIKey == '' || global.settings.antiCapAPIKey == undefined) {
+			if (global.settings['2capAPIKey'] == '' || global.settings['2capAPIKey'] == undefined) {
 				mainBot.mainBotWin.send('taskUpdate', {
 					id: task.taskID,
 					type: task.type,
@@ -412,6 +412,10 @@ exports.captchaWorker = function (request, task, profile, viewkey) {
 									});
 									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+								}
+								if(body == undefined)
+								{
+									return setTimeout(() => capHandler(), 12000);
 								}
 								if (body.status == 0) {
 									if (body.request == 'CAPCHA_NOT_READY') {
