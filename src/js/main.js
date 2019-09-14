@@ -235,12 +235,7 @@ $("body").on("click", ".startTaskMass", function () {
 
 $("#startAllTasks").click(function () {
 	var entryMode = require('electron').remote.getGlobal('settings').entryMode;
-	if (entryMode == 'manual') {
-		$.each($(".startTaskMass"), function () {
-			var task = tasks[$(this).attr('id') - 1];
-			ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-		});
-	} else if (entryMode == 'delayed') {
+	if (entryMode == 'delayed') {
 		var delay = 0;
 		var delayIncrease = parseInt(require('electron').remote.getGlobal('settings').entryDelay) * 1000;
 		$.each($(".startTaskMass"), function (i) {
@@ -300,11 +295,25 @@ $("#startAllTasks").click(function () {
 				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
 			} else {
 				delay = delay + delayIncrease;
-				$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+				if(delay >= 60000)
+				{
+					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000 ) /60 + 'm');
+				}
+				else
+				{
+					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+				}
 				setTimeout(function () {
 					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
 				}, delay);
 			}
+		});
+	}
+	else
+	{
+		$.each($(".startTaskMass"), function () {
+			var task = tasks[$(this).attr('id') - 1];
+			ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
 		});
 	}
 	/*var delay = 0;
