@@ -50,7 +50,7 @@ function getRandomProxy() {
 	}
 }
 
-exports.performTask = function (task, profile) {
+exports.initTask = function (task, profile) {
 	// *TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY*
 	//task['captchaHandler'] = '2captcha';
 	//task['captchaHandler'] = 'anticaptcha';
@@ -74,9 +74,32 @@ exports.performTask = function (task, profile) {
 	});
 
 
-	if (profile['jigProfileName'] == true) {
+	if (profile['jigProfileFirstName'] == true) {
 		profile['firstName'] = faker.fake("{{name.firstName}}");
+	}
+	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
+	}
+	
+	if (profile['jigProfileFirstNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		}
+	}
+	if (profile['jigProfileLastNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		}
 	}
 
 	if (task['taskTypeOfEmail'] == 'catchall') {
@@ -154,41 +177,43 @@ exports.captchaWorker = function (request, task, profile) {
 		}
 		capHandler();
 	} else {
-		if (global.settings.capAPIKey == '' || global.settings.capAPIKey == undefined) {
-			mainBot.mainBotWin.send('taskUpdate', {
-				id: task.taskID,
-				type: task.type,
-				message: 'Captcha API Key not set. Check settings.'
-			});
-			mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-			mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-			return;
-		}
 
 
+		agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 		if (task['captchaHandler'] == 'anticaptcha') {
+			if (global.settings.antiCapAPIKey == '' || global.settings.antiCapAPIKey == undefined) {
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Captcha API Key not set. Check settings.'
+				});
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+				return;
+			}
 			request({
 				url: 'https://api.anti-captcha.com/createTask',
 				method: 'POST',
 				body: {
-					clientKey: global.settings.capAPIKey,
+					clientKey: global.settings.antiCapAPIKey,
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
-						"websiteURL": "http://yeezy.chmielna20.pl",
+						"websiteURL": "http://yeezy500.chmielna20.pl/",
 						"websiteKey": "6Lf14jgUAAAAAJ_xxyVSusFVOJY7yOR-wjpw-8nf"
 					}
 				},
-				json: true
+				json: true,
+				agent: agent
 			}, function (error, response, body) {
 				if (error) {
 					mainBot.mainBotWin.send('taskUpdate', {
 						id: task.taskID,
 						type: task.type,
-						message: 'AntiCaptcha error'
+						message: 'AntiCaptcha error. Retrying in 15s'
 					});
-					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-					mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-					return;
+					var proxy2 = getRandomProxy();
+					task['proxy'] = proxy2;
+					return setTimeout(() => exports.captchaWorker(request, task, profile), 15000);
 				}
 				if (body.errorId != undefined && body.errorId == 0) {
 					var taskId = body.taskId;
@@ -204,10 +229,11 @@ exports.captchaWorker = function (request, task, profile) {
 							url: 'https://api.anti-captcha.com/getTaskResult',
 							method: 'POST',
 							body: {
-								clientKey: global.settings.capAPIKey,
+								clientKey: global.settings.antiCapAPIKey,
 								taskId: taskId
 							},
-							json: true
+							json: true,
+							agent: agent
 						}, function (error, response, body) {
 							if (error) {
 								mainBot.mainBotWin.send('taskUpdate', {
@@ -217,6 +243,12 @@ exports.captchaWorker = function (request, task, profile) {
 								});
 								mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 								mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+							}
+							if(body == undefined)
+							{
+								var proxy2 = getRandomProxy();
+								task['proxy'] = proxy2;
+								return setTimeout(() => capHandler(), 10000);
 							}
 							if (body.errorId == 0) {
 								if (body.status == 'ready') {
@@ -258,8 +290,18 @@ exports.captchaWorker = function (request, task, profile) {
 				}
 			});
 		} else if (task['captchaHandler'] == '2captcha') {
+			if (global.settings['2capAPIKey'] == '' || global.settings['2capAPIKey'] == undefined) {
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Captcha API Key not set. Check settings.'
+				});
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+				return;
+			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings.capAPIKey + '&method=userrecaptcha&googlekey=6Lf14jgUAAAAAJ_xxyVSusFVOJY7yOR-wjpw-8nf&pageurl=http://yeezy.chmielna20.pl&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6Lf14jgUAAAAAJ_xxyVSusFVOJY7yOR-wjpw-8nf&pageurl=http://yeezy500.chmielna20.pl/&json=1',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {
@@ -267,11 +309,9 @@ exports.captchaWorker = function (request, task, profile) {
 					mainBot.mainBotWin.send('taskUpdate', {
 						id: task.taskID,
 						type: task.type,
-						message: '2Captcha error'
+						message: '2Captcha error. Retrying in 15s'
 					});
-					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-					mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-					return;
+					return setTimeout(() => exports.captchaWorker(request, task, profile), 15000);
 				}
 				if (body.status == 0) {
 					console.log(JSON.stringify(body));
@@ -295,7 +335,7 @@ exports.captchaWorker = function (request, task, profile) {
 							});
 							console.log('Checking for Captcha token (2Captcha Task ID: ' + taskId + ')');
 							request({
-								url: 'https://2captcha.com/res.php?key=' + global.settings.capAPIKey + '&action=get&id=' + taskId + '&json=1',
+								url: 'https://2captcha.com/res.php?key=' + global.settings['2capAPIKey'] + '&action=get&id=' + taskId + '&json=1',
 								method: 'GET',
 								json: true
 							}, function (error, response, body) {
@@ -308,7 +348,11 @@ exports.captchaWorker = function (request, task, profile) {
 									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 								}
-								if (body.status == 0) {
+								if(body == undefined)
+								{
+									return setTimeout(() => capHandler(), 10000);
+								}
+								else if (body.status == 0) {
 									if (body.request == 'CAPCHA_NOT_READY') {
 										return setTimeout(() => capHandler(), 5000);
 									} else {
@@ -400,15 +444,15 @@ exports.submitRaffle = function (request, task, profile) {
 	});
 
 	request({
-		url: 'http://yeezy.chmielna20.pl/register.php',
+		url: 'http://yeezy500.chmielna20.pl/register.php',
 		method: 'POST',
 		headers: {
-			'Origin': 'http://yeezy.chmielna20.pl',
+			'Origin': 'http://yeezy500.chmielna20.pl',
 			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
 			'Content-type': 'application/x-www-form-urlencoded',
 			'Accept': '*/*',
-			'Referer': 'http://yeezy.chmielna20.pl/',
+			'Referer': 'http://yeezy500.chmielna20.pl/',
 			'Connection': 'keep-alive'
 		},
 		formData: {

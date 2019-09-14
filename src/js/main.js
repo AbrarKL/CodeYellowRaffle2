@@ -16,6 +16,8 @@ var emailsForTasks = {};
 if (updateRequired != true) {
 	$('.update-dot.updateav').css("display", "none");
 }
+$('#user').html(require('electron').remote.getGlobal('user'));
+$('#entries').html(require('electron').remote.getGlobal('entries'));
 // End Main Variables
 
 // Loads saved proxies
@@ -25,7 +27,9 @@ loadProxies(proxies, false);
 loadEmails(emails);
 
 $('#webhookUrl').val(require('electron').remote.getGlobal('settings').discordWebhook);
-$('#capAPIKey').val(require('electron').remote.getGlobal('settings').capAPIKey);
+//$('#capAPIKey').val(require('electron').remote.getGlobal('settings').capAPIKey);
+$('#antiCapAPIKey').val(require('electron').remote.getGlobal('settings').antiCapAPIKey);
+$('#2capAPIKey').val(require('electron').remote.getGlobal('settings')['2capAPIKey']);
 
 
 // Load saved sting settings in inputs
@@ -219,9 +223,15 @@ $('#entryMode').on('change', function () {
 });
 
 // Save Captcha solving API key
-$('#saveCapAPIKey').click(function () {
+/*$('#saveCapAPIKey').click(function () {
 	ipcRenderer.send('saveCapAPIKey', $('#capAPIKey').val())
-});
+});*/
+$('#saveAntiCapAPIKey').click(function () {
+	ipcRenderer.send('saveAntiCapAPIKey', $('#antiCapAPIKey').val())
+})
+$('#save2capAPIKey').click(function () {
+	ipcRenderer.send('save2capAPIKey', $('#2capAPIKey').val())
+})
 
 // Opens captcha harvester
 $('.openHarvester').click(function () {
@@ -244,7 +254,7 @@ $('#deactivateButton').click(function () {
 
 // Update tasks
 ipcRenderer.on('taskUpdate', function (event, data) {
-	$(`#taskResult${data.id}`).html(data.message.toUpperCase())
+	$(`#taskResult${data.id}`).html(data.message.toLowerCase())
 });
 
 $("body").on("click", ".startTaskMass", function () {
@@ -264,12 +274,9 @@ $("#startAllTasks").click(function () {
 				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
 			} else {
 				delay = delay + delayIncrease;
-				if(delay >= 60000)
-				{
-					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000 ) /60 + 'm');
-				}
-				else
-				{
+				if (delay >= 60000) {
+					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000) / 60 + 'm');
+				} else {
 					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
 				}
 				setTimeout(function () {
@@ -289,12 +296,9 @@ $("#startAllTasks").click(function () {
 				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
 			} else {
 				delay = delay + delayIncrease;
-				if(delay >= 60000)
-				{
-					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000 ) /60 + 'm');
-				}
-				else
-				{
+				if (delay >= 60000) {
+					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000) / 60 + 'm');
+				} else {
 					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
 				}
 				setTimeout(function () {
@@ -314,12 +318,9 @@ $("#startAllTasks").click(function () {
 				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
 			} else {
 				delay = delay + delayIncrease;
-				if(delay >= 60000)
-				{
-					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000 ) /60 + 'm');
-				}
-				else
-				{
+				if (delay >= 60000) {
+					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000) / 60 + 'm');
+				} else {
 					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
 				}
 				setTimeout(function () {
@@ -327,9 +328,7 @@ $("#startAllTasks").click(function () {
 				}, delay);
 			}
 		});
-	}
-	else
-	{
+	} else {
 		$.each($(".startTaskMass"), function () {
 			var task = tasks[$(this).attr('id') - 1];
 			ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
@@ -357,6 +356,7 @@ $("body").on("click", ".deleteTask", function () {
 		emailsForTasks[task['taskEmail']][task['taskSiteSelect'] + '_' + task['filterID']] = false;
 	}
 	$(this).parent().parent().remove();
+	$('#tasksInList').html($('#tasks tr').length - 1)
 });
 
 $("#deleteAllTasks").click(function () {
@@ -368,6 +368,7 @@ $("#deleteAllTasks").click(function () {
 			emailsForTasks[task['taskEmail']][task['taskSiteSelect'] + '_' + task['filterID']] = false;
 		}
 		$(this).parent().parent().remove();
+		$('#tasksInList').html($('#tasks tr').length - 1)
 	});
 });
 
@@ -458,17 +459,7 @@ $("#removeFailed").click(function () {
 	});
 });
 
-$("#scrapeProxies").click(function () {
-	var country = $('.prox-sel').data('country');
-	ipcRenderer.send('scrapeProxies', {
-		country: country,
-		amount: $('#proxyQuantity').val()
-	})
-});
 
-ipcRenderer.on('proxiesScraped', function (event, proxies) {
-	$('#proxiesToAdd').val(proxies)
-});
 
 
 function loadProxies(proxiesToAdd, addToArray) {
@@ -523,20 +514,16 @@ $("#createTaskButton").click(function () {
 	var taskProfile = $('#taskProfile').val();
 	var profilesToChoose = [];
 	profilesToChoose.push(taskProfile);
-	if($('.profileaddrow2').css('display') == 'block')
-	{
+	if ($('.profileaddrow2').css('display') == 'block') {
 		profilesToChoose.push($('#taskProfile2').val());
 	}
-	if($('.profileaddrow3').css('display') == 'block')
-	{
+	if ($('.profileaddrow3').css('display') == 'block') {
 		profilesToChoose.push($('#taskProfile3').val());
 	}
-	if($('.profileaddrow4').css('display') == 'block')
-	{
+	if ($('.profileaddrow4').css('display') == 'block') {
 		profilesToChoose.push($('#taskProfile4').val());
 	}
-	if($('.profileaddrow5').css('display') == 'block')
-	{
+	if ($('.profileaddrow5').css('display') == 'block') {
 		profilesToChoose.push($('#taskProfile5').val());
 	}
 	console.log('Enabled profiles: ' + profilesToChoose)
@@ -547,18 +534,6 @@ $("#createTaskButton").click(function () {
 	var taskTypeOfProxy = $('#taskTypeOfProxy').val();
 	var captchaHandler = $('#captchaHandler').val();
 
-	if (taskSiteSelect == 'footpatroluk' && profiles[taskProfile]['country'] != 'United Kingdom') {
-		Materialize.toast("The site you have selected is for UK profile only.", 3500, "rounded");
-		return;
-	}
-	if (taskSiteSelect == 'footshop' && profiles[taskProfile]['country'] == 'China') {
-		Materialize.toast("The site you have selected does not ship to China.", 3500, "rounded");
-		return;
-	}
-	if (taskSiteSelect == 'supplystore' && profiles[taskProfile]['country'] != 'Australia') {
-		Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
-		return;
-	}
 	if (taskQuantity > Object.keys(emails).length && taskTypeOfEmail == 'saved') {
 		Materialize.toast("You only have " + Object.keys(emails).length + " emails saved, but want " + taskQuantity + " tasks", 3500, "rounded");
 		return;
@@ -602,8 +577,7 @@ $("#createTaskButton").click(function () {
 						$('#taskSizeSelect').val('default')
 						$('.taskSiteOption').prop('disabled', true);
 						$('.taskSizeOptionMass').prop('disabled', true);
-						$('#taskSpecificProxy').val('')
-						$('#taskEmail').val('')
+						$('.massentry').click()
 					} else {
 						Materialize.toast("Please input a valid Email", 2000, "rounded");
 					}
@@ -680,9 +654,27 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 		emailsForTasks[taskEmail] = {};
 		emailsForTasks[taskEmail][variantName] = true;
 	}
-	if (taskSiteSelect == 'nakedcph') {
+	if (taskSiteSelect == 'bstn') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
+			captchaHandler: captchaHandler,
+			type: 'mass',
+			filterID: selectedQuickTaskRelease['filterID'],
+			taskTypeOfEmail: taskTypeOfEmail,
+			proxy: proxy,
+			taskSiteSelect: taskSiteSelect,
+			taskSizeSelect: taskSizeSelect,
+			taskSizeVariant: taskSizeVariant,
+			taskProfile: taskProfile,
+			taskEmail: taskEmail,
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			bstn: selectedQuickTaskRelease['bstn']
+		});
+	} else if (taskSiteSelect == 'nakedcph') {
+		tasks.push({
+			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -699,6 +691,7 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 	} else if (taskSiteSelect == 'footshop') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -715,6 +708,7 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 	} else if (taskSiteSelect == 'ymeuniverse') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -731,6 +725,7 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 	} else if (taskSiteSelect == 'dsml') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -747,6 +742,7 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 	} else if (taskSiteSelect == 'dsmny') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -760,9 +756,27 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
 			dsmny: selectedQuickTaskRelease['dsmny']
 		});
+	} else if (taskSiteSelect == 'dsms') {
+		tasks.push({
+			taskID: taskID,
+			proxyType: taskTypeOfProxy,
+			captchaHandler: captchaHandler,
+			type: 'mass',
+			filterID: selectedQuickTaskRelease['filterID'],
+			taskTypeOfEmail: taskTypeOfEmail,
+			proxy: proxy,
+			taskSiteSelect: taskSiteSelect,
+			taskSizeSelect: taskSizeSelect,
+			taskSizeVariant: taskSizeVariant,
+			taskProfile: taskProfile,
+			taskEmail: taskEmail,
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			dsms: selectedQuickTaskRelease['dsms']
+		});
 	} else if (taskSiteSelect == 'dsmla') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -779,6 +793,7 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 	} else if (taskSiteSelect == 'oneblockdown') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -792,9 +807,44 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
 			oneblockdown: selectedQuickTaskRelease['oneblockdown']
 		});
+	} else if (taskSiteSelect == 'backdoor') {
+		tasks.push({
+			taskID: taskID,
+			proxyType: taskTypeOfProxy,
+			captchaHandler: captchaHandler,
+			type: 'mass',
+			filterID: selectedQuickTaskRelease['filterID'],
+			taskTypeOfEmail: taskTypeOfEmail,
+			proxy: proxy,
+			taskSiteSelect: taskSiteSelect,
+			taskSizeSelect: taskSizeSelect,
+			taskSizeVariant: taskSizeVariant,
+			taskProfile: taskProfile,
+			taskEmail: taskEmail,
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			backdoor: selectedQuickTaskRelease['backdoor']
+		});
+	} else if (taskSiteSelect == 'dtlr') {
+		tasks.push({
+			taskID: taskID,
+			proxyType: taskTypeOfProxy,
+			captchaHandler: captchaHandler,
+			type: 'mass',
+			filterID: selectedQuickTaskRelease['filterID'],
+			taskTypeOfEmail: taskTypeOfEmail,
+			proxy: proxy,
+			taskSiteSelect: taskSiteSelect,
+			taskSizeSelect: taskSizeSelect,
+			taskSizeVariant: taskSizeVariant,
+			taskProfile: taskProfile,
+			taskEmail: taskEmail,
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			dtlr: selectedQuickTaskRelease['dtlr']
+		});
 	} else if (taskSiteSelect == 'supplystore') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -811,6 +861,7 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 	} else if (taskSiteSelect == 'bdgastore') {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -824,9 +875,27 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
 			bdgastore: selectedQuickTaskRelease['bdgastore']
 		});
+	} else if (taskSiteSelect == 'joyce') {
+		tasks.push({
+			taskID: taskID,
+			proxyType: taskTypeOfProxy,
+			captchaHandler: captchaHandler,
+			type: 'mass',
+			filterID: selectedQuickTaskRelease['filterID'],
+			taskTypeOfEmail: taskTypeOfEmail,
+			proxy: proxy,
+			taskSiteSelect: taskSiteSelect,
+			taskSizeSelect: taskSizeSelect,
+			taskSizeVariant: taskSizeVariant,
+			taskProfile: taskProfile,
+			taskEmail: taskEmail,
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			hkidnumber: $('#hkIDNUMBER4').val()
+		});
 	} else {
 		tasks.push({
 			taskID: taskID,
+			proxyType: taskTypeOfProxy,
 			captchaHandler: captchaHandler,
 			type: 'mass',
 			filterID: selectedQuickTaskRelease['filterID'],
@@ -858,6 +927,7 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			</td>
 		</tr>
 		`);
+	$('#tasksInList').html($('#tasks tr').length - 1)
 }
 
 
@@ -968,7 +1038,10 @@ $("#newProfile").click(function () {
 				"expiryMonth": "MM",
 				"expiryYear": "YY",
 				"CVV": "",
-				"jigProfileName": false,
+				"jigProfileFirstName": false,
+				"jigProfileLastName": false,
+				"jigProfileFirstNameLetter": false,
+				"jigProfileLastNameLetter": false,
 				"jigProfileAddress": false,
 				"jigProfilePhoneNumber": false
 			};
@@ -1006,7 +1079,10 @@ $("#saveProfile").click(function () {
 			"expiryMonth": $('#expiryMonth').val(),
 			"expiryYear": $('#expiryYear').val(),
 			"CVV": $('#CVV').val(),
-			"jigProfileName": $('#jigProfileName').is(':checked'),
+			"jigProfileFirstName": $('#jigProfileFirstName').is(':checked'),
+			"jigProfileLastName": $('#jigProfileLastName').is(':checked'),
+			"jigProfileFirstNameLetter": $('#jigProfileFirstNameLetter').is(':checked'),
+			"jigProfileLastNameLetter": $('#jigProfileLastNameLetter').is(':checked'),
 			"jigProfileAddress": $('#jigProfileAddress').is(':checked'),
 			"jigProfilePhoneNumber": $('#jigProfilePhoneNumber').is(':checked')
 		};
@@ -1052,7 +1128,7 @@ function loadProfile(profileName, notify) {
 	var keys = Object.keys(profile)
 	for (var i = 0; i < keys.length; i++) {
 		var value = profile[keys[i]];
-		if (keys[i] == 'jigProfileName' || keys[i] == 'jigProfileAddress' || keys[i] == 'jigProfilePhoneNumber') {
+		if (keys[i] == 'jigProfileFirstName' || keys[i] == 'jigProfileLastName' || keys[i] == 'jigProfileFirstNameLetter' || keys[i] == 'jigProfileLastNameLetter' || keys[i] == 'jigProfileAddress' || keys[i] == 'jigProfilePhoneNumber') {
 			if (value == true) {
 				document.getElementById(keys[i]).checked = true;
 			} else {
@@ -1062,6 +1138,7 @@ function loadProfile(profileName, notify) {
 			$('#' + keys[i]).val(value);
 		}
 	}
+	$('#country').change()
 	if (notify) {
 		Materialize.toast("Profile '" + profileName + "' loaded!", 2000, "rounded");
 	}

@@ -1,16 +1,13 @@
 /*
 	Copyright (C) 2019 Code Yellow
-
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
-
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
-
 	You should have received a copy of the GNU General Public License
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -68,32 +65,25 @@ exports.initTask = function (task, profile) {
 		jar: jar
 	});
 
-
 	if (profile['jigProfileFirstName'] == true) {
 		profile['firstName'] = faker.fake("{{name.firstName}}");
 	}
 	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
 	}
-	
+
 	if (profile['jigProfileFirstNameLetter'] == true) {
-		if (Math.random() >= 0.5)
-		{
-			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
-		}
-		else
-		{
-			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		if (Math.random() >= 0.5) {
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97 + Math.floor(Math.random() * 26));
+		} else {
+			profile['firstName'] = String.fromCharCode(97 + Math.floor(Math.random() * 26)) + profile['firstName'];
 		}
 	}
 	if (profile['jigProfileLastNameLetter'] == true) {
-		if (Math.random() >= 0.5)
-		{
-			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
-		}
-		else
-		{
-			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		if (Math.random() >= 0.5) {
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97 + Math.floor(Math.random() * 26));
+		} else {
+			profile['lastName'] = String.fromCharCode(97 + Math.floor(Math.random() * 26)) + profile['lastName'];
 		}
 	}
 
@@ -140,16 +130,68 @@ exports.initTask = function (task, profile) {
 
 	if (profile['jigProfileAddress'] == true) {
 		profile['aptSuite'] = faker.fake("{{address.secondaryAddress}}");
+		// ********************************************* Add this only to sites with no address line 2 *********************************************
+		profile['address'] = profile['address'] + ' ' + faker.fake("{{address.secondaryAddress}}");
+		// ********************************************* Add this only to sites with no address line 2 *********************************************
 	}
 
 	if (profile['jigProfilePhoneNumber'] == true) {
 		profile['phoneNumber'] = faker.fake("{{phone.phoneNumberFormat}}");
 	}
+	if (profile['phoneNumber'] != null && profile['phoneNumber'].indexOf('-') > -1)
+	{
+		profile['phoneNumber'] = profile['phoneNumber'].replaceAll('-', '');
+	}
 
-	return exports.getRafflePage(request, task, profile);
+
+	mainBot.mainBotWin.send('taskUpdate', {
+		id: task.taskID,
+		type: task.type,
+		message: 'Getting size variant'
+	});
+	console.log(`[${task.taskID}] ` + ' Getting size variant');
+	request({
+		url: 'https://codeyellow.io/api/get_snipes_size.php',
+		method: 'post',
+		formData: {
+			'email': global.settings.email
+		},
+	}, function (err, response, body) {
+		console.log(body)
+		try {
+			var parsedAPI = JSON.parse(body);
+			// IF CREDENTIALS ARE VALID
+			if (parsedAPI.valid == true) {
+				console.log("Saved size exists.")
+				task['sizeSaved'] = parsedAPI.size;
+				// C H A N G E T H I S C H A N G E T H I S C H A N G E T H I S C H A N G E T H I S C H A N G E T H I S C H A N G E T H I S C H A N G E T H I S C H A N G E T H I S C H A N G E T H I S C H A N G E T H I S
+				//exports.submitRaffle(request, task, profile);
+				exports.getRafflePage(request, task, profile);
+				return;
+			}
+			// IF CREDENTIALS ARE NOT VALID
+			else {
+				console.log("You must save a size https://codeyellow.io/snipes_size")
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Save a size here https://codeyellow.io/snipes_size'
+				});
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+				return;
+			}
+		} catch (error) {
+			var proxy2 = getRandomProxy();
+			task['proxy'] = proxy2;
+			mainBot.mainBotWin.send('taskUpdate', {
+				id: task.taskID,
+				type: task.type,
+				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
+			});
+			return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
+		}
+	});
 }
-
-
 
 exports.getRafflePage = function (request, task, profile) {
 	if (task['proxy'] != '') {
@@ -158,75 +200,88 @@ exports.getRafflePage = function (request, task, profile) {
 		agent = '';
 	}
 
-	
 	mainBot.mainBotWin.send('taskUpdate', {
 		id: task.taskID,
 		type: task.type,
 		message: 'Obtaining raffle page'
 	});
-	
+
 	request({
-		url: task['variant'],
+		url: 'https://raffle.snipesusa.com/releases/current',
 		headers: {
-			'authority': 'raffle.vooberlin.com',
-			'cache-control': 'max-age=0',
-			'upgrade-insecure-requests': '1',
-			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36',
-			'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+			'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 libshopgate/22.0 (SnipesKicks 10.41.0 Codebase:10.41.0 NOAPPLEPAY)'
 		},
 		agent: agent
-	}, function (error, response, body) {
-		if (error) {
-			var proxy2 = getRandomProxy();
-			task['proxy'] = proxy2;
-			mainBot.mainBotWin.send('taskUpdate', {
-				id: task.taskID,
-				type: task.type,
-				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
-			});
-			return setTimeout(() => exports.getRafflePage(request, task, profile), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
-		}
-		if (response.statusCode == 200) {
-			mainBot.mainBotWin.send('taskUpdate', {
-				id: task.taskID,
-				type: task.type,
-				message: 'Got raffle page'
-			});
-			console.log(`[${task.taskID}] ` + ' Got raffle page');
-			$ = cheerio.load(body);
-			var raffleToken = $('input[name="token"]').attr('value');
-			var pageID = $('input[name="page_id"]').attr('value');
-			if (raffleToken == undefined || pageID == undefined) {
+	}, function callback(error, response, body) {
+		if (!error) {
+			if (response.statusCode != 200) 
+			{
+				var proxy2 = getRandomProxy();
+				task['proxy'] = proxy2;
+				console.log('New proxy: ' + formatProxy(task['proxy']));
 				mainBot.mainBotWin.send('taskUpdate', {
 					id: task.taskID,
 					type: task.type,
-					message: 'Raffle not found'
+					message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 				});
-				console.log(`[${task.taskID}] ` + ' Raffle not found');
-				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-				return;
+				return setTimeout(() => exports.getRafflePage(request, task, profile), global.settings.retryDelay);
 			}
-			console.log('Got raffle token: ' + raffleToken);
-			console.log('Got page ID: ' + pageID);
+			mainBot.mainBotWin.send('taskUpdate', {
+				id: task.taskID,
+				type: task.type,
+				message: 'Got raffle endpoint'
+			});
+			console.log(`[${task.taskID}] ` + ' Got raffle endpoint');
+			$ = cheerio.load(body);
+			var siteInfo = rawurldecode($('meta[name="config"]').attr('content'));
+			try {
+				var parsed = JSON.parse(siteInfo);
+			} catch (e) {
+				var proxy2 = getRandomProxy();
+				task['proxy'] = proxy2;
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
+				});
+				return setTimeout(() => exports.getRafflePage(request, task, profile), global.settings.retryDelay);
+			}
+			var csrfToken = parsed['csrf'];
+			if (!csrfToken) {
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Error getting token. Retrying in ' + global.settings.retryDelay / 1000 + 's'
+				});
+				console.log(`[${task.taskID}] ` + ' Error getting raffle tokens. Retrying');
+				console.log(body);
+				return setTimeout(() => exports.getRafflePage(request, task, profile), global.settings.retryDelay);
+			}
+			mainBot.mainBotWin.send('taskUpdate', {
+				id: task.taskID,
+				type: task.type,
+				message: 'Got raffle token'
+			});
+			console.log(`[${task.taskID}] ` + ' Got raffle token. CSRF token: ' + csrfToken);
 			console.log('Now needs captcha');
-			return exports.captchaWorker(request, task, profile, raffleToken, pageID);
-
+			return exports.captchaWorker(request, task, profile, csrfToken);
+			/*
+			return exports.captchaWorker(request, task, profile, viewkey, uniqueKey);*/
 		} else {
 			var proxy2 = getRandomProxy();
 			task['proxy'] = proxy2;
+			console.log('New proxy: ' + formatProxy(task['proxy']));
 			mainBot.mainBotWin.send('taskUpdate', {
 				id: task.taskID,
 				type: task.type,
 				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 			});
-			return setTimeout(() => exports.getRafflePage(request, task, profile), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
+			return setTimeout(() => exports.getRafflePage(request, task, profile), global.settings.retryDelay);
 		}
 	});
 }
 
-
-exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
+exports.captchaWorker = function (request, task, profile, csrfToken) {
 	if (task['proxy'] != '') {
 		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 	} else {
@@ -240,51 +295,52 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 			message: 'Awaiting captcha'
 		});
 		console.log(`[${task.taskID}] ` + ' Awaiting captcha');
-		mainBot.requestCaptcha('vooberlin', task, false);
+		mainBot.requestCaptcha('snipeskicks', task, false);
 		const capHandler = () => {
 			if (mainBot.taskCaptchas[task['type']][task['taskID']] == undefined || mainBot.taskCaptchas[task['type']][task['taskID']] == '') {
 				setTimeout(() => capHandler(), 100);
 			} else {
-				exports.submitRaffle(request, task, profile, raffleToken, pageID);
+				exports.submitRaffle(request, task, profile, csrfToken);
 				return;
 			}
 		}
 		capHandler();
 	} else {
-
+		if (global.settings.capAPIKey == '' || global.settings.capAPIKey == undefined) {
+			mainBot.mainBotWin.send('taskUpdate', {
+				id: task.taskID,
+				type: task.type,
+				message: 'Captcha API Key not set. Check settings.'
+			});
+			mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+			mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+			return;
+		}
+		agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 		if (task['captchaHandler'] == 'anticaptcha') {
-			if (global.settings.antiCapAPIKey == '' || global.settings.antiCapAPIKey == undefined) {
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Captcha API Key not set. Check settings.'
-				});
-				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-				return;
-			}
 			request({
 				url: 'https://api.anti-captcha.com/createTask',
 				method: 'POST',
 				body: {
-					clientKey: global.settings.antiCapAPIKey,
+					clientKey: global.settings.capAPIKey,
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
-						"websiteURL": "https://raffle.vooberlin.com/index.php?alias=yeezyboost350v2black",
-						"websiteKey": "6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec"
+						"websiteURL": "https://raffle.snipesusa.com/releases/current",
+						"websiteKey": "6Lf1zbMUAAAAANBwSjY8Mh5d0bTe4-ucx5Gt1UEz"
 					}
 				},
-				json: true
+				json: true,
+				agent: agent
 			}, function (error, response, body) {
 				if (error) {
 					mainBot.mainBotWin.send('taskUpdate', {
 						id: task.taskID,
 						type: task.type,
-						message: 'AntiCaptcha error'
+						message: 'AntiCaptcha error. Retrying in 15s'
 					});
-					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-					mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-					return;
+					var proxy2 = getRandomProxy();
+					task['proxy'] = proxy2;
+					return setTimeout(() => exports.captchaWorker(request, task, profile, csrfToken), 15000);
 				}
 				if (body.errorId != undefined && body.errorId == 0) {
 					var taskId = body.taskId;
@@ -300,10 +356,11 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 							url: 'https://api.anti-captcha.com/getTaskResult',
 							method: 'POST',
 							body: {
-								clientKey: global.settings.antiCapAPIKey,
+								clientKey: global.settings.capAPIKey,
 								taskId: taskId
 							},
-							json: true
+							json: true,
+							agent: agent
 						}, function (error, response, body) {
 							if (error) {
 								mainBot.mainBotWin.send('taskUpdate', {
@@ -314,6 +371,12 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 								mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 								mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 							}
+							if(body == undefined)
+							{
+								var proxy2 = getRandomProxy();
+								task['proxy'] = proxy2;
+								return setTimeout(() => capHandler(), 10000);
+							}
 							if (body.errorId == 0) {
 								if (body.status == 'ready') {
 									console.log(JSON.stringify(body));
@@ -323,7 +386,7 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 										type: task.type,
 										message: 'Submitting entry'
 									});
-									return exports.submitRaffle(request, task, profile, raffleToken, pageID);
+									return exports.submitRaffle(request, task, profile, csrfToken);
 								} else {
 									return setTimeout(() => capHandler(), 5000);
 								}
@@ -354,18 +417,8 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 				}
 			});
 		} else if (task['captchaHandler'] == '2captcha') {
-			if (global.settings['2capAPIKey'] == '' || global.settings['2capAPIKey'] == undefined) {
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Captcha API Key not set. Check settings.'
-				});
-				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-				return;
-			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec&pageurl=https://raffle.vooberlin.com/index.php?alias=yeezyboost350v2black&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings.capAPIKey + '&method=userrecaptcha&googlekey=6Lf1zbMUAAAAANBwSjY8Mh5d0bTe4-ucx5Gt1UEz&pageurl=https://raffle.snipesusa.com/releases/current&json=1',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {
@@ -373,11 +426,9 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 					mainBot.mainBotWin.send('taskUpdate', {
 						id: task.taskID,
 						type: task.type,
-						message: '2Captcha error'
+						message: '2Captcha error. Retrying in 15s'
 					});
-					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-					mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-					return;
+					return setTimeout(() => exports.captchaWorker(request, task, profile, csrfToken), 15000);
 				}
 				if (body.status == 0) {
 					console.log(JSON.stringify(body));
@@ -401,7 +452,7 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 							});
 							console.log('Checking for Captcha token (2Captcha Task ID: ' + taskId + ')');
 							request({
-								url: 'https://2captcha.com/res.php?key=' + global.settings['2capAPIKey'] + '&action=get&id=' + taskId + '&json=1',
+								url: 'https://2captcha.com/res.php?key=' + global.settings.capAPIKey + '&action=get&id=' + taskId + '&json=1',
 								method: 'GET',
 								json: true
 							}, function (error, response, body) {
@@ -414,7 +465,11 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 								}
-								if (body.status == 0) {
+								if(body == undefined)
+								{
+									return setTimeout(() => capHandler(), 10000);
+								}
+								else if (body.status == 0) {
 									if (body.request == 'CAPCHA_NOT_READY') {
 										return setTimeout(() => capHandler(), 5000);
 									} else {
@@ -437,7 +492,7 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 											type: task.type,
 											message: 'Submitting entry'
 										});
-										return exports.submitRaffle(request, task, profile, raffleToken, pageID);
+										return exports.submitRaffle(request, task, profile, csrfToken);
 									} else {
 										if (body.request == 'CAPCHA_NOT_READY') {
 											return setTimeout(() => capHandler(), 5000);
@@ -475,7 +530,7 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 
 }
 
-exports.submitRaffle = function (request, task, profile, raffleToken, pageID) {
+exports.submitRaffle = function (request, task, profile, csrfToken) {
 	if (shouldStop(task) == true) {
 		return;
 	}
@@ -488,9 +543,10 @@ exports.submitRaffle = function (request, task, profile, raffleToken, pageID) {
 		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 		return;
 	}
+
 	if (mainBot.taskCaptchas[task['type']][task['taskID']] == undefined || mainBot.taskCaptchas[task['type']][task['taskID']] == '') {
 		// NEEDS CAPTCHA AGAIN
-		return setTimeout(() => exports.captchaWorker(request, task, profile, raffleToken, pageID), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
+		return setTimeout(() => exports.captchaWorker(request, task, profile, csrfToken), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
 	}
 
 	if (task['proxy'] != '') {
@@ -499,24 +555,152 @@ exports.submitRaffle = function (request, task, profile, raffleToken, pageID) {
 		agent = '';
 	}
 	request({
-		url: 'https://raffle.vooberlin.com/ajax.php',
+		url: 'https://raffle.snipesusa.com/api/registrations',
 		method: 'POST',
 		headers: {
-			'origin': 'https://raffle.vooberlin.com',
-			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36',
-			'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-			'referer': task['variant'],
-			'authority': 'raffle.vooberlin.com',
-			'x-requested-with': 'XMLHttpRequest'
+			'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 libshopgate/22.0 (SnipesKicks 10.41.0 Codebase:10.41.0 NOAPPLEPAY)',
+			'x-csrf-token': csrfToken
 		},
-		body: 'token=' + raffleToken + '&page_id=' + pageID + '&shoes_size=' + task['taskSizeVariant'] + '&action=send_request&fax=&name=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&contact_number=' + profile['phoneNumber'] + '&streetname=' + profile['address'] + '&housenumber=' + profile['address'] + '&postalcode=' + profile['zipCode'] + '&city=' + profile['city'] + '&country=' + countryFormatter(profile['country']) + '&countryhidden=&g-recaptcha-response=' + mainBot.taskCaptchas[task['type']][task['taskID']],
-		agent: agent
+		json: {
+			"email": task['taskEmail'],
+			"first_name": profile['firstName'],
+			"last_name": profile['lastName'],
+			"phone_number": profile['phoneNumber'],
+			"postal_code": profile['zipCode'],
+			"quantity_id": task['sizeSaved'],
+			"recaptcha": mainBot.taskCaptchas[task['type']][task['taskID']]
+		},
+		agent: agent,
+		followAllRedirects: true
 	}, function callback(error, response, body) {
-		console.log(`[${task.taskID}]  ` + body)
-		try {
-			body = JSON.parse(body);
-		} catch (e) {
+		console.log(body);
+		if (!error) {
+			if (response.statusCode != 200) {
+				if (JSON.stringify(body).toLowerCase().indexOf('postal_code') > -1 && JSON.stringify(body).toLowerCase().indexOf('allowed to be empty') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Please save a post code'
+					});
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				} else if (JSON.stringify(body).toLowerCase().indexOf('phone_number') > -1 && JSON.stringify(body).toLowerCase().indexOf('allowed to be empty') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Please save a valid phone number'
+					});
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				} else if (JSON.stringify(body).toLowerCase().indexOf('phone_number') > -1 && JSON.stringify(body).toLowerCase().indexOf('required pattern') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Invalid number format (10 digits)'
+					});
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				}  else if (JSON.stringify(body).toLowerCase().indexOf('first_name') > -1 && JSON.stringify(body).toLowerCase().indexOf('allowed to be empty') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Please save a valid first name'
+					});
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				} else if (JSON.stringify(body).toLowerCase().indexOf('last_name') > -1 && JSON.stringify(body).toLowerCase().indexOf('allowed to be empty') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Please save a valid last name'
+					});
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				} else if (JSON.stringify(body).toLowerCase().indexOf('email') > -1 && JSON.stringify(body).toLowerCase().indexOf('allowed to be empty') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Please save a valid email'
+					});
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				} else if (JSON.stringify(body).toLowerCase().indexOf('email') > -1 && JSON.stringify(body).toLowerCase().indexOf('must be a valid email') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Please save a valid email'
+					});
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				} else {
+					if (response.statusCode == 400) {
+						console.log(JSON.stringify(body))
+						console.log(JSON.stringify(task))
+						console.log(JSON.stringify(profile))
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'Unknown error. DM log'
+						});
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					} else {
+						var proxy2 = getRandomProxy();
+						task['proxy'] = proxy2;
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
+						});
+						return setTimeout(() => exports.submitRaffle(request, task, profile, csrfToken), global.settings.retryDelay);
+					}
+				}
+			}
+			mainBot.mainBotWin.send('taskUpdate', {
+				id: task.taskID,
+				type: task.type,
+				message: 'Got entry details'
+			});
+			console.log(`[${task.taskID}] ` + ' Got entry details');
+			if (!body) {
+				var proxy2 = getRandomProxy();
+				task['proxy'] = proxy2;
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
+				});
+				return setTimeout(() => exports.submitRaffle(request, task, profile, csrfToken), global.settings.retryDelay);
+			}
+			if (body['data']['confirmation_code'] != null || body['data']['confirmation_code'] != undefined) {
+				var confirmDelay = (Math.floor(Math.random() * (30 - 11 + 1)) + 11) * 10000;
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Verifying Entry in ' + confirmDelay / 10000 + 's'
+				});
+				console.log('https://raffle.snipesusa.com/verify/' + body['data']['verification_code']);
+				return setTimeout(() => exports.verifyEntry(request, task, profile, 'https://raffle.snipesusa.com/verify/' + body['data']['verification_code'], confirmDelay));
+			} else {
+				console.log(JSON.stringify(body))
+				console.log(JSON.stringify(task))
+				console.log(JSON.stringify(profile))
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Unknown error. DM log'
+				});
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+				return;
+			}
+		} else {
 			var proxy2 = getRandomProxy();
 			task['proxy'] = proxy2;
 			mainBot.mainBotWin.send('taskUpdate', {
@@ -524,61 +708,88 @@ exports.submitRaffle = function (request, task, profile, raffleToken, pageID) {
 				type: task.type,
 				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 			});
-			return setTimeout(() => exports.submitRaffle(request, task, profile, raffleToken, pageID), global.settings.retryDelay);
-		}
-		console.log('token=' + raffleToken + '&page_id=' + pageID + '&shoes_size=' + task['taskSizeVariant'] + '&action=send_request&fax=&name=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&contact_number=' + profile['phoneNumber'] + '&streetname=' + profile['address'] + '&housenumber=' + profile['address'] + '&postalcode=' + profile['zipCode'] + '&city=' + profile['city'] + '&country=' + countryFormatter(profile['country']) + '&countryhidden=&g-recaptcha-response=' + mainBot.taskCaptchas[task['type']][task['taskID']]);
-		if (body.error == true) {
-			console.log(`[${task.taskID}] ` + ' ERROR: ' + body.msg);
-			if (body.msg == 'Error Captcha!') {
-				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Captcha error! Retrying'
-				});
-				console.log(`[${task.taskID}] ` + ' Captcha error! Retrying');
-				return setTimeout(() => exports.captchaWorker(request, task, profile, raffleToken, pageID), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
-			} else if (body.msg == 'You can register only once per raffle!') {
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Already entered!'
-				});
-				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-				return;
-			} else if (body.msg == 'Invalid shoes size!') {
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Size error. Contact the devs'
-				});
-				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-				return;
-			} else if (body.msg == 'Required fields are empty!') {
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Please enter every address detail'
-				});
-				console.log(`[${task.taskID}] ` + JSON.stringify(profile));
-				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-				return;
-			}
-		} else {
-			mainBot.taskCaptchas[task['type']][task['taskID']]
-			mainBot.mainBotWin.send('taskUpdate', {
-				id: task.taskID,
-				type: task.type,
-				message: 'Entry submitted!'
-			});
-			console.log(`[${task.taskID}] ` + ' Entry submitted!');
-			registerEmail(task);
-			mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '');
-			mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-			return;
+			return setTimeout(() => exports.submitRaffle(request, task, profile, csrfToken), global.settings.retryDelay);
 		}
 	});
 }
+
+exports.verifyEntry = function (request, task, profile, verifyURL) {
+	if (shouldStop(task) == true) {
+		return;
+	}
+	if (checkEmail(task)) {
+		mainBot.mainBotWin.send('taskUpdate', {
+			id: task.taskID,
+			type: task.type,
+			message: 'Email previously entered'
+		});
+		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+		return;
+	}
+	
+	if (task['proxy'] != '') {
+		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
+	} else {
+		agent = '';
+	}
+
+	request({
+		url: verifyURL,
+		headers: {
+			'Connection': 'keep-alive',
+			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
+			'Sec-Fetch-Mode': 'navigate',
+			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+			'Sec-Fetch-Site': 'none',
+			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
+		},
+		agent: agent,
+	}, function callback(error, response, body) {
+		if (!error) {``
+			if(response.statusCode == 200)
+			{
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Entry submitted and verified!'
+				});
+				registerEmail(task);
+				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '');
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+			}
+			else
+			{
+				console.log(response.statusCode);
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Error. Need to manually confirm entry'
+				});
+				registerEmail(task);
+				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], verifyURL, '');
+				var open = require("open");
+				open(verifyURL);
+				return;
+			}
+		}
+		else
+		{
+			console.log(error);
+			mainBot.mainBotWin.send('taskUpdate', {
+				id: task.taskID,
+				type: task.type,
+				message: 'Error. Need to manually confirm entry'
+			});
+			registerEmail(task);
+			mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], verifyURL, '');
+			var open = require("open");
+			open(verifyURL);
+			return;
+		}
+	});
+
+}
+
 
 // Check if task should stop, for example if deleted
 function shouldStop(task) {
@@ -619,77 +830,38 @@ function registerEmail(task) {
 }
 
 
-// Needed for country localizations being different per site
-function countryFormatter(profileCountry) {
-	switch (profileCountry) {
-		case 'United Kingdom':
-			return 'United Kingdom';
-			break;
-		case 'United States':
-			return 'United States of America';
-			break;
-		case 'Canada':
-			return 'Canada';
-			break;
-		case 'North Ireland':
-			return 'North Ireland';
-			break;
-		case 'Ireland':
-			return 'Ireland';
-			break;
-		case 'Germany':
-			return 'Germany';
-			break;
-		case 'Switzerland':
-			return 'Switzerland';
-			break;
-		case 'France':
-			return 'France';
-			break;
-		case 'Spain':
-			return 'Spain';
-			break;
-		case 'Italy':
-			return 'Italy';
-			break;
-		case 'Netherlands':
-			return 'Netherlands';
-			break;
-		case 'Czech Republic':
-			return 'Czech Republic';
-			break;
-		case 'Australia':
-			return 'Australia';
-			break;
-		case 'Belgium':
-			return 'Belgium';
-			break;
-		case 'Slovenia':
-			return 'Slovenia';
-			break;
-		case 'Singapore':
-			return 'Singapore';
-			break;
-		case 'Malaysia':
-			return 'Malaysia';
-			break;
-		case 'Hong Kong':
-			return 'Hong Kong';
-			break;
-		case 'China':
-			return 'China';
-			break;
-		case 'Japan':
-			return 'Japan';
-			break;
-		case 'Sweden':
-			return 'Sweden';
-			break;
-		case 'Poland':
-			return 'Poland';
-			break;
-	}
-}
+
+
+//stockItemId = size
+/* code to extract sizes from https://www.oneblockdown.it/en/footwear-sneakers/nike/men-unisex/nike-mars-yard-overshoe/12339
+var sizeList = '';
+for(var i = 0; i < preloadedStock.length; i++)
+{
+	var size = preloadedStock[i]['variant'];
+	size = parseFloat(size.match(/[\d\.]+/));
+	var stockItemId = preloadedStock[i]['stockItemId'];
+	sizeList = sizeList + `'${size}' => '${stockItemId}',`;
+}*/
+
+
+
+
+
+
+function rawurldecode (str) {
+  
+	return decodeURIComponent((str + '')
+	  .replace(/%(?![\da-f]{2})/gi, function () {
+		// PHP tolerates poorly formed escape sequences
+		return '%25'
+	  }))
+  }
+  
+
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+} 
 
 
 

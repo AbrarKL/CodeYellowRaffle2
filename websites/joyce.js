@@ -1,24 +1,21 @@
 /*
 	Copyright (C) 2019 Code Yellow
-
 	This program is free software: you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
-
 	This program is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU General Public License for more details.
-
 	You should have received a copy of the GNU General Public License
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 
 var HttpsProxyAgent = require('https-proxy-agent');
 var mainBot = require('../index.js')
-var faker = require('faker');
 var cheerio = require('cheerio');
+var faker = require('faker');
 
 function formatProxy(proxy) {
 	if (proxy == '') {
@@ -68,32 +65,25 @@ exports.initTask = function (task, profile) {
 		jar: jar
 	});
 
-
 	if (profile['jigProfileFirstName'] == true) {
 		profile['firstName'] = faker.fake("{{name.firstName}}");
 	}
 	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
 	}
-	
+
 	if (profile['jigProfileFirstNameLetter'] == true) {
-		if (Math.random() >= 0.5)
-		{
-			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
-		}
-		else
-		{
-			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		if (Math.random() >= 0.5) {
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97 + Math.floor(Math.random() * 26));
+		} else {
+			profile['firstName'] = String.fromCharCode(97 + Math.floor(Math.random() * 26)) + profile['firstName'];
 		}
 	}
 	if (profile['jigProfileLastNameLetter'] == true) {
-		if (Math.random() >= 0.5)
-		{
-			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
-		}
-		else
-		{
-			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		if (Math.random() >= 0.5) {
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97 + Math.floor(Math.random() * 26));
+		} else {
+			profile['lastName'] = String.fromCharCode(97 + Math.floor(Math.random() * 26)) + profile['lastName'];
 		}
 	}
 
@@ -140,10 +130,13 @@ exports.initTask = function (task, profile) {
 
 	if (profile['jigProfileAddress'] == true) {
 		profile['aptSuite'] = faker.fake("{{address.secondaryAddress}}");
+		// ********************************************* Add this only to sites with no address line 2 *********************************************
+		profile['address'] = profile['address'] + ' ' + faker.fake("{{address.secondaryAddress}}");
+		// ********************************************* Add this only to sites with no address line 2 *********************************************
 	}
 
 	if (profile['jigProfilePhoneNumber'] == true) {
-		profile['phoneNumber'] = faker.fake("{{phone.phoneNumberFormat}}");
+		profile['phoneNumber'] = '3' + Math.floor(1000000 + Math.random() * 9000000);
 	}
 
 	if (task['proxy'] != '') {
@@ -151,58 +144,64 @@ exports.initTask = function (task, profile) {
 	} else {
 		agent = '';
 	}
+	if(profile['country'] != 'Hong Kong')
+	{
+		mainBot.mainBotWin.send('taskUpdate', {
+			id: task.taskID,
+			type: task.type,
+			message: 'This website is HK Pickup only'
+		});
+		return;
+	}
+
 
 	mainBot.mainBotWin.send('taskUpdate', {
 		id: task.taskID,
 		type: task.type,
-		message: 'Obtaining raffle page'
+		message: 'Getting raffle page'
 	});
-
 	request({
-		url: task['variant'],
+		rejectUnauthorized: false,
+		url: 'https://event.joyce.com/hk',
 		headers: {
 			'Connection': 'keep-alive',
 			'Cache-Control': 'max-age=0',
 			'Upgrade-Insecure-Requests': '1',
-			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36',
+			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
+			'Sec-Fetch-Mode': 'navigate',
+			'Sec-Fetch-User': '?1',
 			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+			'Sec-Fetch-Site': 'none',
 			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 		},
 		agent: agent
 	}, function callback(error, response, body) {
-		if (!error && response.statusCode == 200) {
+		if (!error) {
+			if (response.statusCode != 200) {
+				var proxy2 = getRandomProxy();
+				task['proxy'] = proxy2;
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
+				});
+				return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
+			}
 			mainBot.mainBotWin.send('taskUpdate', {
 				id: task.taskID,
 				type: task.type,
 				message: 'Got raffle page'
 			});
-			console.log(`[${task.taskID}] ` + ' Got raffle page');
-			console.log('Now needs captcha');
 			mainBot.mainBotWin.send('taskUpdate', {
 				id: task.taskID,
 				type: task.type,
-				message: 'Awaiting captcha'
+				message: 'Submitting entry'
 			});
-			console.log(`[${task.taskID}] ` + ' Awaiting captcha');
-			mainBot.requestCaptcha('bdgastore', task, false);
-			const capHandler = () => {
-				if (mainBot.taskCaptchas[task['type']][task['taskID']] == undefined || mainBot.taskCaptchas[task['type']][task['taskID']] == '') {
-					setTimeout(() => capHandler(), 100);
-				} else {
-					mainBot.mainBotWin.send('taskUpdate', {
-						id: task.taskID,
-						type: task.type,
-						message: 'Posting raffle information'
-					});
-					exports.submitRaffle(request, task, profile);
-					return;
-				}
-			}
-			capHandler();
+			return exports.submitRaffle(request, task, profile)
 		} else {
+			console.log(body);
 			var proxy2 = getRandomProxy();
 			task['proxy'] = proxy2;
-			console.log('New proxy: ' + formatProxy(task['proxy']));
 			mainBot.mainBotWin.send('taskUpdate', {
 				id: task.taskID,
 				type: task.type,
@@ -212,6 +211,7 @@ exports.initTask = function (task, profile) {
 		}
 	});
 }
+
 
 exports.submitRaffle = function (request, task, profile) {
 	if (shouldStop(task) == true) {
@@ -226,99 +226,95 @@ exports.submitRaffle = function (request, task, profile) {
 		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 		return;
 	}
-	if (mainBot.taskCaptchas[task['type']][task['taskID']] == undefined || mainBot.taskCaptchas[task['type']][task['taskID']] == '') {
-		// NEEDS CAPTCHA AGAIN
-		return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
-	}
-
+	console.log(`[${task.taskID}] ` + JSON.stringify(task));
+	console.log(`[${task.taskID}] ` + JSON.stringify(profile));
 	if (task['proxy'] != '') {
 		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 	} else {
 		agent = '';
 	}
-	var form = JSON.parse(
-		`{
-			"id": "${task['bdgastore']['widgetID']}",
-			"type": "widget",
-			"refer_source": "",
-			"entry_source": "${task['variant']}",
-			"first_name": "${profile['firstName']}",
-			"last_name": "${profile['lastName']}",
-			"email": "${task['taskEmail']}",
-			"email_again": "",
-			"${task['bdgastore']['sizeID']}": "${task['taskSizeSelect']}",
-			"agree_to_rules": "yes",
-			"g-recaptcha-response": "${mainBot.taskCaptchas[task['type']][task['taskID']]}"
-		}`);
+
 	request({
-		url: 'https://app.viralsweep.com/promo/enter',
+		rejectUnauthorized: false,
+		url: 'https://event.joyce.com/hk',
 		method: 'POST',
 		headers: {
-			'origin': 'https://app.viralsweep.com',
-			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36',
-			'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-			'accept': '*/*',
-			'referer': task['bdgastore']['referer'],
-			'authority': 'app.viralsweep.com',
-			'x-requested-with': 'XMLHttpRequest'
+			'Sec-Fetch-Mode': 'cors',
+			'Sec-Fetch-Site': 'same-origin',
+			'Origin': 'https://event.joyce.com',
+			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
+			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
+			'Content-Type': 'application/json;charset=UTF-8',
+			'Accept': 'application/json, text/plain, */*',
+			'Referer': 'https://event.joyce.com/hk',
+			'Connection': 'keep-alive'
 		},
-		formData: form,
-		agent: agent
+		body: '{"title":"Mr","lastName":"' + profile['lastName'] + '","firstName":"' + profile['firstName'] + '","idNumber4":"' + task['hkidnumber'] + '","email":"' + task['taskEmail'] + '","mobileNumber":"' + profile['phoneNumber'] + '","sizeSelector":"' + task['taskSizeVariant'] + '","joyceMember":"NO","personalDataAgreement":true,"lang":null}',
+		followAllRedirects: true
 	}, function callback(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			console.log(`[${task.taskID}] ` + body);
-			try {
-				parsed = JSON.parse(body)
-			} catch (e) {
-				var proxy2 = getRandomProxy();
-				task['proxy'] = proxy2;
-				console.log('New proxy: ' + formatProxy(task['proxy']));
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
-				});
-				// Goes back to beginning since only 2 steps and re needs captcha probably
-				return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
-			}
-			if (parsed.success == 1) {
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Entry submitted!'
-				});
-				console.log(`[${task.taskID}] ` + ' Entry submitted!');
-				registerEmail(task);
-				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '');
-				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-				return;
+		if (!error) {
+			if (response.statusCode == 202) {
+				if (body == task['variant']) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Entry submitted!'
+					});
+					registerEmail(task);
+					mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '');
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				}
 			} else {
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Unknown Error!'
-				});
-				console.log(`[${task.taskID}] ` + ' Unknown Error!');
-				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-				return;
+				try {
+					var parsed = JSON.parse(body)
+				} catch (e) {
+					console.log(body);
+					console.log(response.statusCode);
+					console.log('DM log');
+					console.log(`[${task.taskID}] ` + JSON.stringify(task));
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Unknown error. DM Log'
+					});
+					return
+				}
+				if (parsed['msg']) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: parsed['msg']
+					});
+					return;
+				} else {
+					console.log(body);
+					console.log(response.statusCode);
+					console.log('DM log');
+					console.log(`[${task.taskID}] ` + JSON.stringify(task));
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Unknown error. DM Log'
+					});
+					return
+				}
 			}
 		} else {
-
 			var proxy2 = getRandomProxy();
 			task['proxy'] = proxy2;
-			console.log('New proxy: ' + formatProxy(task['proxy']));
 			mainBot.mainBotWin.send('taskUpdate', {
 				id: task.taskID,
 				type: task.type,
 				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 			});
-			// Goes back to beginning since only 2 steps and re needs captcha probably
-			return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
+			return setTimeout(() => exports.submitRaffle(request, task, profile), global.settings.retryDelay);
 		}
 	});
-}
 
+}
 
 // Check if task should stop, for example if deleted
 function shouldStop(task) {
@@ -356,4 +352,126 @@ function registerEmail(task) {
 		global.emails[task['taskEmail']][variantName] = true;
 		mainBot.saveEmails(global.emails);
 	}
+}
+
+
+// Needed for country localizations being different per site
+function countryFormatter(profileCountry) {
+	switch (profileCountry) {
+		case 'United Kingdom':
+			return '77';
+			break;
+		case 'United States':
+			return '233';
+			break;
+		case 'Canada':
+			return '38';
+			break;
+		case 'North Ireland':
+			return '77';
+			break;
+		case 'Ireland':
+			return '102';
+			break;
+		case 'Germany':
+			return '57';
+			break;
+		case 'Switzerland':
+			return '43';
+			break;
+		case 'France':
+			return '75';
+			break;
+		case 'Spain':
+			return '68';
+			break;
+		case 'Italy':
+			return '110';
+			break;
+		case 'Netherlands':
+			return '166';
+			break;
+		case 'Czech Republic':
+			return '56';
+			break;
+		case 'Australia':
+			return '13';
+			break;
+		case 'Austria':
+			return '12';
+			break;
+		case 'Slovakia':
+			return '202';
+			break;
+		case 'Belgium':
+			return '20';
+			break;
+		case 'Slovenia':
+			return '200';
+			break;
+		case 'Singapore':
+			return '198';
+			break;
+		case 'Malaysia':
+			return '158';
+			break;
+		case 'Hong Kong':
+			return '95';
+			break;
+		case 'China':
+			return '48';
+			break;
+		case 'Japan':
+			return '114';
+			break;
+		case 'Sweden':
+			return '197';
+			break;
+		case 'Denmark':
+			return '59';
+			break;
+		case 'Finland':
+			return '70';
+			break;
+		case 'Romania':
+			return '189';
+			break;
+		case 'Poland':
+			return '179';
+			break;
+	}
+}
+
+
+
+
+
+//stockItemId = size
+/* code to extract sizes from https://www.oneblockdown.it/en/footwear-sneakers/nike/men-unisex/nike-mars-yard-overshoe/12339
+var sizeList = '';
+for(var i = 0; i < preloadedStock.length; i++)
+{
+	var size = preloadedStock[i]['variant'];
+	size = parseFloat(size.match(/[\d\.]+/));
+	var stockItemId = preloadedStock[i]['stockItemId'];
+	sizeList = sizeList + `'${size}' => '${stockItemId}',`;
+}*/
+
+
+// Random birthday
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+
+function makePassword(length) {
+	var result = '';
+	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var charactersLength = characters.length;
+	for (var i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
 }

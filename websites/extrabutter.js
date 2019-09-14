@@ -49,7 +49,7 @@ function getRandomProxy() {
 	}
 }
 
-exports.performTask = function (task, profile) {
+exports.initTask = function (task, profile) {
 	if (shouldStop(task) == true) {
 		return;
 	}
@@ -67,9 +67,32 @@ exports.performTask = function (task, profile) {
 		jar: jar
 	});
 
-	if (profile['jigProfileName'] == true) {
+	if (profile['jigProfileFirstName'] == true) {
 		profile['firstName'] = faker.fake("{{name.firstName}}");
+	}
+	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
+	}
+	
+	if (profile['jigProfileFirstNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		}
+	}
+	if (profile['jigProfileLastNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		}
 	}
 
 	if (task['taskTypeOfEmail'] == 'catchall') {
@@ -191,7 +214,7 @@ exports.performTask = function (task, profile) {
 							type: task.type,
 							message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 						});
-						return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+						return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 					}
 					if (parsed.message == 'Customer created successfully') {
 						var customerID = parsed.id;
@@ -214,7 +237,7 @@ exports.performTask = function (task, profile) {
 							type: task.type,
 							message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 						});
-						return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+						return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 					} else {
 						try {
 							var parsed = JSON.parse(body);
@@ -226,7 +249,7 @@ exports.performTask = function (task, profile) {
 								type: task.type,
 								message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 							});
-							return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+							return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 						}
 						if (parsed['errors']['email'][0] == 'has already been taken') {
 							console.log('Email used before');
@@ -258,7 +281,7 @@ exports.performTask = function (task, profile) {
 				type: task.type,
 				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 			});
-			return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+			return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 		}
 	});
 
@@ -410,7 +433,7 @@ exports.tokenizeCard = function (request, task, profile, customerID, entryID) {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
-			'Referer': 'https://js.stripe.com/v3/controller-97af8c3dcbdd82cb2827d49bb8aa31ad.html',
+			'Referer': 'https://js.stripe.com/v3/controller-815299a026a6d6a05ad55cbe5b5816d4.html',
 			'Origin': 'https://js.stripe.com',
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36',
 			'Content-Type': 'application/x-www-form-urlencoded'
@@ -421,7 +444,7 @@ exports.tokenizeCard = function (request, task, profile, customerID, entryID) {
 			'card[cvc]': profile['CVV'],
 			'card[exp_month]': profile['expiryMonth'],
 			'card[exp_year]': profile['expiryYear'].substr(profile['expiryYear'].length - 2),
-			payment_user_agent: 'stripe.js/15af90e0; stripe-js-v3/15af90e0',
+			payment_user_agent: 'stripe.js/48e118db; stripe-js-v3/48e118db',
 			referrer: task['variant']
 		},
 		agent: agent

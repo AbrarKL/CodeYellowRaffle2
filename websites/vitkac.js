@@ -50,7 +50,7 @@ function getRandomProxy() {
 	}
 }
 
-exports.performTask = function (task, profile) {
+exports.initTask = function (task, profile) {
 	// *TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY**TEMPORARY*
 	//task['captchaHandler'] = '2captcha';
 	//task['captchaHandler'] = 'anticaptcha';
@@ -74,9 +74,32 @@ exports.performTask = function (task, profile) {
 	});
 
 
-	if (profile['jigProfileName'] == true) {
+	if (profile['jigProfileFirstName'] == true) {
 		profile['firstName'] = faker.fake("{{name.firstName}}");
+	}
+	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
+	}
+	
+	if (profile['jigProfileFirstNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		}
+	}
+	if (profile['jigProfileLastNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		}
 	}
 
 	if (task['taskTypeOfEmail'] == 'catchall') {
@@ -161,25 +184,25 @@ exports.captchaWorker = function (request, task, profile) {
 		}
 		capHandler();
 	} else {
-		if (global.settings.capAPIKey == '' || global.settings.capAPIKey == undefined) {
-			mainBot.mainBotWin.send('taskUpdate', {
-				id: task.taskID,
-				type: task.type,
-				message: 'Captcha API Key not set. Check settings.'
-			});
-			mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-			mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-			return;
-		}
 
 
 
 		if (task['captchaHandler'] == 'anticaptcha') {
+			if (global.settings.antiCapAPIKey == '' || global.settings.antiCapAPIKey == undefined) {
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Captcha API Key not set. Check settings.'
+				});
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+				return;
+			}
 			request({
 				url: 'https://api.anti-captcha.com/createTask',
 				method: 'POST',
 				body: {
-					clientKey: global.settings.capAPIKey,
+					clientKey: global.settings.antiCapAPIKey,
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
 						"websiteURL": "https://www.vitkac.com",
@@ -212,7 +235,7 @@ exports.captchaWorker = function (request, task, profile) {
 							url: 'https://api.anti-captcha.com/getTaskResult',
 							method: 'POST',
 							body: {
-								clientKey: global.settings.capAPIKey,
+								clientKey: global.settings.antiCapAPIKey,
 								taskId: taskId
 							},
 							json: true
@@ -267,8 +290,18 @@ exports.captchaWorker = function (request, task, profile) {
 			});
 		}
 		else if (task['captchaHandler'] == '2captcha') {
+			if (global.settings['2capAPIKey'] == '' || global.settings['2capAPIKey'] == undefined) {
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Captcha API Key not set. Check settings.'
+				});
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+				return;
+			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings.capAPIKey + '&method=userrecaptcha&googlekey=6LfmiqkUAAAAAD_Fm-4KvgdtZhZbzXh2kdie0y2B&pageurl=https://www.vitkac.com&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LfmiqkUAAAAAD_Fm-4KvgdtZhZbzXh2kdie0y2B&pageurl=https://www.vitkac.com&json=1',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {
@@ -304,7 +337,7 @@ exports.captchaWorker = function (request, task, profile) {
 							});
 							console.log('Checking for Captcha token (2Captcha Task ID: ' + taskId + ')');
 							request({
-								url: 'https://2captcha.com/res.php?key=' + global.settings.capAPIKey + '&action=get&id=' + taskId + '&json=1',
+								url: 'https://2captcha.com/res.php?key=' + global.settings['2capAPIKey'] + '&action=get&id=' + taskId + '&json=1',
 								method: 'GET',
 								json: true
 							}, function (error, response, body) {

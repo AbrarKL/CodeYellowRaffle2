@@ -30,28 +30,8 @@ const appDataDir = require('os').homedir() + "\\AppData\\Local\\CodeYellow_Raffl
 const proxy = require('./proxy.js');
 const crypto = require('crypto');
 
-// WEBSITES SUPPORTED
-const hervia = require('./websites/hervia.js');
-const shelta = require('./websites/shelta.js');
-const chmielna = require('./websites/chmielna.js');
-const vitkac = require('./websites/vitkac.js');
-const kodaiaio = require('./websites/kodaiaio.js');
-const dsmny = require('./websites/dsmny.js');
-const dsml = require('./websites/dsml.js');
-const dsmla = require('./websites/dsmla.js');
-const footpatroluk = require('./websites/footpatroluk.js');
-const footshop = require('./websites/footshop.js');
-const nakedcph = require('./websites/nakedcph.js');
-const vooberlin = require('./websites/vooberlin.js');
-const ymeuniverse = require('./websites/ymeuniverse.js');
-const oneblockdown = require('./websites/oneblockdown.js');
-const wishatl = require('./websites/wishatl.js');
-const bdgastore = require('./websites/bdgastore.js');
-const supplystore = require('./websites/supplystore.js');
-const renarts = require('./websites/renarts.js');
-const stayrooted = require('./websites/stayrooted.js');
-const extrabutter = require('./websites/extrabutter.js');
-const crusoeandsons = require('./websites/crusoeandsons.js');
+// WEBSITES SUPPORTED;
+const websites = require('./websites');
 
 initialfolderExistsOrMkDir();
 
@@ -67,16 +47,62 @@ console.log = function (msg) {
 	trueLog(msg);
 }
 
+
 global.websites = {
+	'shoezgallery': {
+		sitekey: '6LcBxjcUAAAAAIwov8vAg-HTPriSnUIQXYBBFweZ',
+		url: 'raffle.shoezgallery.com',
+		name: 'ShoezGallery'
+	},
+	'bstn': {
+		sitekey: '6LeZJZEUAAAAAPLuYfMYiMOF7X7tKMz45xfEIXaZ',
+		url: 'raffle.bstn.com',
+		name: 'BSTN'
+	},
+	'asphaltgold': {
+		sitekey: '6LcN9xoUAAAAAHqSkoJixPbUldBoHojA_GCp6Ims',
+		url: 'asphaltgold.us1.list-manage.com',
+		name: 'AsphaltGold'
+	},
+	'snipeskicks': {
+		sitekey: '6Lf1zbMUAAAAANBwSjY8Mh5d0bTe4-ucx5Gt1UEz',
+		url: 'raffle.snipesusa.com',
+		name: 'SnipesKicks (Kicks)'
+	},
+	'kicksstore': {
+		sitekey: '6LfQ36gUAAAAAJjVSZ15liCo0kXjEBH6Lcexwl6_',
+		url: 'raffle.kicksstore.eu',
+		name: 'KicksStore'
+	},
+	'dtlr': {
+		sitekey: '6LeepqwUAAAAAKmQ_Dj-bY23bKZtThXNxlxFKp6F',
+		url: 'blog.dtlr.com',
+		name: 'DTLR'
+	},
+	'backdoor': {
+		sitekey: '6LdVDAcTAAAAAP1Qr9EowXZi1gSYmGI9aqxiUFgD',
+		url: 'back-door.it',
+		name: 'Back-door.it'
+	},
+	'milk-store': {
+		sitekey: '6LdJXYMUAAAAANBhbEps33IW7BJKBEu3xsWOkZ7Z',
+		url: 'raffle.milk-store.com',
+		name: 'Milk-store'
+	},
 	'chmielna': {
 		sitekey: '6Lf14jgUAAAAAJ_xxyVSusFVOJY7yOR-wjpw-8nf',
-		url: 'yeezy.chmielna20.pl',
+		url: 'yeezy500.chmielna20.pl',
 		name: 'Chmielna'
 	},
 	'vitkac': {
 		sitekey: '6LfmiqkUAAAAAD_Fm-4KvgdtZhZbzXh2kdie0y2B',
 		url: 'vitkac.com',
 		name: 'Vitkac'
+	},
+	'skatedeluxe': {
+		sitekey: '6LfKcSUUAAAAAKPsnPBeTOSxPfNB_8gXgf7mxeJS',
+		url: 'skatedeluxe.com',
+		name: 'SkateDeluxe'
 	},
 	'vooberlin': {
 		sitekey: '6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec',
@@ -112,6 +138,11 @@ global.websites = {
 		sitekey: '6LetKEIUAAAAAPk-uUXqq9E82MG3e40OMt_74gjS',
 		url: 'losangeles.doverstreetmarket.com',
 		name: 'DSMLA'
+	},
+	'dsms': {
+		sitekey: '6LetKEIUAAAAAPk-uUXqq9E82MG3e40OMt_74gjS',
+		url: 'singapore.doverstreetmarket.com',
+		name: 'DSMS'
 	},
 	'supplystore': {
 		sitekey: '6LfknFoUAAAAAGfMFlRb2qHvlH34AS6HWXGd9RwI',
@@ -221,6 +252,8 @@ function loadBot() {
 				var parsed = JSON.parse(body);
 				// IF CREDENTIALS ARE VALID
 				if (parsed.valid == true) {
+					global.user = parsed.user;
+					global.entries = parsed.entries;
 					console.log("Saved key is valid. Opening Bot.")
 					openBot(false);
 				}
@@ -310,38 +343,6 @@ function openActivation(onReady) {
 				});
 			}
 		});
-		/*request({
-			url: 'https://codeyellow.io/api/login.php',
-			method: 'post',
-			formData: {
-				'password': activationKey
-			},
-		}, function (err, response, body) {
-			try {
-				var parsed = JSON.parse(body);
-			} catch (e) {
-				console.log(body);
-				win.send('notify', {
-					message: 'Error logging in. Our server may be down',
-					length: 2500
-				});
-				return;
-			}
-			if (parsed.valid == true) {
-				console.log("Token to save: " + parsed.token);
-				global.settings.token = parsed.token;
-				global.settings.email = emailAddress;
-				saveSettings();
-				openBot();
-				win.hide();
-			} else {
-				console.log(body);
-				win.send('notify', {
-					message: parsed.message,
-					length: 2500
-				});
-			}
-		});*/
 	});
 
 	// Opens sign up page
@@ -614,13 +615,20 @@ function openBot(onReady) {
 		});
 		exports.sendWebhook('test')
 	});
-	// Save Captcha solving API Key
-	ipcMain.on('saveCapAPIKey', function (e, capAPIKey) {
-		global.settings.capAPIKey = capAPIKey;
+	ipcMain.on('saveAntiCapAPIKey', function (e, antiCapAPIKey) {
+		global.settings.antiCapAPIKey = antiCapAPIKey;
 		saveSettings();
 		module.exports.mainBotWin.send('notify', {
 			length: 3000,
-			message: 'API Key saved!'
+			message: 'AntiCaptcha API Key saved!'
+		});
+	});
+	ipcMain.on('save2capAPIKey', function (e, twoCapAPIKey) {
+		global.settings['2capAPIKey'] = twoCapAPIKey;
+		saveSettings();
+		module.exports.mainBotWin.send('notify', {
+			length: 3000,
+			message: '2Captcha API Key saved!'
 		});
 	});
 	//Open captcha harvester
@@ -646,21 +654,38 @@ function openBot(onReady) {
 		module.exports.taskStatuses[task['type']][task.taskID] = 'active';
 		if (task['taskSiteSelect'] == 'nakedcph') {
 			console.log('Nakedcph task started');
-			nakedcph.performTask(task, profile)
-			module.exports.requestCaptcha('nakedcph', task, false);
+			websites.nakedcph.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'joyce') {
+			if(task['type'] != 'mass')
+			{
+				module.exports.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'You can only mass enter on Joyce'
+				});
+				return;
+			}
+			console.log('Joyce task started');
+			websites.joyce.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'vooberlin') {
 			console.log('VooBerlin task started');
-			vooberlin.performTask(task, profile)
+			websites.vooberlin.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'jd') {
+			console.log('JD task started');
+			websites.jd.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'shoezgallery') {
+			console.log('ShoezGallery task started');
+			websites.shoezgallery.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'footshop') {
 			console.log('Footshop task started');
-			footshop.performTask(task, profile)
+			websites.footshop.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'ymeuniverse') {
 			console.log('YMEuniverse task started');
-			ymeuniverse.performTask(task, profile)
+			websites.ymeuniverse.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'oneblockdown') {
 			if (module.exports.tasksAwaitingConfirm[task.type][task.taskID] != 'awaiting') {
 				console.log('Oneblockdown task started');
-				oneblockdown.performTask(task, profile)
+				websites.oneblockdown.initTask(task, profile)
 			} else {
 				module.exports.tasksAwaitingConfirm[task.type][task.taskID] = 'confirmed';
 				module.exports.mainBotWin.send('taskUpdate', {
@@ -671,52 +696,82 @@ function openBot(onReady) {
 			}
 		} else if (task['taskSiteSelect'] == 'wishatl') {
 			console.log('WishATL task started');
-			wishatl.performTask(task, profile)
+			websites.wishatl.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'bdgastore') {
 			console.log('BDGAStore task started');
-			bdgastore.performTask(task, profile)
+			websites.bdgastore.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'footpatroluk') {
 			console.log('Footpatroluk task started');
-			footpatroluk.performTask(task, profile)
+			websites.footpatroluk.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'dsmny') {
 			console.log('DSMNY task started');
-			dsmny.performTask(task, profile)
+			websites.dsmny.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'dsms') {
+			console.log('DSMS task started');
+			websites.dsms.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'dsml') {
 			console.log('DSML task started');
-			dsml.performTask(task, profile)
+			websites.dsml.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'dsmla') {
 			console.log('DSMLA task started');
-			dsmla.performTask(task, profile)
+			websites.dsmla.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'supplystore') {
 			console.log('SupplyStore task started');
-			supplystore.performTask(task, profile)
+			websites.supplystore.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'kodaiaio') {
 			console.log('KodaiAIO task started');
-			kodaiaio.performTask(task, profile)
+			websites.kodaiaio.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'renarts') {
 			console.log('Renarts task started');
-			renarts.performTask(task, profile)
+			websites.renarts.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'stayrooted') {
 			console.log('Stay-rooted task started');
-			stayrooted.performTask(task, profile)
+			websites.stayrooted.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'extrabutter') {
 			console.log('ExtraButter task started');
-			extrabutter.performTask(task, profile)
+			websites.extrabutter.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'hervia') {
 			console.log('Hervia task started');
-			hervia.performTask(task, profile)
+			websites.hervia.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'shelta') {
 			console.log('Shelta task started');
-			shelta.performTask(task, profile)
+			websites.shelta.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'vitkac') {
 			console.log('Vitkac task started');
-			vitkac.performTask(task, profile)
+			websites.vitkac.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'chmielna') {
 			console.log('Chmielna task started');
-			chmielna.performTask(task, profile)
+			websites.chmielna.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'crusoeandsons') {
 			console.log('Crusoeandsons task started');
-			crusoeandsons.performTask(task, profile)
+			websites.crusoeandsons.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'milk-store') {
+			console.log('Milk-store task started');
+			websites.milkstore.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'backdoor') {
+			console.log('Backdoor task started');
+			websites.backdoor.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'skatedeluxe') {
+			console.log('SkateDeluxe task started');
+			websites.skatedeluxe.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'dtlr') {
+			console.log('DTLR task started');
+			websites.dtlr.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'snipeskicks') {
+			console.log('SnipesKicks task started');
+			websites.snipeskicks.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'kicksstore') {
+			console.log('KicksStore task started');
+			websites.kicksstore.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'asphaltgold') {
+			console.log('AsphaltGold task started');
+			websites.asphaltgold.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'bstn') {
+			console.log('BSTN task started');
+			websites.bstn.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'bouncewear') {
+			console.log('BounceWear task started');
+			websites.bouncewear.initTask(task, profile)
 		}
 	});
 
@@ -1125,7 +1180,7 @@ function createOrGetFiles() {
 		console.log(fileContents);
 		if (fileContents == '' || fileContents == null || fileContents == undefined) {
 			console.log("fileContents == '' || fileContents == null || fileContents == undefined so creating a blank new canvas for settings.json");
-			var parsed = JSON.parse('{"token": "","email": "", "retryDelay": "500", "discordWebhook": "", "capAPIKey": ""}', null, 4);
+			var parsed = JSON.parse('{"token": "","key": "", "retryDelay": "500", "discordWebhook": "", "antiCapAPIKey": "", "2capAPIKey": ""}', null, 4);
 			makeFile('settings.json', JSON.stringify(parsed, null, 4))
 			global.settings = parsed;
 		} else {
@@ -1137,7 +1192,7 @@ function createOrGetFiles() {
 			}
 		}
 	} else {
-		var parsed = JSON.parse('{"token": "","email": "", "retryDelay": "500", "discordWebhook": "", "capAPIKey": ""}', null, 4);
+		var parsed = JSON.parse('{"token": "","key": "", "retryDelay": "500", "discordWebhook": "", "antiCapAPIKey": "", "2capAPIKey": ""}', null, 4);
 		makeFile('settings.json', JSON.stringify(parsed, null, 4))
 		global.settings = parsed;
 	}
@@ -1206,7 +1261,7 @@ function getUpcomingReleases() {
 				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
 			},
 			json: true,
-			url: 'https://codeyellow.io/api/releases_25.php'
+			url: 'https://codeyellow.io/api/releases_41.php'
 		},
 		function (error, response, body) {
 			global.releases = body;

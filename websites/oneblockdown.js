@@ -47,7 +47,7 @@ function getRandomProxy() {
 	}
 }
 
-exports.performTask = function (task, profile) {
+exports.initTask = function (task, profile) {
 	if (shouldStop(task) == true) {
 		return;
 	}
@@ -65,9 +65,32 @@ exports.performTask = function (task, profile) {
 		jar: jar
 	});
 
-	if (profile['jigProfileName'] == true) {
+	if (profile['jigProfileFirstName'] == true) {
 		profile['firstName'] = faker.fake("{{name.firstName}}");
+	}
+	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
+	}
+	
+	if (profile['jigProfileFirstNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		}
+	}
+	if (profile['jigProfileLastNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		}
 	}
 	
 	if (task['taskTypeOfEmail'] == 'catchall') {
@@ -140,7 +163,7 @@ exports.performTask = function (task, profile) {
 		headers: {
 			'origin': 'https://www.oneblockdown.it',
 			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36',
+			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.112 Safari/537.36',
 			'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
 			'accept': 'application/json, text/javascript, */*; q=0.01',
 			'referer': 'https://www.oneblockdown.it/en/login',
@@ -160,7 +183,7 @@ exports.performTask = function (task, profile) {
 			'privacy[1]': '1',
 			'privacy[2]': '1',
 			'redirectTo': 'https://www.oneblockdown.it/en/account',
-			'version': '103'
+			'version': '112'
 		},
 		agent: agent
 	}, function callback(error, response, body) {
@@ -262,7 +285,7 @@ exports.performTask = function (task, profile) {
 				type: task.type,
 				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 			});
-			return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+			return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 		}
 	});
 }
@@ -308,7 +331,7 @@ exports.login = function (request, task, profile) {
 			'extension': 'obd',
 			'credential': task['taskEmail'],
 			'password': task['taskPassword'],
-			'version': '103'
+			'version': '112'
 		},
 		followAllRedirects: true,
 		agent: agent
@@ -520,7 +543,7 @@ exports.submitRaffle = function (request, task, profile, userId) {
 			'address[cityName]': profile['city'],
 			'address[phone_number]': profile['phoneNumber'],
 			'address[statecode]': profile['stateProvince'],
-			'version': '103'
+			'version': '112'
 		},
 		agent: agent
 	}, function callback(error, response, body) {
@@ -543,7 +566,7 @@ exports.submitRaffle = function (request, task, profile, userId) {
 			'address[cityName]': profile['city'],
 			'address[phone_number]': profile['phoneNumber'],
 			'address[statecode]': profile['stateProvince'],
-			'version': '103'
+			'version': '112'
 		}));
 		console.log(body)
 		console.log(`[${task.taskID}]` + response.statusCode);

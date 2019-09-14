@@ -50,7 +50,7 @@ function getRandomProxy() {
 	}
 }
 
-exports.performTask = function (task, profile) {
+exports.initTask = function (task, profile) {
 	if (shouldStop(task) == true) {
 		return;
 	}
@@ -68,9 +68,32 @@ exports.performTask = function (task, profile) {
 		jar: jar
 	});
 
-	if (profile['jigProfileName'] == true) {
+	if (profile['jigProfileFirstName'] == true) {
 		profile['firstName'] = faker.fake("{{name.firstName}}");
+	}
+	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
+	}
+	
+	if (profile['jigProfileFirstNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		}
+	}
+	if (profile['jigProfileLastNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		}
 	}
 	
 	if (task['taskTypeOfEmail'] == 'catchall') {
@@ -160,7 +183,7 @@ exports.performTask = function (task, profile) {
 					message: 'Error getting raffle token. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 				});
 				console.log(`[${task.taskID}] ` + ' Error getting raffle token. Retrying');
-				return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+				return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 			}
 			mainBot.mainBotWin.send('taskUpdate', {
 				id: task.taskID,
@@ -178,7 +201,7 @@ exports.performTask = function (task, profile) {
 				type: task.type,
 				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 			});
-			return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+			return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 		}
 	});
 }
@@ -289,7 +312,7 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 						message: 'Error getting 2nd raffle token. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 					});
 					console.log(`[${task.taskID}] ` + ' Error getting raffle token. Retrying');
-					return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+					return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 				}
 			}
 			console.log(`[${task.taskID}] ` + ' Got 2nd raffle token: ' + mf);
@@ -342,7 +365,7 @@ exports.submitRaffle = function (request, task, profile, token, mf) {
 	}
 	if (mainBot.taskCaptchas[task['type']][task['taskID']] == undefined || mainBot.taskCaptchas[task['type']][task['taskID']] == '') {
 		// NEEDS CAPTCHA AGAIN
-		return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
+		return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
 	}
 	
 	if(task['proxy'] != '')

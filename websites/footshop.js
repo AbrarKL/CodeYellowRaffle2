@@ -51,7 +51,7 @@ function getRandomProxy() {
 	}
 }
 
-exports.performTask = function (task, profile) {
+exports.initTask = function (task, profile) {
 	if (shouldStop(task) == true) {
         return;
     }
@@ -70,10 +70,32 @@ exports.performTask = function (task, profile) {
 		jar: jar
 	});
 	
-	if(profile['jigProfileName'] == true)
-	{
+	if (profile['jigProfileFirstName'] == true) {
 		profile['firstName'] = faker.fake("{{name.firstName}}");
+	}
+	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
+	}
+	
+	if (profile['jigProfileFirstNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		}
+	}
+	if (profile['jigProfileLastNameLetter'] == true) {
+		if (Math.random() >= 0.5)
+		{
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
+		}
+		else
+		{
+			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		}
 	}
 	
 	if (task['taskTypeOfEmail'] == 'catchall') {
@@ -162,7 +184,7 @@ exports.performTask = function (task, profile) {
 					type: task.type,
 					message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 				});
-				return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+				return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 			}
 			var sizes = parsed['sizeSets']['Unisex']['sizes'];
 			for (var i = 0; i < sizes.length; i++) {
@@ -185,7 +207,7 @@ exports.performTask = function (task, profile) {
 				type: task.type,
 				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 			});
-			return setTimeout(() => exports.performTask(task, profile), global.settings.retryDelay);
+			return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
 		}
 	});
 
@@ -332,7 +354,34 @@ exports.submitRaffle = function (request, task, profile, sizeID) {
 	} else {
 		agent = '';
 	}
-
+	try 
+	{
+		var cardNumber = profile['cardNumber'].split(" ").join("");
+	} catch (e)
+	{
+		try 
+		{
+			var cardNumber = profile['cardNumber'];
+		} catch (e)
+		{
+			mainBot.mainBotWin.send('taskUpdate', {
+				id: task.taskID,
+				type: task.type,
+				message: 'Card error. DM Log'
+			});
+			console.log(`[${task.taskID}] ` + 'Card error. DM Log');
+			console.log(`[${task.taskID}] ` + profile['cardNumber']);
+			try
+			{
+			console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+			}
+			catch (e)
+			{
+			}
+			mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+			return;
+		}
+	}
 	request({
 		url: 'https://api2.checkout.com/v2/tokens/card',
 		method: 'POST',
@@ -345,7 +394,7 @@ exports.submitRaffle = function (request, task, profile, sizeID) {
 			'Content-Type': 'application/json'
 		},
 		body: {
-			number: profile['cardNumber'].split(" ").join(""),
+			number: cardNumber,
 			expiryMonth: profile['expiryMonth'],
 			expiryYear: profile['expiryYear'].substr(profile['expiryYear'].length - 2),
 			cvv: profile['CVV'],
@@ -420,16 +469,49 @@ exports.submitRaffle = function (request, task, profile, sizeID) {
 						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 					}
 				} else {
-					console.log(JSON.stringify(body));
-					console.log(JSON.stringify(profile));
-					console.log(JSON.stringify(task));
-					mainBot.mainBotWin.send('taskUpdate', {
-						id: task.taskID,
-						type: task.type,
-						message: 'Make sure all your profile details are filled correct.'
-					});
-					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-					return;
+					if (JSON.stringify(body).toLowerCase().indexOf('the email domain') > -1 && JSON.stringify(body).toLowerCase().indexOf('is forbidden') > -1) {	
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'Catchall domain banned'
+						});
+						console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					}
+					else if (JSON.stringify(body).toLowerCase().indexOf('user is already registered') > -1) {	
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'Already registered (Check if jigged)'
+						});
+						console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					}
+					else if (JSON.stringify(body).toLowerCase().indexOf('the card data is invalid') > -1) {	
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'Card limit reached / Card error'
+						});
+						console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					}
+					else
+					{
+						console.log(JSON.stringify(body));
+						console.log(JSON.stringify(profile));
+						console.log(JSON.stringify(task));
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'Make sure all your profile details are filled correct.'
+						});
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					}
 				}
 			});
 		}

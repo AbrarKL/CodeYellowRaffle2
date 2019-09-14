@@ -24,60 +24,51 @@ var tabx = 1;
 $("#defaultOpen").click(function () {
   tabx = 1;
   createtabx = 1;
-  if (tabx = 1) {
-  }
+  if (tabx = 1) {}
 });
 
 $("#profilesTab").click(function () {
   tabx = 2;
   createtabx = 1;
-  if (tabx = 2) {
-  }
+  if (tabx = 2) {}
 });
 
 $("#proxiesTab").click(function () {
   tabx = 3;
   createtabx = 1;
-  if (tabx = 3) {
-  }
+  if (tabx = 3) {}
 });
 
 $("#settingsTab").click(function () {
   tabx = 4;
   createtabx = 1;
-  if (tabx = 4) {
-  }
+  if (tabx = 4) {}
 });
 
 $("#creattask").click(function () {
   tabx = 5;
   createtabx = 1;
-  if (tabx = 5) {
-  }
+  if (tabx = 5) {}
 });
 
 $("#addprox").click(function () {
   tabx = 5;
-  if (tabx = 5) {
-  }
+  if (tabx = 5) {}
 });
 
 $("#autoenter").click(function () {
   tabx = 6;
-  if (tabx = 6) {
-  }
+  if (tabx = 6) {}
 });
 
 $("#eeconfig").click(function () {
   tabx = 7;
-  if (tabx = 7) {
-  }
+  if (tabx = 7) {}
 });
 
 $("#addMails").click(function () {
   tabx = 1;
-  if (tabx = 1) {
-  }
+  if (tabx = 1) {}
 });
 
 $('.customCheckbx').change(function () {
@@ -98,43 +89,33 @@ var createtabx = 1;
 
 
 $(".plus1").click(function () {
-  if(createtabx == 1)
-  {
+  if (createtabx == 1) {
     if (selectedQuickTaskRelease == undefined) {
       Materialize.toast("Please select a Release", 2000, "rounded");
       return;
     }
-  }
-  else if (createtabx == 2) {
+  } else if (createtabx == 2) {
     var taskProfile = $('#taskProfile').val();
-    if($('.profileaddrow2').css('display') == 'block')
-    {
-      if($('#taskProfile2').val() == 'Example Profile')
-      {
+    if ($('.profileaddrow2').css('display') == 'block') {
+      if ($('#taskProfile2').val() == 'Example Profile') {
         Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
         return;
       }
     }
-    if($('.profileaddrow3').css('display') == 'block')
-    {
-      if($('#taskProfile3').val() == 'Example Profile')
-      {
+    if ($('.profileaddrow3').css('display') == 'block') {
+      if ($('#taskProfile3').val() == 'Example Profile') {
         Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
         return;
       }
     }
-    if($('.profileaddrow4').css('display') == 'block')
-    {
-      if($('#taskProfile4').val() == 'Example Profile')
-      {
+    if ($('.profileaddrow4').css('display') == 'block') {
+      if ($('#taskProfile4').val() == 'Example Profile') {
         Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
         return;
       }
     }
-    if($('.profileaddrow5').css('display') == 'block')
-    {
-      if($('#taskProfile5').val() == 'Example Profile')
-      {
+    if ($('.profileaddrow5').css('display') == 'block') {
+      if ($('#taskProfile5').val() == 'Example Profile') {
         Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
         return;
       }
@@ -151,13 +132,51 @@ $(".plus1").click(function () {
       Materialize.toast("Please select a site.", 3500, "rounded");
       return;
     }
+    var taskProfile = $('#taskProfile').val();
+    if ($('.profileaddrow2').css('display') == 'block') {
+      if (taskSiteSelect == 'footshop' && profiles[$('#taskProfile2').val()]['country'] == 'China') {
+        Materialize.toast("The site you have selected does not ship to China.", 3500, "rounded");
+        return;
+      }
 
-   /* if (taskSiteSelect == 'footpatroluk' && profiles[taskProfile]['country'] != 'United Kingdom') {
-      Materialize.toast("The site you have selected is for UK profile only.", 3500, "rounded");
-      return;
+      if (taskSiteSelect == 'supplystore' && profiles[$('#taskProfile2').val()]['country'] != 'Australia') {
+        Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
+        return;
+      }
     }
-	
-	
+    if ($('.profileaddrow3').css('display') == 'block') {
+      if (taskSiteSelect == 'footshop' && profiles[$('#taskProfile3').val()]['country'] == 'China') {
+        Materialize.toast("The site you have selected does not ship to China.", 3500, "rounded");
+        return;
+      }
+
+      if (taskSiteSelect == 'supplystore' && profiles[$('#taskProfile3').val()]['country'] != 'Australia') {
+        Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
+        return;
+      }
+    }
+    if ($('.profileaddrow4').css('display') == 'block') {
+      if (taskSiteSelect == 'footshop' && profiles[$('#taskProfile4').val()]['country'] == 'China') {
+        Materialize.toast("The site you have selected does not ship to China.", 3500, "rounded");
+        return;
+      }
+
+      if (taskSiteSelect == 'supplystore' && profiles[$('#taskProfile4').val()]['country'] != 'Australia') {
+        Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
+        return;
+      }
+    }
+    if ($('.profileaddrow5').css('display') == 'block') {
+      if (taskSiteSelect == 'footshop' && profiles[$('#taskProfile5').val()]['country'] == 'China') {
+        Materialize.toast("The site you have selected does not ship to China.", 3500, "rounded");
+        return;
+      }
+
+      if (taskSiteSelect == 'supplystore' && profiles[$('#taskProfile5').val()]['country'] != 'Australia') {
+        Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
+        return;
+      }
+    }
     if (taskSiteSelect == 'footshop' && profiles[taskProfile]['country'] == 'China') {
       Materialize.toast("The site you have selected does not ship to China.", 3500, "rounded");
       return;
@@ -166,15 +185,14 @@ $(".plus1").click(function () {
     if (taskSiteSelect == 'supplystore' && profiles[taskProfile]['country'] != 'Australia') {
       Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
       return;
-    }*/
-	if($('#captchaHandler').val() != 'manual')
-	{
-		if(settings.capAPIKey == '' || settings.capAPIKey == undefined)
-		{	
-		  Materialize.toast("You must enter an API key in the settings tab.", 4500, "rounded");
-		  return;
-		}
-	}
+    }
+
+    if ($('#captchaHandler').val() != 'manual') {
+      if (settings.capAPIKey == '' || settings.capAPIKey == undefined) {
+        Materialize.toast("You must enter an API key in the settings tab.", 4500, "rounded");
+        return;
+      }
+    }
 
     if (taskSizeSelect == 'default') {
       Materialize.toast("Please select a Size", 2000, "rounded");
@@ -183,28 +201,26 @@ $(".plus1").click(function () {
   } else if (createtabx == 4) {
     var taskTypeOfEmail = $('#taskTypeOfEmail').val();
     var taskTypeOfProxy = $('#taskTypeOfProxy').val();
-	var taskEmail = $('#taskEmail').val();
-	
+    var taskEmail = $('#taskEmail').val();
+
     if (taskTypeOfEmail == 'default') {
       Materialize.toast("Please select an email type.", 3500, "rounded");
       return;
     }
-	
-	if(taskTypeOfEmail == 'newEmail')
-	{
-		if (validateEmail(taskEmail) == false) {
-			Materialize.toast("Please input a valid Email", 2000, "rounded");
-			return;
-		}
-	}
-	
-	if(taskTypeOfEmail == 'catchall')
-	{
-		if (validateEmail('test@' + taskEmail) == false) {
-			Materialize.toast("Please input a valid catchall like example.com", 2000, "rounded");
-			return;
-		}
-	}
+
+    if (taskTypeOfEmail == 'newEmail') {
+      if (validateEmail(taskEmail) == false) {
+        Materialize.toast("Please input a valid Email", 2000, "rounded");
+        return;
+      }
+    }
+
+    if (taskTypeOfEmail == 'catchall') {
+      if (validateEmail('test@' + taskEmail) == false) {
+        Materialize.toast("Please input a valid catchall like example.com", 2000, "rounded");
+        return;
+      }
+    }
 
     if (taskTypeOfProxy == 'default') {
       Materialize.toast("Please select proxies type.", 3500, "rounded");
@@ -294,43 +310,43 @@ $(".createbumbutton, .refro, .pcancel, .createprofile, .editprofile, .pnext2, .p
     $(".proDetails1").get(0).style.setProperty("display", "none");
     $(".proDetails2").get(0).style.setProperty("display", "none");
     $(".proDetails3").get(0).style.setProperty("display", "none");
-	$(".proDetails4").get(0).style.setProperty("display", "none");
-	$(".proDetails5").get(0).style.setProperty("display", "none");
+    $(".proDetails4").get(0).style.setProperty("display", "none");
+    $(".proDetails5").get(0).style.setProperty("display", "none");
   } else if (profiletabx == 2) {
     $(".proDetails").get(0).style.setProperty("display", "none");
     $(".proDetails1").get(0).style.setProperty("display", "block");
     $(".proDetails2").get(0).style.setProperty("display", "none");
     $(".proDetails3").get(0).style.setProperty("display", "none");
-	$(".proDetails4").get(0).style.setProperty("display", "none");
-	$(".proDetails5").get(0).style.setProperty("display", "none");
+    $(".proDetails4").get(0).style.setProperty("display", "none");
+    $(".proDetails5").get(0).style.setProperty("display", "none");
   } else if (profiletabx == 3) {
     $(".proDetails").get(0).style.setProperty("display", "none");
     $(".proDetails1").get(0).style.setProperty("display", "none");
     $(".proDetails2").get(0).style.setProperty("display", "block");
     $(".proDetails3").get(0).style.setProperty("display", "none");
-	$(".proDetails4").get(0).style.setProperty("display", "none");
-	$(".proDetails5").get(0).style.setProperty("display", "none");
+    $(".proDetails4").get(0).style.setProperty("display", "none");
+    $(".proDetails5").get(0).style.setProperty("display", "none");
   } else if (profiletabx == 4) {
     $(".proDetails").get(0).style.setProperty("display", "none");
     $(".proDetails1").get(0).style.setProperty("display", "none");
     $(".proDetails2").get(0).style.setProperty("display", "none");
     $(".proDetails3").get(0).style.setProperty("display", "block");
-	$(".proDetails4").get(0).style.setProperty("display", "none");
-	$(".proDetails5").get(0).style.setProperty("display", "none");
-	} else if (profiletabx == 5) {
+    $(".proDetails4").get(0).style.setProperty("display", "none");
+    $(".proDetails5").get(0).style.setProperty("display", "none");
+  } else if (profiletabx == 5) {
     $(".proDetails").get(0).style.setProperty("display", "none");
     $(".proDetails1").get(0).style.setProperty("display", "none");
     $(".proDetails2").get(0).style.setProperty("display", "none");
     $(".proDetails3").get(0).style.setProperty("display", "none");
-	$(".proDetails4").get(0).style.setProperty("display", "block");
-	$(".proDetails5").get(0).style.setProperty("display", "none");
+    $(".proDetails4").get(0).style.setProperty("display", "block");
+    $(".proDetails5").get(0).style.setProperty("display", "none");
   } else if (profiletabx == 0) {
     $(".proDetails").get(0).style.setProperty("display", "none");
     $(".proDetails1").get(0).style.setProperty("display", "none");
     $(".proDetails2").get(0).style.setProperty("display", "none");
     $(".proDetails3").get(0).style.setProperty("display", "none");
-	$(".proDetails4").get(0).style.setProperty("display", "none");
-	$(".proDetails5").get(0).style.setProperty("display", "block");
+    $(".proDetails4").get(0).style.setProperty("display", "none");
+    $(".proDetails5").get(0).style.setProperty("display", "block");
   }
 });
 
@@ -355,8 +371,7 @@ $(".ccreate").click(function () {
     $(".sneaksel").get(0).style.setProperty("display", "none");
   }
 
-  if (tabx = 1) {
-  }
+  if (tabx = 1) {}
 });
 
 $(".massenter").click(function () {
