@@ -73,6 +73,9 @@ if (require('electron').remote.getGlobal('settings').maximumDelay != null) {
 settingsRetryDelay.value = require('electron').remote.getGlobal('settings').retryDelay;
 //amountr.value = require('electron').remote.getGlobal('settings').retryDelay;
 
+if (require('electron').remote.getGlobal('instagrams') != null) {
+	$('#igsToSave').val(require('electron').remote.getGlobal('instagrams'));
+}
 // Loads all releases in the quick task area
 
 loadReleases();
@@ -93,6 +96,22 @@ ipcRenderer.on('profilesImported', function (event, data) {
 				text: keyName
 			}));
 			$('#taskProfile').append($('<option>', {
+				value: keyName,
+				text: keyName
+			}));
+			$('#taskProfile2').append($('<option>', {
+				value: keyName,
+				text: keyName
+			}));
+			$('#taskProfile3').append($('<option>', {
+				value: keyName,
+				text: keyName
+			}));
+			$('#taskProfile4').append($('<option>', {
+				value: keyName,
+				text: keyName
+			}));
+			$('#taskProfile5').append($('<option>', {
 				value: keyName,
 				text: keyName
 			}));
@@ -371,6 +390,10 @@ $("#saveProxies").click(function () {
 	ipcRenderer.send('saveProxies', proxies.join('\n'))
 });
 
+$("#saveIGlist").click(function () {
+	ipcRenderer.send('saveIGlist', $('#igsToSave').val())
+});
+
 $("#addProxies").click(function () {
 	var proxiesToAdd = $('#proxiesToAdd').val().split('\n')
 	// just make it click it i think
@@ -498,6 +521,25 @@ $("#createTaskButton").click(function () {
 	var taskSiteSelect = $('#taskSiteSelect').val();
 	var taskSizeSelect = $('#taskSizeSelect').val();
 	var taskProfile = $('#taskProfile').val();
+	var profilesToChoose = [];
+	profilesToChoose.push(taskProfile);
+	if($('.profileaddrow2').css('display') == 'block')
+	{
+		profilesToChoose.push($('#taskProfile2').val());
+	}
+	if($('.profileaddrow3').css('display') == 'block')
+	{
+		profilesToChoose.push($('#taskProfile3').val());
+	}
+	if($('.profileaddrow4').css('display') == 'block')
+	{
+		profilesToChoose.push($('#taskProfile4').val());
+	}
+	if($('.profileaddrow5').css('display') == 'block')
+	{
+		profilesToChoose.push($('#taskProfile5').val());
+	}
+	console.log('Enabled profiles: ' + profilesToChoose)
 	var taskSpecificProxy = $('#taskSpecificProxy').val();
 	var taskQuantity = parseInt($('#taskQuantity').val());
 	var taskEmail = $('#taskEmail').val();
@@ -517,16 +559,8 @@ $("#createTaskButton").click(function () {
 		Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
 		return;
 	}
-	if (profiles[taskProfile]['address'] == '') {
-		Materialize.toast("Profile does not have a saved address. Are you sure you clicked save?", 3500, "rounded");
-		return;
-	}
 	if (taskQuantity > Object.keys(emails).length && taskTypeOfEmail == 'saved') {
 		Materialize.toast("You only have " + Object.keys(emails).length + " emails saved, but want " + taskQuantity + " tasks", 3500, "rounded");
-		return;
-	}
-	if (taskProfile == 'Example Profile') {
-		Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
 		return;
 	}
 	var proxyUsed = '';
@@ -536,6 +570,7 @@ $("#createTaskButton").click(function () {
 				if (taskQuantity >= 1) {
 					if (validateEmail(taskEmail) != false || taskTypeOfEmail != 'newEmail') {
 						for (var i = 0; i < taskQuantity; i++) {
+							taskProfile = profilesToChoose[Math.floor(Math.random() * profilesToChoose.length)]
 							if (taskSizeSelect == 'random') {
 								tempTaskSize = Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect])[Math.floor(Math.random() * Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect]).length)];
 								var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][tempTaskSize];
@@ -853,6 +888,22 @@ for (var i = 0; i < profileKeys.length; i++) {
 		value: keyName,
 		text: keyName
 	}));
+	$('#taskProfile2').append($('<option>', {
+		value: keyName,
+		text: keyName
+	}));
+	$('#taskProfile3').append($('<option>', {
+		value: keyName,
+		text: keyName
+	}));
+	$('#taskProfile4').append($('<option>', {
+		value: keyName,
+		text: keyName
+	}));
+	$('#taskProfile5').append($('<option>', {
+		value: keyName,
+		text: keyName
+	}));
 	$('#stingProfiles').append($('<option>', {
 		value: keyName,
 		text: keyName
@@ -879,6 +930,22 @@ $("#newProfile").click(function () {
 				text: profileName
 			}));
 			$('#taskProfile').append($('<option>', {
+				value: profileName,
+				text: profileName
+			}));
+			$('#taskProfile2').append($('<option>', {
+				value: profileName,
+				text: profileName
+			}));
+			$('#taskProfile3').append($('<option>', {
+				value: profileName,
+				text: profileName
+			}));
+			$('#taskProfile4').append($('<option>', {
+				value: profileName,
+				text: profileName
+			}));
+			$('#taskProfile5').append($('<option>', {
 				value: profileName,
 				text: profileName
 			}));
@@ -962,6 +1029,10 @@ $("#deleteProfile").click(function () {
 		$('#profileList').val('Example Profile');
 		$('#profileList option[value="' + profileName + '"]').remove()
 		$('#taskProfile option[value="' + profileName + '"]').remove()
+		$('#taskProfile2 option[value="' + profileName + '"]').remove()
+		$('#taskProfile3 option[value="' + profileName + '"]').remove()
+		$('#taskProfile4 option[value="' + profileName + '"]').remove()
+		$('#taskProfile5 option[value="' + profileName + '"]').remove()
 		$('#stingProfiles option[value="' + profileName + '"]').remove()
 	} else {
 		Materialize.toast("You can't modify the Example Profile!", 2000, "rounded");

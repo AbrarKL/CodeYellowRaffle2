@@ -98,26 +98,61 @@ var createtabx = 1;
 
 
 $(".plus1").click(function () {
-  if (createtabx == 2) {
+  if(createtabx == 1)
+  {
     if (selectedQuickTaskRelease == undefined) {
       Materialize.toast("Please select a Release", 2000, "rounded");
       return;
     }
-  } else if (createtabx == 3) {
+  }
+  else if (createtabx == 2) {
     var taskProfile = $('#taskProfile').val();
-    var taskSiteSelect = $('#taskSiteSelect').val();
-    var taskSizeSelect = $('#taskSizeSelect').val();
+    if($('.profileaddrow2').css('display') == 'block')
+    {
+      if($('#taskProfile2').val() == 'Example Profile')
+      {
+        Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
+        return;
+      }
+    }
+    if($('.profileaddrow3').css('display') == 'block')
+    {
+      if($('#taskProfile3').val() == 'Example Profile')
+      {
+        Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
+        return;
+      }
+    }
+    if($('.profileaddrow4').css('display') == 'block')
+    {
+      if($('#taskProfile4').val() == 'Example Profile')
+      {
+        Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
+        return;
+      }
+    }
+    if($('.profileaddrow5').css('display') == 'block')
+    {
+      if($('#taskProfile5').val() == 'Example Profile')
+      {
+        Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
+        return;
+      }
+    }
     if (taskProfile == 'Example Profile') {
       Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
       return;
     }
+  } else if (createtabx == 3) {
+    var taskSiteSelect = $('#taskSiteSelect').val();
+    var taskSizeSelect = $('#taskSizeSelect').val();
 
     if (taskSiteSelect == 'default') {
       Materialize.toast("Please select a site.", 3500, "rounded");
       return;
     }
 
-    if (taskSiteSelect == 'footpatroluk' && profiles[taskProfile]['country'] != 'United Kingdom') {
+   /* if (taskSiteSelect == 'footpatroluk' && profiles[taskProfile]['country'] != 'United Kingdom') {
       Materialize.toast("The site you have selected is for UK profile only.", 3500, "rounded");
       return;
     }
@@ -131,7 +166,7 @@ $(".plus1").click(function () {
     if (taskSiteSelect == 'supplystore' && profiles[taskProfile]['country'] != 'Australia') {
       Materialize.toast("The site you have selected is for an Australian profiles only.", 3500, "rounded");
       return;
-    }
+    }*/
 	if($('#captchaHandler').val() != 'manual')
 	{
 		if(settings.capAPIKey == '' || settings.capAPIKey == undefined)

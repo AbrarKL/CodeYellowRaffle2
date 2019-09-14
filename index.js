@@ -741,6 +741,21 @@ function openBot(onReady) {
 		});
 	});
 
+	
+	ipcMain.on('saveIGlist', function (e, igsToSave) {
+		global.instagrams = igsToSave;
+		fs.writeFile(appDataDir + "\\instagrams.txt", igsToSave, function (err) {
+			if (err) {
+				console.log('Error saving (instagrams) list: ' + igsToSave + ' to file');
+				return;
+			}
+			module.exports.mainBotWin.send('notify', {
+				length: 3000,
+				message: 'instagrams saved'
+			});
+		});
+	});
+
 	ipcMain.on('saveEmails', function (e, emailsToSave) {
 		global.emails = emails;
 		fs.writeFile(appDataDir + "\\emails.json", JSON.stringify(emailsToSave, null, 4), function (err) {
@@ -1172,6 +1187,16 @@ function createOrGetFiles() {
 	} else {
 		makeFile('proxies.txt', '')
 		global.proxies = [];
+	}
+
+	if (fileExists('instagrams.txt')) {
+		var igFile = fs.readFileSync(appDataDir + "\\instagrams.txt", 'utf8');
+		console.log("instagrams.txt exists Contents:");
+		console.log(igFile);
+		global.instagrams = igFile == '' ? [] : igFile;
+	} else {
+		makeFile('instagrams.txt', '')
+		global.instagrams = '';
 	}
 }
 
