@@ -713,7 +713,7 @@ exports.submitRaffle = function (request, task, profile, token, mf) {
 				});
 				console.log(`[${task.taskID}] ` + ' Entry submitted!');
 				registerEmail(task);
-				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '');
+				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '', task, profile);
 				return;
 			} else {
 				mainBot.mainBotWin.send('taskUpdate', {

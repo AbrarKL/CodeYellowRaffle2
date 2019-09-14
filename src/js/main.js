@@ -254,6 +254,10 @@ $('#deactivateButton').click(function () {
 
 // Update tasks
 ipcRenderer.on('taskUpdate', function (event, data) {
+	if(data.message.toLowerCase().indexOf('entry submitted') >= 0 || data.message.toLowerCase().indexOf('check email') >= 0)
+	{
+		$('#entries').html(parseInt($('#entries').html()) + 1)
+	}
 	$(`#taskResult${data.id}`).html(data.message.toLowerCase())
 });
 

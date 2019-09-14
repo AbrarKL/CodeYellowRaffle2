@@ -553,7 +553,7 @@ exports.tokenizeCard = function (request, task, profile, customerID, entryID) {
 							message: 'Entry submitted!'
 						});
 						registerEmail(task);
-						mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '');
+						mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '', task, profile);
 						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 						return;
 					} else {

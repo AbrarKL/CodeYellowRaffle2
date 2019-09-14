@@ -597,7 +597,7 @@ exports.submitRaffle = function (request, task, profile, userId) {
 				message: 'Entry submitted!'
 			});
 			registerEmail(task);
-			mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', task['taskPassword']);
+			mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', task['taskPassword'], task, profile);
 			mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 			return;
 		} else {

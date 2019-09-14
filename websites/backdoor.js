@@ -525,7 +525,7 @@ exports.submitRaffle = function (request, task, profile, postInputs) {
 			});
 			console.log(`[${task.taskID}] ` + ' Entry submitted!');
 			registerEmail(task);
-			mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '');
+			mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '', task, profile);
 			mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 			return;
 		} else if (body['status'] == 'validation_failed') {

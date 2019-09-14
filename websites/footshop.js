@@ -458,7 +458,7 @@ exports.submitRaffle = function (request, task, profile, sizeID) {
 					} else {
 						var open = require("open");
 						registerEmail(task);
-						mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], body['secure3DRedirectUrl'], '');	
+						mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], body['secure3DRedirectUrl'], '', task, profile);	
 						mainBot.mainBotWin.send('taskUpdate', {
 							id: task.taskID,
 							type: task.type,

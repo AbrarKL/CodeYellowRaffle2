@@ -983,21 +983,30 @@ exports.saveEmails = function (emails) {
 	});
 }
 // Sending webhook function
-exports.sendWebhook = function (website, email, additional, password) {
+exports.sendWebhook = function (website, email, additional, password, task, profile) {
 	var webhook = global.settings.discordWebhook;
 	if (website != 'test') {
 		request({
-			url: 'https://codeyellow.io/api/entry.php',
+			url: 'https://codeyellow.io/api/v2/entry.php',
 			method: 'post',
+			headers: {
+				'x-auth-key': exports.getAuthHeader(machineIdSync(), global.settings.token, global.settings.key)
+			},
 			formData: {
-				'email': email,
-				'website': website,
+				'key': global.settings.key,
 				'token': global.settings.token,
+				'hwid': machineIdSync(),
+				'website': website,
 				'additional': additional,
-				'password': password
+				'password': password,
+				'name': task['filterID'],
+				'email': task['taskEmail'],
+				'profileFName': profile['firstName'] + ' ' + profile['lastName'],
+				'zipCode': profile['zipCode'],
+				'address': profile['address'],
+				'aptSuite': profile['aptSuite']
 			},
 		}, function (err, response, body) {
-			var parsed = JSON.parse(body);
 			try {
 				var parsed = JSON.parse(body);
 			} catch (e) {
@@ -1006,6 +1015,11 @@ exports.sendWebhook = function (website, email, additional, password) {
 			}
 			if (parsed.valid == true) {
 				console.log("Entry saved")
+			}
+			else
+			{
+				console.log(body)
+				console.log(response.statusCode);
 			}
 		});
 	}
