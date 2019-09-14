@@ -246,34 +246,59 @@ $("#startAllTasks").click(function () {
 		$.each($(".startTaskMass"), function (i) {
 			var taskId = $(this).attr('id');
 			var task = tasks[$(this).attr('id') - 1];
-			if(i == 0)
-			{
+			if (i == 0) {
 				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-			}
-			else
-			{
+			} else {
 				delay = delay + delayIncrease;
-				$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+				if(delay >= 60000)
+				{
+					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000 ) /60 + 'm');
+				}
+				else
+				{
+					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+				}
 				setTimeout(function () {
 					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
 				}, delay);
 			}
 		});
 	} else if (entryMode == 'idle') {
-		//need to code this
+		var taskLength = $('#tasks tr').length - 1;
+		var minutes = require('electron').remote.getGlobal('settings').idleTime;
+		var delay = 0;
+		var delayIncrease = parseInt(((minutes * 60) * 1000) / taskLength);
+		$.each($(".startTaskMass"), function (i) {
+			var taskId = $(this).attr('id');
+			var task = tasks[$(this).attr('id') - 1];
+			if (i == 0) {
+				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+			} else {
+				delay = delay + delayIncrease;
+				if(delay >= 60000)
+				{
+					$(`#taskResult${taskId}`).html('Starting task in ' + (delay / 1000 ) /60 + 'm');
+				}
+				else
+				{
+					$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
+				}
+				setTimeout(function () {
+					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
+				}, delay);
+			}
+		});
+
 	} else if (entryMode == 'human') {
 		console.log('human');
 		var delay = 0;
 		$.each($(".startTaskMass"), function (i) {
-			var delayIncrease = (Math.floor(Math.random() * (parseInt(require('electron').remote.getGlobal('settings').maximumDelay) - parseInt(require('electron').remote.getGlobal('settings').minimumDelay) + 1)) + parseInt(require('electron').remote.getGlobal('settings').minimumDelay))* 1000;
+			var delayIncrease = (Math.floor(Math.random() * (parseInt(require('electron').remote.getGlobal('settings').maximumDelay) - parseInt(require('electron').remote.getGlobal('settings').minimumDelay) + 1)) + parseInt(require('electron').remote.getGlobal('settings').minimumDelay)) * 1000;
 			var taskId = $(this).attr('id');
 			var task = tasks[$(this).attr('id') - 1];
-			if(i == 0)
-			{
+			if (i == 0) {
 				ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
-			}
-			else
-			{
+			} else {
 				delay = delay + delayIncrease;
 				$(`#taskResult${taskId}`).html('Starting task in ' + delay / 1000 + 's');
 				setTimeout(function () {
