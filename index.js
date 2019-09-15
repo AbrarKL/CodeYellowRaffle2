@@ -332,6 +332,8 @@ function openActivation(onReady) {
 				console.log("Key: " + activationKey + " is valid and now activated!");
 				global.settings.key = activationKey;
 				global.settings.token = parsed.token;
+				global.user = parsed.user;
+				global.entries = parsed.entries;
 				saveSettings();
 				openBot();
 				win.hide();
