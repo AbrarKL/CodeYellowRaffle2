@@ -60,7 +60,7 @@
       </div>
       <div class="bot-logo"><img src="css/img/new_logo.png" class="brandlogo"></div>
 
-      <div style="cursor: pointer;" id="gummybear" class="bot-title refro settings chadmode">
+      <div style="cursor: pointer;" id="gummybear" class="bot-title">
          <div class="title-top">welcome back, <span id="user">User</span></div>
          <div class="title-bottom">you have entered <b><span id="entries">0</span></b> raffles</div>
       </div>
@@ -838,35 +838,53 @@ ip:port"></textarea>
 
                <div class="shoe-container">
 
-                  <div style="height: 200px;position: relative;" class="new-meta">
+                  <div style="height: 250px;position: relative;" class="new-meta">
 
-                     <div style="margin-top: 0px;" class="jig-tit">Name, address & phone number jig</div>
-                     <div style="margin-bottom: 40px;" class="jig-info">Here you can select to jig your first and last
-                        name, address (line 2) and phone number for each profile (per task)</div>
+		 <div style="margin-top: 0px;" class="jig-tit">Name, address & phone number jig</div>
+		 <div style="margin-bottom: 40px;" class="jig-info">Here you can select to jig your first and last name, address (line 2) and phone number for each profile (per task)</div>			
+		 
+		 <div class="half-check-con" ><label style="margin-top: 10px;" class="switch">
+	     <input id="jigProfileFirstName" class="customCheckbx" type="checkbox">
+         <span class="sliderf roundf"></span>
+		 </label></div>
 
-                     <div class="half-check-con"><label style="margin-top: 10px;" class="switch">
-                           <input id="jigProfileName" class="customCheckbx" type="checkbox">
-                           <span class="sliderf roundf"></span>
-                        </label></div>
+		 <div class="half-check-con"><label style="margin-top: 10px;" class="switch">
+		 <input id="jigProfileAddress" class="customCheckbx" type="checkbox">
+		 <span class="sliderf roundf"></span>
+		 </label></div>
+		 
+		 <div class="half-check-con"><label style="margin-top: 10px;" class="switch">
+		 <input id="jigProfilePhoneNumber" class="customCheckbx" type="checkbox">
+		 <span class="sliderf roundf"></span>
+		 </label></div>
+		 
+		 <div class="half-check-tit">Jig profile First Name</div>
+		 <div class="half-check-tit">Jig profile Address</div>
+		 <div class="half-check-tit">Jig profile Phone Number</div>	
 
-                     <div class="half-check-con"><label style="margin-top: 10px;" class="switch">
-                           <input id="jigProfileAddress" class="customCheckbx" type="checkbox">
-                           <span class="sliderf roundf"></span>
-                        </label></div>
+		<div class="half-check-con" ><label style="margin-top: 10px;" class="switch">
+	     <input id="jigProfileLastName" class="customCheckbx" type="checkbox">
+         <span class="sliderf roundf"></span>
+		 </label></div>
+		 
+		<div class="half-check-con" ><label style="margin-top: 10px;" class="switch">
+	     <input id="jigProfileFirstNameLetter" class="customCheckbx" type="checkbox">
+         <span class="sliderf roundf"></span>
+		 </label></div>
+		 
+		<div class="half-check-con" ><label style="margin-top: 10px;" class="switch">
+	     <input id="jigProfileLastNameLetter" class="customCheckbx" type="checkbox">
+         <span class="sliderf roundf"></span>
+		 </label></div>
+		 
+		 <div class="half-check-tit">Jig profile Last Name</div>
+		 <div class="half-check-tit">Jig profile First Name (Letter)</div>
+		 <div class="half-check-tit">Jig profile Last Name (Letter)</div>
 
-                     <div class="half-check-con"><label style="margin-top: 10px;" class="switch">
-                           <input id="jigProfilePhoneNumber" class="customCheckbx" type="checkbox">
-                           <span class="sliderf roundf"></span>
-                        </label></div>
-
-                     <div class="half-check-tit">Jig profile first and last name</div>
-                     <div class="half-check-tit">Jig profile address</div>
-                     <div class="half-check-tit">Jig profile phone number!</div>
 
                   </div>
 
                </div>
-
                <div class="buttonbar">
                   <div class="createbumbutton pmin1">BACK</div>
                   <div class="createbumbutton pnext1">NEXT</div>
@@ -2219,13 +2237,13 @@ ip:port"></textarea>
 
             <div class="settingnav" onclick="openCity(event, 'entrymode')">entry mode</div>
 
-            <div class="settingnav" onclick="openCity(event, 'advanced')">advanced</div>
+           <!-- <div class="settingnav" onclick="openCity(event, 'advanced')">advanced</div> --->
 
 			<div class="settingnav" onclick="openCity(event, 'sting')">sting</div>
 
             <div class="settingnav" onclick="openCity(event, 'captcha')">captcha</div>
 
-            <div class="settingnav myaccountx" id="shegotalotofcake" onclick="openCity(event, 'account')">my account</div>
+            <!-- <div class="settingnav myaccountx" id="shegotalotofcake" onclick="openCity(event, 'account')">my account</div> --->
 
             <div style="bottom: 55px;position: absolute;left: 0;" class="settingnav" id="guidesButton">guides</div>
 
