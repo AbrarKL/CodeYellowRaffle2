@@ -373,10 +373,11 @@ function initCapWin() {
 	process.env.NODE_ENV = 'production';
 	app.on('ready', function () {
 		module.exports.capWin = new BrowserWindow({
-			height: 450,
-			width: 690,
+			height: 400,
+			width: 770,
 			resizable: false,
 			frame: false,
+			transparent: true,
 			show: false
 		});
 

@@ -8,40 +8,59 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onCapLoad"></script>
 	<style>
-		::-webkit-scrollbar-track {
-			border-radius: 10px;
-			background-color: rgba(0, 0, 0, 0.2);
+		::-webkit-scrollbar-track
+		{
+			border-radius: 50px !important;
+			background: rgba(0,0,0,1);
 		}
 
 		::-webkit-scrollbar {
-			width: 3px;
-			height: 3px;
-			background-color: rgba(0, 0, 0, 0.2);
+			border-radius: 50px !important;
+			width: 7px;
+			height: 7px;
+			background: rgba(0,0,0,1);
 		}
 
+		/* ::-webkit-scrollbar:hover {
+			width: 10px !important;
+			height: 10px !important;
+		} */
+
 		::-webkit-scrollbar-thumb {
-			border-radius: 10px;
-			background-color: #ffba00;
+			border-radius: 50px !important;
+			background-color: #fbcf4d;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+			background-color: #bf9e3b;
+		}
+
+
+		::selection {
+		  background: #fbcf4d !important; /* WebKit/Blink Browsers */
+		}
+		::-moz-selection {
+		  background: #fbcf4d !important; /* Gecko Browsers */
 		}
 
 		body {
-			background: #1b1b1f;
+			background: transparent;
 			margin: 0 auto;
-			font-family: 'Roboto', sans-serif;
+			font-family: 'Raleway', sans-serif;
 		}
 
 		.cap-window {
-			background-image: url("https://i.imgur.com/8ASGPm5.png");
-			background-size: cover;
-			background-color: rgba(0, 0, 0, 0.3);
+			background: #161619;
 			position: fixed;
 			top: 50%;
 			left: 50%;
-			height: 340px;
-			width: 600px;
-			border-radius: 5px;
+			height: 390px;
+			width: 680px;
+			padding-top: 80px;
+			border-radius: 50px;
 			transform: translate(-50%, -50%);
 			box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.2);
+			overflow: hidden;
 		}
 
 		.cap-brand {
@@ -142,9 +161,10 @@
 		} 
 		
 		.price-it-up {
-			background: #ffa500;
+			background: #fbcf4d;
+			border-radius: 35px;
 			height: 40px;
-			width: 70%;
+			width: 35%;
 			display: inline-block;
 			cursor: pointer;
 			text-align: center;
@@ -153,34 +173,192 @@
 			vertical-align: middle;
 		}
 		
+		.bot-window {
+			border-bottom-left-radius: 50px;
+			background: #131316;
+			height: 35px;
+			width: 100px;
+			text-align: center;
+			line-height: 35px;
+			font-size: 22px;
+			z-index: 2;
+			position: absolute;
+			top: 0;
+			right: 0;
+			text-align: center;
+			padding-left: 15px;
+			overflow: hidden;
+			z-index: 99999;
+		}
+		
+		.window-c {
+			width: 35px;
+			height: 35px;
+			float: left;
+			text-align: center;
+			line-height: 35px;
+			color: #aaa;
+			display: inline-block;
+			cursor: pointer;
+			font-size: 18px;
+		}
+		
+		.create-rowset {
+			width: 100%;
+			display: inline-block;
+			height: 45px;
+			background:  #28282e;
+			margin-bottom: 10px;
+			position: relative;
+			border-radius: 25px;
+			outline: none;
+			float: left;
+			overflow: hidden;
+		}
+
+		.inputiconset {
+			width: 35px;
+			height: 35px;
+			text-align: center;
+			line-height: 35px;
+			font-size: 18px;
+			float: left;
+			color: #fbcf4d;
+			background: rgba(0,0,0,0.3);
+			border-radius: 25px;
+			margin-top: 5px;
+			margin-left: 5px;
+			padding-top: 9px;
+			position: relative;
+			z-index: 9999;
+		}
+
+		.createinputset {
+			height: 45px;
+			border: none;
+			font-size: 14px;
+			background: #28282e;
+			padding-left: 10px;
+			width: calc(100% - 45px);
+			color: #fff;
+			opacity: 0.8;
+			position: relative;
+			z-index: 9999;
+			border-top-right-radius: 25px;
+			border-bottom-right-radius: 25px;
+			padding-right: 20px;
+			outline: none;
+			line-height: 45px;
+		}				
+		
+		.create-row {
+			width: 100%;
+			display: inline-block;
+			height: 50px;
+			background:  #28282e;
+			margin-bottom: 10px;
+			position: relative;
+			border-radius: 25px;
+			outline: none;
+			overflow: hidden;
+		}
+
+		.checkoutinput:after {
+			content: '';
+			position: absolute;
+			z-index: -1;
+			lefT: -5px;
+			top: -5px;
+			width: calc(100% + 10px);
+			height: calc(100% + 10px);
+			background: #28282e;
+			border-radius: 35px;
+		}
+
+
+		.inputicon {
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			font-size: 18px;
+			float: left;
+			color: #fbcf4d;
+			background: rgba(0,0,0,0.3);
+			border-radius: 25px;
+			margin-top: 5px;
+			margin-left: 5px;
+			padding-top: 11px;
+		}
+
+		.createinput {
+			height: 50px;
+			border: none;
+			font-size: 15px;
+			background: #28282e;
+			padding-left: 10px;
+			width: calc(100% - 50px);
+			color: #fff;
+			opacity: 0.8;
+			position: relative;
+			z-index: 9999;
+			border-top-right-radius: 25px;
+			border-bottom-right-radius: 25px;
+			padding-right: 20px;
+			outline: none;
+			line-height: 50px;
+		}
+		
+		.logotip {
+			position: fixed;
+			top: 0;
+			left: calc(50% - 62.5px);
+			width: 125px;
+			height: 30px;
+			background: #28282e;
+			border-bottom-left-radius: 25px;
+			border-bottom-right-radius: 25px;
+		}
+		  
+		.logo {
+			position: fixed;
+			top: 5px;
+			left: calc(50% - 35px);
+			width: 70px;
+			height: 70px;
+		}
 	</style>
 </head>
 
 <body>
 
       <div class="drag-top"></div>
-      <div class="window-options">
-         <div style="padding-top: 5px;" id="close" onclick="minimize()" class="window-icon"><span class="lnr lnr-cross"></span>
-         </div>
-         <div id="minimize" class="window-icon" onclick="minimize()">－</div>
-      </div>
 
 	<div class="cap-window">
-		<img class="cap-brand" src="https://codeyellow.io/img/logo.png">
+	
+		<div class="bot-window">
+         <div class="window-c" onclick="minimize()" id="minimizeM">－</div>
+         <div class="window-c" onclick="minimize()" style="padding-top: 7px;" id="closeM"><span class="lnr lnr-cross"></span></div>
+        </div>
+
+		<div class="logotip"></div>
+		<img src="https://codeyellow.io/img/newassets/templogo.png" class="logo">
 
 		<div class="cap-con">
 			<div class="cappin recaptcha" id="capFrame">
 			</div>
-
-			<div class="texterx">
-				<div class="texterx-icon"><i class="fas fa-globe"></i></div>
-				<div class="texterx-sec" id="capSiteName"></div>
-			</div>
-
-			<div class="texterx">
-				<div class="texterx-icon"><i class="fas fa-thumbtack"></i></div>
-				<div class="texterx-sec" id="capTaskID"></div>
-			</div>
+			
+			<div style="width:80%;margin-left:10%;float: left;" class="create-row">
+                        <div class="inputicon"><i class="fas fa-globe"></i>
+                        </div>
+                        <div class="createinput" id="capSiteName"></div>
+            </div>		
+			
+			<div style="width:80%;margin-left:10%;float: left;" class="create-row">
+                        <div class="inputicon"><i class="fas fa-thumbtack"></i>
+                        </div>
+                        <div class="createinput" id="capTaskID"></div>
+            </div>		
 
 			<div class="setterbum">
                   <div class="price-it-up" id="openGoogleLogin" onclick="ipcRenderer.send('login');">Sign in with <i class="fab fa-google"></i></div>
