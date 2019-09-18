@@ -126,7 +126,6 @@ $(".plus1").click(function () {
     }
   } else if (createtabx == 3) {
     var taskSiteSelect = $('#taskSiteSelect').val();
-    var taskSizeSelect = $('#taskSizeSelect').val();
 
     if (taskSiteSelect == 'default') {
       Materialize.toast("Please select a site.", 3500, "rounded");

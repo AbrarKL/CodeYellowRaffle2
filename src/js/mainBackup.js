@@ -586,15 +586,12 @@ $("#createTaskButton").click(function () {
 									return;
 								}
 							} else {
-								// These 2 lines below are new
-								var sizesToChoose = taskSizeSelect.split(',');
-								var taskSizeSelect2 = sizesToChoose[Math.floor(Math.random() * sizesToChoose.length)].trimLeft().trimRight()
-								var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][taskSizeSelect2];
+								var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][taskSizeSelect];
 								if (taskSizeVariant == undefined) {
 									Materialize.toast("Task size variant does not exist.", 3500, "rounded");
 									return;
 								}
-								if (createTask(taskSiteSelect, taskSizeSelect2, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
+								if (createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
 									return;
 								}
 							}
