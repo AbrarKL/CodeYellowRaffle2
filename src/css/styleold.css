@@ -684,6 +684,7 @@ select {
 	border-bottom-right-radius: 25px;
 	padding-right: 20px;
 	outline: none;
+	text-transform: lowercase;
 }
 
 .price-it-up {

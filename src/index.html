@@ -93,6 +93,8 @@
                   title="instagram configuration"><i class="fab fa-instagram"></i></div>
             </div>
 
+		<div style="display: none;" class="xboxhotty"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="right" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
             <div style="float:right;padding-left: 15px;padding-right:15px;font-size: 14px;color: #eee;line-height: 20px;width: 200px;"
                class="tripleactionx"><span style="margin-top: 15px;"><b style="font-size: 18px;" id="tasksInList">0</b><br>tasks in list</span></div>
 <div style="padding-left: 0;" class="tablescroll">
@@ -453,7 +455,6 @@ ip:port"></textarea>
 
             </div>
 
-
             <div style="display: none;" class="details1">
                <div class="midtitle">raffle Profiles</div>
                <div class="midtitleinfo">select up to 5 raffle profiles to mass enter raffles with.</div>
@@ -468,7 +469,12 @@ ip:port"></textarea>
                               class="fa fa-user" aria-hidden="true"></i>
                         </div>
                         <select class="createinput" id="taskProfile">
+						<option>all profiles</option>
                         </select>
+						
+							<div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+						
                     </div>
 					 				 
 					 
@@ -562,12 +568,11 @@ ip:port"></textarea>
 
             </div>
 
-
             <div style="display: none;" class="details2">
                <div class="midtitle">Select the details</div>
-               <div class="midtitleinfo">raffle entry details</div>
+               <div class="midtitleinfo">raffle entry details.</div>
 
-               <div class="shoe-container">
+               <div  style="height: 410px;"class="shoe-container">
 
                   <div class="new-meta">
 
@@ -581,7 +586,7 @@ ip:port"></textarea>
                            <option class="taskSiteOption" value="shoezgallery" disabled>ShoezGallery</option>
                            <option class="taskSiteOption" value="bouncewear" disabled>BounceWear</option>
                            <option class="taskSiteOption" value="joyce" disabled>Joyce</option>
-                           <option class="taskSiteOption" value="bstn" disabled>BSTN</option>
+                           <option class="taskSiteOption" value="bstn" >BSTN</option>
                            <option class="taskSiteOption" value="asphaltgold" disabled>AsphaltGold</option>
                            <option class="taskSiteOption" value="kicksstore" disabled>KicksStore</option>
                            <option class="taskSiteOption" value="snipeskicks" disabled>SnipesKicks</option>
@@ -611,36 +616,22 @@ ip:port"></textarea>
                            <option class="taskSiteOption" value="wishatl" disabled>WishATL</option>
                            <!-- <option class="taskSiteOption" value="bdgastore" disabled>BDGAStore</option> -->
                         </select>
-                     </div>
+                    
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
 
-                     <div class="create-row">
+
+					</div>
+
+                     <div style="margin-bottom: 5px;" class="create-row">
                         <div data-toggle="tooltip" data-placement="top" title="Item size!" class="inputicon"><i
                               class="fas fa-sort-amount-up"></i>
                         </div>
-                        <select class="createinput" id="taskSizeSelect">
-                           <option value="default">Sizes</option>
-                           <option value="random">Random</option>
-                           <option class="taskSizeOptionMass" value="nosize" disabled>No Size</option>
-                           <option class="taskSizeOptionMass" value="selectOnWin" disabled>Selected on Win</option>
-                           <option class="taskSizeOptionMass" value="4" disabled>4</option>
-                           <option class="taskSizeOptionMass" value="4.5" disabled>4.5</option>
-                           <option class="taskSizeOptionMass" value="5" disabled>5</option>
-                           <option class="taskSizeOptionMass" value="5.5" disabled>5.5</option>
-                           <option class="taskSizeOptionMass" value="6" disabled>6</option>
-                           <option class="taskSizeOptionMass" value="6.5" disabled>6.5</option>
-                           <option class="taskSizeOptionMass" value="7" disabled>7</option>
-                           <option class="taskSizeOptionMass" value="7.5" disabled>7.5</option>
-                           <option class="taskSizeOptionMass" value="8" disabled>8</option>
-                           <option class="taskSizeOptionMass" value="8.5" disabled>8.5</option>
-                           <option class="taskSizeOptionMass" value="9" disabled>9</option>
-                           <option class="taskSizeOptionMass" value="9.5" disabled>9.5</option>
-                           <option class="taskSizeOptionMass" value="10" disabled>10</option>
-                           <option class="taskSizeOptionMass" value="10.5" disabled>10.5</option>
-                           <option class="taskSizeOptionMass" value="11" disabled>11</option>
-                           <option class="taskSizeOptionMass" value="11.5" disabled>11.5</option>
-                           <option class="taskSizeOptionMass" value="12" disabled>12</option>
-                        </select>
-                     </div>
+						<input type="text" style="width: 100%;left: 0px; color: #bbb;margin-left: 10px;font-size: 14px;" class="createinput" id="taskSizeSelect" placeholder="Sizes"/>
+ 
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+
+                    </div>
 
                      <div class="create-row">
                         <div data-toggle="tooltip" data-placement="top" title="Captcha mode" class="inputicon"><i
@@ -651,21 +642,39 @@ ip:port"></textarea>
                            <option value="anticaptcha">Anti Captcha</option>
                            <option value="2captcha">2Captcha</option>
                         </select>
+
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+
                      </div>
 
                      <div class="create-row">
                         <div data-toggle="tooltip" data-placement="top" title="Instagram jigs" class="inputicon"><i class="fab fa-instagram"></i>
                         </div>
-                        <select class="createinput">
+                        <select id="checklistnigga" class="createinput" disabled>
                            <option value="cylist">CY scraped</option>
                            <option value="mylist">saved instagram list</option>
-                           <option value="Instajig">insta jig</option>
+                           <option value="instajig">insta jig</option>
                         </select>
+								
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+
                      </div>
+
+                     <div class="create-row">
+                        <div data-toggle="tooltip" data-placement="top" title="instagram username" class="inputicon"><i class="fas fa-hashtag"></i>
+                        </div>
+                        <input class="createinput" id="instaName" placeholder="instagram name to jig" disabled>
+                    
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="instagram name to jig!"><i class="fas fa-question"></i></div></div>
+
+
+					</div>
 
                   </div>
 
-               </div>
+               </div>`
 
                <div class="buttonbar">
                   <div class="createbumbutton min1">BACK</div>
@@ -674,7 +683,6 @@ ip:port"></textarea>
                </div>
 
             </div>
-
 
             <div style="display: none;" class="details3">
                <div class="midtitle">Email & Proxies</div>
@@ -695,6 +703,10 @@ ip:port"></textarea>
                            <option value="saved">Saved Emails</option>
                            <option value="newEmail">New email</option>
                         </select>
+						
+				<div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+						
                      </div>
 
                      <div class="create-row">
@@ -702,7 +714,11 @@ ip:port"></textarea>
                               class="fa fa-envelope" aria-hidden="true"></i>
                         </div>
                         <input class="createinput" id="taskEmail" placeholder="Email Address" disabled>
-                     </div>
+ 
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+
+					</div>
 
                      <div class="create-row">
                         <div data-toggle="tooltip" data-placement="top" title="Proxy options" class="inputicon"><i
@@ -714,6 +730,10 @@ ip:port"></textarea>
                            <option value="savedProxies">Saved proxies</option>
                            <option value="specificProxy">Specific proxy</option>
                         </select>
+						
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+						
                      </div>
 
                      <div class="create-row">
@@ -721,6 +741,10 @@ ip:port"></textarea>
                            <i class="fa fa-globe" aria-hidden="true"></i>
                         </div>
                         <input class="createinput" id="taskSpecificProxy" placeholder="Specific Proxy" disabled>
+
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+
                      </div>
 
 
@@ -785,7 +809,6 @@ ip:port"></textarea>
 
          <div id="Profiles" class="mainrr">
 
-
             <div class="proDetails">
                <div class="midtitle">Create / Edit a profile</div>
                <div class="midtitleinfo">Create a new profile or edit an existing one!</div>
@@ -803,7 +826,10 @@ ip:port"></textarea>
                         </div>
                         <select class="createinput" id="profileList">
                         </select>
-                     </div>
+               
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+				</div>
 
                      <div class="cpbbar">
                         <input id="importProfiles" type="file" accept=".json" hidden />
@@ -825,6 +851,7 @@ ip:port"></textarea>
                <div class="buttonbar">
                   <div class="createbumbutton editprofile" data-toggle="tooltip" data-placement="top"
                      title="Edit profile" id="loadProfile">EDIT (<span id="profileSelected">Demo</span>) PROFILE</div>
+					 
                   <div class="createbumbutton createprofile" data-toggle="tooltip" data-placement="top"
                      title="New profile">NEW PROFILE</div>
                   <div class="canclerow"></div>
@@ -905,17 +932,29 @@ ip:port"></textarea>
                         <div class="inputicon"><i class="fas fa-user"></i>
                         </div>
                         <input class="createinput" id="firstName" placeholder="First name">
+						
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+						
                      </div>
                      <div style="width: 100%;float:right;" class="create-row">
                         <div class="inputicon"><i class="far fa-user"></i>
                         </div>
                         <input class="createinput" id="lastName" placeholder="Last name">
-                     </div>
+                    
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+
+					</div>
                      <div style="width: 100%;float:left;" class="create-row">
                         <div class="inputicon"><i class="fa fa-phone" aria-hidden="true"></i>
                         </div>
                         <input class="createinput" id="phoneNumber" placeholder="Phone Number">
-                     </div>
+               
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+
+					</div>
 
                   </div>
 
@@ -941,13 +980,21 @@ ip:port"></textarea>
                         <div class="inputicon"><i class="fa fa-map-marker" aria-hidden="true"></i>
                         </div>
                         <input class="createinput" id="address" placeholder="Address">
-                     </div>
+                   
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+				   </div>
                      <div style="width: 100%;float:right;" class="create-row">
                         <div class="inputicon"><i class="fas fa-map-marker-alt"></i>
                         </div>
                         <input class="createinput" id="aptSuite" placeholder="Apt Suite (optional)">
+
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+
                      </div>
-                     <div style="width: 49%;float:left;" class="create-row">
+ 
+                    <div style="width: 49%;float:left;" class="create-row">
                         <div class="inputicon"><i class="fa fa-globe" aria-hidden="true"></i>
                         </div>
                         <select class="createinput" id="country">
@@ -980,6 +1027,8 @@ ip:port"></textarea>
                            <option value="China">China</option>
                            <option value="Japan">Japan</option>
                         </select>
+
+
                      </div>
                      <div style="width: 49%;float:right;" class="create-row">
                         <div class="inputicon"><i class="fa fa-building" aria-hidden="true"></i>
@@ -2100,12 +2149,18 @@ ip:port"></textarea>
                            <option value="master">Master Card</option>
                            <option value="amex">American Express</option>
                         </select>
+
+						 <div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
                      </div>
                      <div style="width: 100%;float:left;" class="create-row">
                         <div class="inputicon"><i class="fa fa-credit-card" aria-hidden="true"></i>
                         </div>
                         <input class="createinput" id="cardNumber" placeholder="Card Number">
-                     </div>
+ 
+						<div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+	                    </div>
                      <div style="width: 32%;float:left;" class="create-row">
                         <div class="inputicon"><i class="fas fa-calendar-alt"></i>
                         </div>
@@ -2147,7 +2202,10 @@ ip:port"></textarea>
                         <div class="inputicon"><i class="fa fa-key" aria-hidden="true"></i>
                         </div>
                         <input class="createinput" id="CVV" placeholder="CVV">
-                     </div>
+                    
+					<div class="xleg"><div class="xspot redirectToElectron" data-toggle="tooltip" data-placement="top" title="What does this do?"><i class="fas fa-question"></i></div></div>
+
+						</div>
 
 
                   </div>
@@ -2193,7 +2251,6 @@ ip:port"></textarea>
 
 
             </div>
-
 
          </div>
 
@@ -2534,7 +2591,7 @@ ip:port"></textarea>
                      <select class="createinputset" id="stingSize">
                         <option value="default">sizes</option>
                         <option value="random">random</option>
-                        <optionvalue="4">4</option>
+                        <option value="4">4</option>
                         <option value="4.5">4.5</option>
                         <option value="5">5</option>
                         <option value="5.5">5.5</option>
@@ -2637,12 +2694,11 @@ ip:port"></textarea>
    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js'></script>
    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
 
-
-
    <script src="js/script.js"></script>
    <script src="js/tab.js"></script>
    <script src="js/main.js"></script>
-
+   <script src="js/sizerange.js"></script>
+   <script src="js/comboTreePlugin.js"></script>
 
 
 </body>

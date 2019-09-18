@@ -228,12 +228,12 @@ $(".plus1").click(function () {
     }
   }
   createtabx++;
-  console.log(createtabx);
+//  console.log(createtabx);
 });
 
 $(".min1").click(function () {
   createtabx -= 1;
-  console.log(createtabx);
+//  console.log(createtabx);
 });
 
 $(".craterv2").click(function () {
@@ -361,7 +361,7 @@ $(".createbumbutton, .refro, .pcancel, .createprofile, .editprofile, .pnext2, .p
 $(".ccreate").click(function () {
   tabx = 1;
   createtabx = 1;
-  console.log(createtabx);
+//  console.log(createtabx);
 
   if (createtabx == 1) {
     $(".details1").get(0).style.setProperty("display", "none");
