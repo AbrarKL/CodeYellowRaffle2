@@ -228,13 +228,13 @@ $("#sizesket").on("click", ".savaliable", function () {
 			} else {
 				$(".rekop").css("display", "none");
 			}
-		
+	
 });
 
 
-  $('.size-select .allthemsizes').click( function () {
-    $('.size-select.sizeNumber.savaliable input[type="checkbox"]').prop('checked', this.checked)
-  })
+//  $('.size-select .allthemsizes').click( function () {
+//    $('.size-select .sizeNumber .savaliable input[type="checkbox"]').prop('checked', this.checked);
+//  })
 
 
 $(".sizeinput").click(function() {
@@ -245,14 +245,14 @@ $(".buttonbar, skelto").click(function() {
 		$(".sizedropcontainer").removeClass("hideyourkidshideyourwife");
 });
 
+$(document).click(function() {
+    $(".sizedropcontainer").removeClass("hideyourkidshideyourwife");
+});
 
-//$(document).click(function(e) {
-//    if (($(e.target).closest("#sizesket").attr("id") != "sizesket") &&
-//        $(e.target).closest(".sizeinput").attr("id") != "sizeinput") {
-//			$(".sizedropcontainer").css("display", "none");
-//    }
-//});
-
+$(".sizesket, .kojey").click(function(event) {
+    $(".sizedropcontainer").addClass("hideyourkidshideyourwife");
+    event.stopPropagation();
+});
 
 $(document).ready(function() {
     $(".selecttexter").append("Select sizes");
