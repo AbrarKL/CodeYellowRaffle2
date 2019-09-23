@@ -1135,7 +1135,7 @@ select:disabled {
 }
 
 .sizedisabled {
-	opacity: 0.8;
+	opacity: 0.4;
 	position: relative;
 	color: #aaa !important;
 }
