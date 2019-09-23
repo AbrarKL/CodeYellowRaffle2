@@ -16,10 +16,9 @@
   -webkit-border-radius: 100px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  /* This is the EXACT color of Mac OS scrollbars. 
-     Yes, I pulled out digital color meter */
+::-webkit-scrollbar-thumb:vertical:hover {
   background: #fbcf4d; 
+  width: 8px !important;
 }
 
 /* hover effect for both scrollbar area, and scrollbar 'thumb' */
