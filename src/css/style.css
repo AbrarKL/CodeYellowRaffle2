@@ -1214,13 +1214,3 @@ select:disabled {
 	font-weight: bold;
 	width: 10px;
 }
-
-.rekop {
-    position: absolute;
-    height: 50px;
-    top: 15px;
-    left: 60px;
-    z-index: 99999;
-    font-size: 14px;
-    color: white;
-}
