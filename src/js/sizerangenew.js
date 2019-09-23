@@ -29,7 +29,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s4').is(":checked"))
 			{
 				 size4 = 1;
-				 $(".sizeinput").append("size: 4, ");
+				 $(".sizeinput").append("4");
 				 $('#size4').addClass("wegoagain");
 			} else {
 				 size4 = 0;
@@ -38,7 +38,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s45').is(":checked"))
 			{
 				 size45 = 1;
-				 $(".sizeinput").append("size: 4.5, ");
+				 $(".sizeinput").append("4.5");
 				 $('#size45').addClass("wegoagain");
 			} else {
 				 size45 = 0;
@@ -47,7 +47,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s5').is(":checked"))
 			{
 				 size5 = 1;
-				 $(".sizeinput").append("size: 5, ");
+				 $(".sizeinput").append("5");
 				 $('#size5').addClass("wegoagain");
 			} else {
 				 size5 = 0;
@@ -56,7 +56,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s55').is(":checked"))
 			{
 				 size55 = 1;
-				 $(".sizeinput").append("size: 5.5, ");
+				 $(".sizeinput").append("5.5");
 				 $('#size55').addClass("wegoagain");
 			} else {
 				 size55 = 0;
@@ -65,7 +65,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s6').is(":checked"))
 			{
 				 size6 = 1;
-				 $(".sizeinput").append("size: 6, ");
+				 $(".sizeinput").append("6");
 				 $('#size6').addClass("wegoagain");
 			} else {
 				 size6 = 0;
@@ -74,7 +74,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s65').is(":checked"))
 			{
 				 size65 = 1;
-				 $(".sizeinput").append("size: 6.5, ");
+				 $(".sizeinput").append("6.5");
 				 $('#size65').addClass("wegoagain");
 			} else {
 				 size65 = 0;
@@ -83,7 +83,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s7').is(":checked"))
 			{
 				 size7 = 1;
-				 $(".sizeinput").append("size: 7, ");
+				 $(".sizeinput").append("7");
 				 $('#size7').addClass("wegoagain");
 			} else {
 				 size7 = 0;
@@ -92,7 +92,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s75').is(":checked"))
 			{
 				 size75 = 1;
-				 $(".sizeinput").append("size: 7.5, ");
+				 $(".sizeinput").append("7.5");
 				 $('#size75').addClass("wegoagain");
 			} else {
 				 size75 = 0;
@@ -101,7 +101,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s8').is(":checked"))
 			{
 				 size8 = 1;
-				 $(".sizeinput").append("size: 8, ");
+				 $(".sizeinput").append("8");
 				 $('#size8').addClass("wegoagain");
 			} else {
 				 size8 = 0;
@@ -110,7 +110,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s85').is(":checked"))
 			{
 				 size85 = 1;
-				 $(".sizeinput").append("size: 8.5, ");
+				 $(".sizeinput").append("8.5");
 				 $('#size85').addClass("wegoagain");
 			} else {
 				 size85 = 0;
@@ -119,7 +119,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s9').is(":checked"))
 			{
 				 size9 = 1;
-				 $(".sizeinput").append("size: 9, ");
+				 $(".sizeinput").append("9");
 				 $('#size9').addClass("wegoagain");
 			} else {
 				 size9 = 0;
@@ -128,7 +128,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s95').is(":checked"))
 			{
 				 size95 = 1;
-				 $(".sizeinput").append("size: 9.5, ");
+				 $(".sizeinput").append("9.5");
 				 $('#size95').addClass("wegoagain");
 			} else {
 				 size95 = 0;
@@ -137,7 +137,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s10').is(":checked"))
 			{
 				 size10 = 1;
-				 $(".sizeinput").append("size: 10, ");
+				 $(".sizeinput").append("10");
 				 $('#size10').addClass("wegoagain");
 			} else {
 				 size10 = 0;
@@ -146,7 +146,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s105').is(":checked"))
 			{
 				 size105 = 1;
-				 $(".sizeinput").append("size: 10.5, ");
+				 $(".sizeinput").append("10.5");
 				 $('#size105').addClass("wegoagain");
 			} else {
 				 size105 = 0;
@@ -155,7 +155,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s11').is(":checked"))
 			{
 				 size11 = 1;
-				 $(".sizeinput").append("size: 11, ");
+				 $(".sizeinput").append("11");
 				 $('#size11').addClass("wegoagain");
 			} else {
 				 size11 = 0;
@@ -164,7 +164,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s115').is(":checked"))
 			{
 				 size115 = 1;
-				 $(".sizeinput").append("size: 11.5, ");
+				 $(".sizeinput").append("11.5");
 				 $('#size115').addClass("wegoagain");
 			} else {
 				 size115 = 0;
@@ -173,7 +173,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s12').is(":checked"))
 			{
 				 size12 = 1;
-				 $(".sizeinput").append("size: 12, ");
+				 $(".sizeinput").append("12");
 				 $('#size12').addClass("wegoagain");
 			} else {
 				 size12 = 0;
@@ -182,7 +182,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s125').is(":checked"))
 			{
 				 size125 = 1;
-				 $(".sizeinput").append("size: 12.5, ");
+				 $(".sizeinput").append("12.5");
 				 $('#size125').addClass("wegoagain");
 			} else {
 				 size125 = 0;
@@ -191,7 +191,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		if($('#s13').is(":checked"))
 			{
 				 size13 = 1;
-				 $(".sizeinput").append("size: 13, ");
+				 $(".sizeinput").append("13");
 				 $('#size13').addClass("wegoagain");
 			} else {
 				 size13 = 0;
