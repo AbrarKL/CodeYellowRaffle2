@@ -233,7 +233,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 
 
   $('.size-select .allthemsizes').click( function () {
-    $('.size-select input[type="checkbox"]').prop('checked', this.checked)
+    $('.size-select.sizeNumber.savaliable input[type="checkbox"]').prop('checked', this.checked)
   })
 
 
