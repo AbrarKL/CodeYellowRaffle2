@@ -1375,13 +1375,14 @@ $(".shoe-container.releases").on('click', '.selectQuick', function () {
 });
 
 $('#taskSiteSelect').on('change', function () {
-	$('#taskSizeSelect').val('default')
-	$('.taskSizeOptionMass').prop('disabled', true);
+	//$('.size-select').removeClass('savaliable').removeClass('sizedisabled')
+	//$('.taskSizeOptionMass').prop('disabled', true);
+	$('.size-select').removeClass('savaliable').removeClass('sizedisabled')
 	var sizesAvailable = Object.keys(selectedQuickTaskRelease['sizes_supported_' + this.value]).sort(function (a, b) {
 		return a - b
 	});
 	for (var i = 0; i < sizesAvailable.length; i++) {
-		$('.taskSizeOptionMass[value="' + sizesAvailable[i] + '"').prop('disabled', false);
+		$('.size-select[value="' + sizesAvailable[i] + '"').addClass('savaliable');
 	}
 });
 

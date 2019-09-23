@@ -1,4 +1,4 @@
-$(".savaliable").click(function() {
+$("#sizesket").on("click", ".savaliable", function () {
 	
 		$(".sizeinput").empty();
 		$(".allthemsizes").empty();
