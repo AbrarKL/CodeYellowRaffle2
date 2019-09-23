@@ -1085,7 +1085,7 @@ select:disabled {
     text-align: left;
     white-space: nowrap;                   
     overflow: hidden;
-    direction: rtl;
+    direction: ltr;
     text-align: left;
 }
 
@@ -1200,4 +1200,27 @@ select:disabled {
 
 .hideyourkidshideyourwife {
 	display: block !important;
+}
+
+.sizesort {
+	display: inline-block;
+	position: relative;
+	color: #fff;
+}
+
+.sizesort::after {
+	content: ', ';
+	color: #aaa;
+	font-weight: bold;
+	width: 10px;
+}
+
+.rekop {
+    position: absolute;
+    height: 50px;
+    top: 15px;
+    left: 60px;
+    z-index: 99999;
+    font-size: 14px;
+    color: white;
 }
