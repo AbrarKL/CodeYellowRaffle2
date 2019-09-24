@@ -1128,8 +1128,24 @@ select:disabled {
 	position: relative;
 	z-index: 99999;
 }
+.plus-select {
+	height: 18px;
+	width: 100%;
+	padding-left: 10px;
+	line-height: 18px;
+	font-size: 14px;
+	color: #aaa;
+	text-align: left;
+	position: relative;
+	z-index: 99999;
+}
 
 .savaliable:hover {
+	background: #1e90ff !important;
+	color: #fff !important;
+}
+
+.plusavaliable:hover {
 	background: #1e90ff !important;
 	color: #fff !important;
 }
@@ -1193,6 +1209,18 @@ select:disabled {
 	opacity: 0;
 }
 
+ .plus-select input[type="checkbox"] {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: transparent;
+	border: none;
+	outline: none;
+/*	opacity: 0; */
+} 
+
 .wegoagain {
 /*	font-weight: bold; */
 	color: #fff;
@@ -1213,4 +1241,8 @@ select:disabled {
 	color: #aaa;
 	font-weight: bold;
 	width: 10px;
+}
+
+.cardiacarrest {
+	width: 100%;
 }

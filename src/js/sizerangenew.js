@@ -214,6 +214,28 @@ $("#sizesket").on("click", ".savaliable", function () {
 			} else {
 				 size14 = 0;
 			}	
+			
+		if($('#selectAll').is(":checked"))
+			{
+				 $('.selectAll').addClass("wegoagain");
+			} else {
+				 $('.selectAll').removeClass("wegoagain");
+			}		
+			
+		if($('#selectWin').is(":checked"))
+			{
+				 $('.selectWin').addClass("wegoagain");
+			} else {
+				 $('.selectWin').removeClass("wegoagain");
+			}		
+			
+		if($('#randomSize').is(":checked"))
+			{
+				 $('.randomSize').addClass("wegoagain");
+			} else {
+				 $('.randomSize').removeClass("wegoagain");
+			}		
+
 
 		if(size4 == 1 || size45 == 1 || size5 == 1 || size55 == 1 || size6 == 1 || size65 == 1 || size7 == 1 || size75 == 1 || size8 == 1 || size85 == 1 || size9 == 1 || size95 == 1 || size10 == 1 || size105 == 1 || size11 == 1 || size115 == 1 || size12 == 1 || size125 == 1 || size13 == 1 || size135 == 1 || size14 == 1)
 			{
@@ -232,10 +254,22 @@ $("#sizesket").on("click", ".savaliable", function () {
 });
 
 
-//  $('.size-select .allthemsizes').click( function () {
-//    $('.size-select .sizeNumber .savaliable input[type="checkbox"]').prop('checked', this.checked);
-//  })
+// $('.selectAll').click( function () {
+//    $('.savaliable input[type="checkbox"]').prop('checked', this.checked);
+//  });
+  
+  
+$("#selectAll").change(function(){
+    var status = $(this).is(":checked") ? true : false;
+    $(".savaliable").prop("checked",status);
+	
+	console.log(status);
+});
+  
 
+//$("#okaybet").click(function (e) {
+//  $('.savaliable input[type="checkbox"]').not(this).prop('checked', this.checked);
+//});
 
 $(".sizeinput").click(function() {
 		$(".sizedropcontainer").toggleClass("hideyourkidshideyourwife");
