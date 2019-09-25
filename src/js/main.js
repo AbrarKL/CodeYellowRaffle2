@@ -258,8 +258,7 @@ $('#deactivateButton').click(function () {
 
 // Update tasks
 ipcRenderer.on('taskUpdate', function (event, data) {
-	if(data.message.toLowerCase().indexOf('entry submitted') >= 0 || data.message.toLowerCase().indexOf('check email') >= 0)
-	{
+	if (data.message.toLowerCase().indexOf('entry submitted') >= 0 || data.message.toLowerCase().indexOf('check email') >= 0) {
 		$('#entries').html(parseInt($('#entries').html()) + 1)
 	}
 	$(`#taskResult${data.id}`).html(data.message.toLowerCase())
@@ -277,8 +276,7 @@ $("#startAllTasks").click(function () {
 		var delayIncrease = parseInt(require('electron').remote.getGlobal('settings').entryDelay) * 1000;
 		$.each($(".startTaskMass"), function (i) {
 			var taskId = $(this).attr('id');
-			if($('#taskResult' + taskId).html().toLowerCase() == 'idle')
-			{
+			if ($('#taskResult' + taskId).html().toLowerCase() == 'idle') {
 				var task = tasks[$(this).attr('id') - 1];
 				if (i == 0) {
 					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
@@ -302,8 +300,7 @@ $("#startAllTasks").click(function () {
 		var delayIncrease = parseInt(((minutes * 60) * 1000) / taskLength);
 		$.each($(".startTaskMass"), function (i) {
 			var taskId = $(this).attr('id');
-			if($('#taskResult' + taskId).html().toLowerCase() == 'idle')
-			{
+			if ($('#taskResult' + taskId).html().toLowerCase() == 'idle') {
 				var task = tasks[$(this).attr('id') - 1];
 				if (i == 0) {
 					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
@@ -327,8 +324,7 @@ $("#startAllTasks").click(function () {
 		$.each($(".startTaskMass"), function (i) {
 			var delayIncrease = (Math.floor(Math.random() * (parseInt(require('electron').remote.getGlobal('settings').maximumDelay) - parseInt(require('electron').remote.getGlobal('settings').minimumDelay) + 1)) + parseInt(require('electron').remote.getGlobal('settings').minimumDelay)) * 1000;
 			var taskId = $(this).attr('id');
-			if($('#taskResult' + taskId).html().toLowerCase() == 'idle')
-			{
+			if ($('#taskResult' + taskId).html().toLowerCase() == 'idle') {
 				var task = tasks[$(this).attr('id') - 1];
 				if (i == 0) {
 					ipcRenderer.send('startTask', task, profiles[task['taskProfile']]);
@@ -393,7 +389,7 @@ $("#deleteAllSubmittedTasks").click(function () {
 	$.each($(".deleteTask"), function () {
 		var task = tasks[$(this).attr('id') - 1];
 		//check if taskresult is 'idle' when starting delayed
-		if($('#taskResult' + $(this).attr('id')).html().toLowerCase().indexOf('submitted') >= 0 || $('#taskResult' + $(this).attr('id')).html().toLowerCase().indexOf('check email') >= 0){
+		if ($('#taskResult' + $(this).attr('id')).html().toLowerCase().indexOf('submitted') >= 0 || $('#taskResult' + $(this).attr('id')).html().toLowerCase().indexOf('check email') >= 0) {
 			tasks[$(this).attr('id') - 1] = {};
 			ipcRenderer.send('deleteTask', task);
 			if (task['taskTypeOfEmail'] != 'catchall') {
@@ -543,7 +539,7 @@ function loadProxies(proxiesToAdd, addToArray) {
 
 $("#createTaskButton").click(function () {
 	var taskSiteSelect = $('#taskSiteSelect').val();
-	var taskSizeSelect = $('#taskSizeSelect').val();
+	var taskSizeSelect = $('#taskSizeSelect').html();
 	var taskProfile = $('#taskProfile').val();
 	var profilesToChoose = [];
 	profilesToChoose.push(taskProfile);
@@ -579,28 +575,35 @@ $("#createTaskButton").click(function () {
 					if (validateEmail(taskEmail) != false || taskTypeOfEmail != 'newEmail') {
 						for (var i = 0; i < taskQuantity; i++) {
 							taskProfile = profilesToChoose[Math.floor(Math.random() * profilesToChoose.length)]
-							if (taskSizeSelect == 'random') {
-								tempTaskSize = Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect])[Math.floor(Math.random() * Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect]).length)];
-								var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][tempTaskSize];
-								if (taskSizeVariant == undefined) {
-									Materialize.toast("Task size variant does not exist.", 3500, "rounded");
-									return;
+							if (taskProfile == 'all profiles') {
+								taskProfile = Object.keys(profiles)[Math.floor(Math.random() * Object.keys(profiles).length)];
+								if (taskProfile == 'Example Profile') {
+									taskProfile = Object.keys(profiles)[Math.floor(Math.random() * Object.keys(profiles).length)];
+									if (taskProfile == 'Example Profile') {
+										taskProfile = Object.keys(profiles)[Math.floor(Math.random() * Object.keys(profiles).length)];
+										if (taskProfile == 'Example Profile') {
+											taskProfile = Object.keys(profiles)[Math.floor(Math.random() * Object.keys(profiles).length)];
+											if (taskProfile == 'Example Profile') {
+												taskProfile = Object.keys(profiles)[Math.floor(Math.random() * Object.keys(profiles).length)];
+												if (taskProfile == 'Example Profile') {
+													taskProfile = Object.keys(profiles)[Math.floor(Math.random() * Object.keys(profiles).length)];
+												}
+											}
+										}
+									}
 								}
-								if (createTask(taskSiteSelect, tempTaskSize, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
-									return;
-								}
-							} else {
-								// These 2 lines below are new
-								var sizesToChoose = taskSizeSelect.split(',');
-								var taskSizeSelect2 = sizesToChoose[Math.floor(Math.random() * sizesToChoose.length)].trimLeft().trimRight()
-								var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][taskSizeSelect2];
-								if (taskSizeVariant == undefined) {
-									Materialize.toast("Task size variant does not exist.", 3500, "rounded");
-									return;
-								}
-								if (createTask(taskSiteSelect, taskSizeSelect2, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
-									return;
-								}
+							}
+							// These 2 lines below are new
+							var sizesToChoose = taskSizeSelect.split(',');
+							sizesToChoose.pop();
+							var taskSizeSelect2 = sizesToChoose[Math.floor(Math.random() * sizesToChoose.length)].trimLeft().trimRight()
+							var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][taskSizeSelect2];
+							if (taskSizeVariant == undefined) {
+								Materialize.toast("Task size variant does not exist.", 3500, "rounded");
+								return;
+							}
+							if (createTask(taskSiteSelect, taskSizeSelect2, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
+								return;
 							}
 
 						}
@@ -1381,12 +1384,9 @@ $(".shoe-container.releases").on('click', '.selectQuick', function () {
 $('#taskSiteSelect').on('change', function () {
 	//$('.size-select').removeClass('savaliable').removeClass('sizedisabled')
 	//$('.taskSizeOptionMass').prop('disabled', true);
-	if($('#taskSiteSelect').val() != 'default')
-	{
+	if ($('#taskSiteSelect').val() != 'default') {
 		$('.selectAll').removeClass('plusdisabled').addClass('plusavaliable');
-	}
-	else
-	{
+	} else {
 		$('.selectAll').removeClass('plusavaliable').addClass('plusdisabled');
 	}
 	$('.size-select.sizeNumber').removeClass('savaliable').removeClass('sizedisabled');
