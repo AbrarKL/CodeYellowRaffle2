@@ -265,7 +265,14 @@ $("#sizesket").on("click", ".savaliable", function () {
 				 $('.selectWin').removeClass("wegoagain");
 			}	
  });
- 
+ $("#nosize").click(function () {
+		if($('#nosize').is(":checked"))
+			{
+				 $('.nosize').addClass("wegoagain");
+			} else {
+				 $('.nosize').removeClass("wegoagain");
+			}	
+ });
  $("#randomSize").click(function () {
 		if($('#randomSize').is(":checked"))
 			{
