@@ -940,6 +940,11 @@ function openBot(onReady) {
 		open(global.downloadURL);
 	});
 
+	// For guides
+	ipcMain.on('openPage', function (e, pageLink) {
+		open(pageLink);
+	});
+
 	ipcMain.on('openGuides', function (e) {
 		open('https://codeyellow.io/v2/new_guides?token=' + global.settings.token);
 	});

@@ -141,6 +141,10 @@ document.getElementById('exportProfiles').onchange = function () {
 $('.update-dot.updateav').click(function () {
 	ipcRenderer.send('downloadUpdate');
 });
+//If update available and update icon clicked
+$('.openPage').click(function () {
+	ipcRenderer.send('openPage', $(this).data('page'));
+});
 
 // To view guides
 $('#guidesButton').click(function () {
