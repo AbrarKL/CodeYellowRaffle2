@@ -1218,7 +1218,7 @@ select:disabled {
 	background: transparent;
 	border: none;
 	outline: none;
-/*	opacity: 0; */
+	opacity: 0; 
 } 
 
 .wegoagain {
