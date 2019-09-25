@@ -1221,6 +1221,14 @@ select:disabled {
 	opacity: 0; 
 } 
 
+.plusdisabled {
+	opacity: 0.4;
+}
+.plusdisabled:hover {
+	background: transparent !important;
+	color: #aaa !important;
+}
+
 .wegoagain {
 /*	font-weight: bold; */
 	color: #fff;

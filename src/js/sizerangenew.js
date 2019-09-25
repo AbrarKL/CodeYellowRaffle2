@@ -257,6 +257,24 @@ $("#sizesket").on("click", ".savaliable", function () {
 			}	
  });
 
+ $("#selectWin").click(function () {
+		if($('#selectWin').is(":checked"))
+			{
+				 $('.selectWin').addClass("wegoagain");
+			} else {
+				 $('.selectWin').removeClass("wegoagain");
+			}	
+ });
+ 
+ $("#randomSize").click(function () {
+		if($('#randomSize').is(":checked"))
+			{
+				 $('.randomSize').addClass("wegoagain");
+			} else {
+				 $('.randomSize').removeClass("wegoagain");
+			}	
+ });
+
 //$('.selectAll').change(function() { 
 //		if($('#selectWin').is(":checked"))
 //			{
@@ -475,6 +493,30 @@ $(window).click(function(e) {
 		$("#s14").prop("disabled", true)
 	} else {
 		$("#s14").prop("disabled", false)
+
+	}	
+	
+	if($(".selectAll").hasClass("plusdisabled"))
+	{
+		$("#selectAll").prop("disabled", true)
+	} else {
+		$("#selectAll").prop("disabled", false)
+
+	}
+	
+	if($(".selectWin").hasClass("plusdisabled"))
+	{
+		$("#selectWin").prop("disabled", true)
+	} else {
+		$("#selectWin").prop("disabled", false)
+
+	}
+	
+	if($(".randomSize").hasClass("plusdisabled"))
+	{
+		$("#randomSize").prop("disabled", true)
+	} else {
+		$("#randomSize").prop("disabled", false)
 
 	}
 });
