@@ -1,4 +1,4 @@
-$("#sizesket").on("click", ".savaliable", function () {
+$("#sizesket, .randomSize").on("click", ".savaliable", function () {
 	
 		$(".sizeinput").empty();
 		$(".allthemsizes").empty();
@@ -25,6 +25,7 @@ $("#sizesket").on("click", ".savaliable", function () {
 		var size13 = 0;
 		var size135 = 0;
 		var size14 = 0;
+
 
 		if($('#s4').is(":checked"))
 			{
@@ -213,7 +214,28 @@ $("#sizesket").on("click", ".savaliable", function () {
 				 $('.ss14').addClass("wegoagain");
 			} else {
 				 size14 = 0;
+			}				
+
+
+
+
+
+			
+		if($('#nosize').is(":checked"))
+			{
+				 $(".sizeinput").append("<div class='sizesort'>no size</div>");
+				 $('.noSize').addClass("wegoagain");
+			} else {
 			}	
+
+		if($('#selectWin').is(":checked"))
+			{
+				 $(".sizeinput").append("<div class='sizesort'>select on win</div>");
+				 $('.onWin').addClass("wegoagain");
+			} else {
+			}	
+
+			
 			
 
 
@@ -329,6 +351,7 @@ $(".sizesket, .kojey").click(function(event) {
     $(".sizedropcontainer").addClass("hideyourkidshideyourwife");
     event.stopPropagation();
 });
+
 
 $(document).ready(function() {
     $(".selecttexter").append("Select sizes");
@@ -494,12 +517,31 @@ $(window).click(function(e) {
 		$("#s135").prop("disabled", false)
 
 	}
-	
+
 	if($(".ss14").hasClass("sizedisabled"))
 	{
 		$("#s14").prop("disabled", true)
 	} else {
 		$("#s14").prop("disabled", false)
+
+	}	
+	
+
+
+	
+	if($(".noSize").hasClass("sizedisabled"))
+	{
+		$("#nosize").prop("disabled", true)
+	} else {
+		$("#nosize").prop("disabled", false)
+
+	}	
+	
+	if($(".onWin").hasClass("sizedisabled"))
+	{
+		$("#selectWin").prop("disabled", true)
+	} else {
+		$("#selectWin").prop("disabled", false)
 
 	}	
 	
@@ -510,22 +552,7 @@ $(window).click(function(e) {
 		$("#selectAll").prop("disabled", false)
 
 	}
-	
-	if($(".selectWin").hasClass("plusdisabled"))
-	{
-		$("#selectWin").prop("disabled", true)
-	} else {
-		$("#selectWin").prop("disabled", false)
 
-	}
-	
-	if($(".randomSize").hasClass("plusdisabled"))
-	{
-		$("#randomSize").prop("disabled", true)
-	} else {
-		$("#randomSize").prop("disabled", false)
-
-	}
 });
 
 

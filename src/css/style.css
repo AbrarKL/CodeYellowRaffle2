@@ -1254,3 +1254,18 @@ select:disabled {
 .cardiacarrest {
 	width: 100%;
 }
+
+
+
+.sizesnort {
+	display: inline-block;
+	position: relative;
+	color: #fff;
+}
+
+.sizesnort::after {
+	content: '';
+	color: #aaa;
+	font-weight: bold;
+	width: 10px;
+}
