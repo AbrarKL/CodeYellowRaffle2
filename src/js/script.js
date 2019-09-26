@@ -54,6 +54,7 @@ $(".proxies").click(function () {
     $(".nav-ground").get(0).style.setProperty("left", "364px");
     $(".nav-item").removeClass("active")
     $(".proxies").addClass("active")
+	$("#proxiesTab").addClass("active")
     $(".sec-nav").removeClass("test")
     $(".sec-nav").removeClass("second-nav-hidden")
 	
