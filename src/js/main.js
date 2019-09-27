@@ -1201,6 +1201,16 @@ function loadProfile(profileName, notify) {
 
 function loadReleases() {
 	var taskID = 0;
+	if(releases.filter(function(vendor){ return vendor.closed === true }).length == releases.length)
+	{
+		$('.noraffletext').html('there are currently no raffles open')
+		$('.noraffleslol').css('display', 'block')
+	}
+	if(releases == undefined || releases.length == 0)
+	{
+		$('.noraffletext').html('please reopen the bot to view releases')
+		$('.noraffleslol').css('display', 'block')
+	}
 	for (var i = 0; i < releases.length; i++) {
 		var release = releases[i];
 		var sitesSupported = release['sites_supported'];
