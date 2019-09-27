@@ -13,8 +13,9 @@ var releases = require('electron').remote.getGlobal('releases');
 var updateRequired = require('electron').remote.getGlobal('updateRequired');
 var selectedQuickTaskRelease;
 var emailsForTasks = {};
-if (updateRequired != true) {
-	$('.update-dot.updateav').css("display", "none");
+$('#softVersion').html(require('electron').remote.getGlobal('currentVersion'));
+if (updateRequired == true) {
+	$('#updateButton').css("display", "block");
 }
 $('#user').html(require('electron').remote.getGlobal('user'));
 $('#entries').html(require('electron').remote.getGlobal('entries'));
@@ -137,10 +138,7 @@ document.getElementById('exportProfiles').onchange = function () {
 	exportProfiles.value = '';
 };
 
-//If update available and update icon clicked
-$('.update-dot.updateav').click(function () {
-	ipcRenderer.send('downloadUpdate');
-});
+
 //If update available and update icon clicked
 $('.openPage').click(function () {
 	ipcRenderer.send('openPage', $(this).data('page'));
