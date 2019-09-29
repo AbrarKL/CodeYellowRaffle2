@@ -48,6 +48,7 @@ body {
   margin: 0 auto;
   text-align: center;
   font-family: 'Raleway', sans-serif;
+  text-transform: lowercase !important;
 
 }
 
@@ -1293,4 +1294,8 @@ select:disabled {
 	font-weight: bold;
 	line-height: 40px;
 	color: #595965;
+}
+
+.redirectToElectron {
+	display: none;
 }
