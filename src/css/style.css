@@ -437,13 +437,14 @@ body {
 }
 
 .settingsleftmenu {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	width: 330px;
-	height: 100%;
-	background: #161619;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 330px;
+    height: 100%;
+     background: transparent;
+    padding-right: 10px;
 }
 
 .settingnavtitle {
@@ -475,11 +476,13 @@ body {
 }
 
 .setactive {
-	border-left: 5px solid #fbcf4d;
-	color: #fff;
-	font-weight: bold;
-	background: #121214;
-	padding-left: 25px;
+    border-left: 5px solid #fbcf4d;
+    color: #fff;
+    font-weight: bold;
+    border-bottom-right-radius: 35px;
+    border-top-right-radius: 35px;
+    background: #121214;
+    padding-left: 25px;
 }
 
 .setting-side {
