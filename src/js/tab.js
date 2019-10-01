@@ -415,3 +415,11 @@ output3.innerHTML = slider3.value;
 slider3.oninput = function () {
   output3.innerHTML = this.value;
 }
+
+var slider4 = document.getElementById("genAmount");
+var output4 = document.getElementById("genAmountShow");
+output4.innerHTML = slider4.value;
+
+slider4.oninput = function () {
+  output4.innerHTML = this.value;
+}
