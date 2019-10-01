@@ -53,7 +53,7 @@ body {
 }
 
 .ui-tooltip {
-    z-index: 100000 !important;
+    z-index: 99999999 !important;
 }
 
 .bot-size {
@@ -749,7 +749,7 @@ body {
     color: #fff;
     opacity: 0.8;
     position: relative;
-    z-index: 9999;
+    z-index: 99s;
 	border-top-right-radius: 25px;
 	border-bottom-right-radius: 25px;
 	padding-right: 20px;

@@ -599,6 +599,7 @@ hr {
   width: 50%;
   float: left;
 }
+
 .rightbind {
   width: 50%;
   float: right;
@@ -608,7 +609,7 @@ select {
   color: #aaa !important;
   background: #28282e !important;
   opacity: 1 !important;
-  z-index: 9999 !important;
+  z-index: 99 !important;
 }
 
 .butoneir {
@@ -1751,6 +1752,8 @@ input.proxCover:checked  {
 	bottom: 0;
 	left: 0;
 	background: #212126;
+	border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
 }
 
 .canclerow {
