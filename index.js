@@ -15,7 +15,7 @@
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var currentVersion = '0.1.5';
+var currentVersion = '0.0.1';
 global.currentVersion = currentVersion;
 // LATER REMOVE EMAIL FROM if (fileExists('profiles.json')) {
 const {
@@ -27,7 +27,7 @@ const electron = require('electron');
 const squirrelWin32 = require('./squirrel');
 const fs = require('fs');
 const request = require('request');
-const appDataDir = require('os').homedir() + "\\AppData\\Local\\CodeYellow_Raffle";
+const appDataDir = require('os').homedir() + "\\AppData\\Local\\CodeYellow_Raffle_V2";
 const proxy = require('./proxy.js');
 const crypto = require('crypto');
 

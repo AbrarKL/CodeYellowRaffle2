@@ -1,10 +1,10 @@
 var electronInstaller = require('electron-winstaller');
 resultPromise = electronInstaller.createWindowsInstaller({
-    appDirectory: './release-builds/CodeYellowRaffle-win32-ia32',
+    appDirectory: './release-builds/CodeYellowRaffleV2-win32-ia32',
     outputDirectory: './builds/installer',
     authors: 'CodeYellow.',
-    exe: 'CodeYellowRaffle.exe',
-	version: '0.1.5',
+    exe: 'CodeYellowRaffleV2.exe',
+	version: '0.0.1',
 	noMsi: true,
 	loadingGif: './assets/installer.gif',
 	setupIcon: './assets/icons/win/icon.ico'

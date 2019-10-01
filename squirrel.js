@@ -38,6 +38,7 @@ function handleSquirrelEvent() {
 
   const squirrelEvent = process.argv[1];
   switch (squirrelEvent) {
+    case '--squirrel-firstrun':
     case '--squirrel-install':
     case '--squirrel-updated':
       spawnUpdate(['--createShortcut', exeName]);

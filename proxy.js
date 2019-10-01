@@ -15,7 +15,6 @@
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 var HttpsProxyAgent = require('https-proxy-agent');
-var ProxyLists = require('proxy-lists');
 const request = require('request');
 exports.testProxy = function(proxy, callback) {
 	if(proxy != '' || proxy != undefined)
