@@ -844,12 +844,6 @@ function openBot(onReady) {
 		});
 	});
 
-	ipcMain.on('scrapeProxies', function (e, data) {
-		proxy.scrapeProxies(data.amount, data.country, function (response) {
-			module.exports.mainBotWin.send('proxiesScraped', response);
-			return;
-		});
-	});
 
 
 

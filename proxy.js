@@ -44,45 +44,6 @@ exports.testProxy = function(proxy, callback) {
 		});
 }
 
-exports.scrapeProxies = function(limit, countries, callback)
-{
-	var currentProxies = 0;
-	var options = {
-		countries: countries
-	};
-	var proxyList = '';
-
-	// `gettingProxies` is an event emitter object.
-	var gettingProxies = ProxyLists.getProxies(options);
-
-	gettingProxies.on('data', function(proxies) {
-		for(var i = 0; i < proxies.length; i++)
-		{
-			if(currentProxies < limit)
-			{
-				proxyList += `${proxies[i].ipAddress}:${proxies[i].port}\n`;
-				currentProxies += 1;
-				if(currentProxies == limit)
-				{
-					callback(proxyList);
-					ProxyLists = require('proxy-lists');
-					gettingProxies = null;
-				}
-			}
-			else
-			{
-				return;
-			}
-		}
-	});
-
-	gettingProxies.on('error', function(error) {
-		// Some error has occurred.
-		return;
-	});
-
-}
-
 
 // Old proxy test
 
