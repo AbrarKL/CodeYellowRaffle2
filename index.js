@@ -1172,7 +1172,7 @@ function initialfolderExistsOrMkDir() {
 function createOrGetFiles() {
 	request.get({
 			json: true,
-			url: 'https://codeyellow.io/api/version.php'
+			url: 'https://codeyellow.io/api/v2/version.php'
 		},
 		function (error, response, body) {
 			if (error) {

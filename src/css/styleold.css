@@ -989,7 +989,7 @@ input:checked + .sliderf:before {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background-color: #ffba00;
+  background-color: #fbcf4d;
   position: absolute;
   bottom: -0px;
   left: 20px;
@@ -1005,7 +1005,7 @@ input:checked + .sliderf:before {
       display: inline-block;
       width: 100px;
       height: 60px;
-      background: #ffba00;
+      background: #fbcf4d;
       position: relative;
       margin-top: -30px;
       zoom: 140%;
@@ -1023,7 +1023,7 @@ input:checked + .sliderf:before {
       height: 0;
       border-left: 50px solid transparent;
       border-right: 50px solid transparent;
-      border-bottom: 25px solid #ffba00;
+      border-bottom: 25px solid #fbcf4d;
     }
     #hexagon:after {
       content: "";
@@ -1034,7 +1034,7 @@ input:checked + .sliderf:before {
       height: 0;
       border-left: 50px solid transparent;
       border-right: 50px solid transparent;
-      border-top: 25px solid #ffba00;
+      border-top: 25px solid #fbcf4d;
     }
 
     #hexagon2 {
@@ -1187,25 +1187,25 @@ input:checked + .sliderf:before {
 
 
 .mid-cop .raffle-circle {
-  background: #ffba00 !important;
+  background: #fbcf4d !important;
 }
 
 .mid-cop #hexagon{
-  background: #ffba00 !important;
+  background: #fbcf4d !important;
   color: #333;
-  border-color: #ffba00 !important;
+  border-color: #fbcf4d !important;
 }
 
 .mid-cop #hexagon:after {
   border-left: 50px solid transparent !important;
   border-right: 50px solid transparent !important;
-  border-top: 25px solid #ffba00 !important;
+  border-top: 25px solid #fbcf4d !important;
 }
 
 .mid-cop #hexagon:before {
   border-left: 50px solid transparent !important;
   border-right: 50px solid transparent !important;
-  border-bottom: 25px solid #ffba00 !important;
+  border-bottom: 25px solid #fbcf4d !important;
 }
 
 
@@ -1270,7 +1270,7 @@ rgba(255, 255, 255, 0.1);
 }
 
 .switch-field input:checked + label {
-	background-color: #ffba00;
+	background-color: #fbcf4d;
 	box-shadow: none;
   color: #333;
 }
@@ -1375,7 +1375,7 @@ rgba(255, 255, 255, 0.1);
     background: rgba(0,0,0,0);
     text-align: center;
     line-height: 60px;
-    color: #ffba00;
+    color: #fbcf4d;
     font-weight: bold;
     font-size: 25px;
     white-space: nowrap;
@@ -1384,7 +1384,7 @@ rgba(255, 255, 255, 0.1);
 }
 
 .enter-r {
-    background: #ffba00;
+    background: #fbcf4d;
     line-height: 50px;
     color: #333;
     font-size: 16px;
@@ -1588,7 +1588,7 @@ rgba(255, 255, 255, 0.1);
     lefT: calc(50% + 35px);
     width: 20px;
     heighT: 20px;
-    background: #ffba00;
+    background: #fbcf4d;
     border-radius: 50%;
     text-align: center;
     line-height: 20px;
@@ -1746,7 +1746,7 @@ input.proxCover:checked  {
 	height: 100px;
 	line-height: 80px;
 	text-align: Center;
-	color: #ffba00;
+	color: #fbcf4d;
 	position: absolute;
 	bottom: 0;
 	left: 0;
