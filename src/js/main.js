@@ -1019,7 +1019,7 @@ for (var i = 0; i < profileKeys.length; i++) {
 if (require('electron').remote.getGlobal('settings').stingProfiles != null) {
 	$('#stingProfiles').val(require('electron').remote.getGlobal('settings').stingProfiles);
 }
-$('#profileSelected').html($('#profileList option:first-child').val())
+$('#profileSelected').html($('#profileList option:first-child').val().slice(0, 8))
 
 // Changes entry mode settings tab input so the disabled inputs get enabled
 $('#entryMode').change();
