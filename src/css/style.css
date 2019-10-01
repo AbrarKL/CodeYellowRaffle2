@@ -496,6 +496,7 @@ body {
 	padding: 20px;
 	overflow-y: auto;
 	overflow-x: hidden;
+	background: rgba(20, 20, 23, 0.15);
 }
 
 .tabbard {
