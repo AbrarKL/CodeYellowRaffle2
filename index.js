@@ -531,12 +531,11 @@ function openBot(onReady) {
 		});
 	});
 
-	
+
 	// Save sting settings
 	ipcMain.on('saveStingSettings', function (e, settingsToSave) {
 		console.log(settingsToSave);
-		if(settingsToSave['stingProfiles'] == 'Example Profile')
-		{
+		if (settingsToSave['stingProfiles'] == 'Example Profile') {
 			module.exports.mainBotWin.send('notify', {
 				length: 3000,
 				message: 'you can\'t use the example profile for tasks!'
@@ -660,8 +659,7 @@ function openBot(onReady) {
 			console.log('Nakedcph task started');
 			websites.nakedcph.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'joyce') {
-			if(task['type'] != 'mass')
-			{
+			if (task['type'] != 'mass') {
 				module.exports.mainBotWin.send('taskUpdate', {
 					id: task.taskID,
 					type: task.type,
@@ -674,9 +672,15 @@ function openBot(onReady) {
 		} else if (task['taskSiteSelect'] == 'vooberlin') {
 			console.log('VooBerlin task started');
 			websites.vooberlin.initTask(task, profile)
-		} else if (task['taskSiteSelect'] == 'jd') {
-			console.log('JD task started');
-			websites.jd.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'basketsstore') {
+			console.log('BasketsStore task started');
+			websites.basketsstore.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'basket4ballers') {
+			console.log('Basket4Ballers task started');
+			websites.basket4ballers.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'opiumparis') {
+			console.log('OpiumParis task started');
+			websites.opiumparis.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'shoezgallery') {
 			console.log('ShoezGallery task started');
 			websites.shoezgallery.initTask(task, profile)
@@ -770,6 +774,12 @@ function openBot(onReady) {
 		} else if (task['taskSiteSelect'] == 'asphaltgold') {
 			console.log('AsphaltGold task started');
 			websites.asphaltgold.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'lsdls') {
+			console.log('LSDLS task started');
+			websites.lsdls.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'woodwood') {
+			console.log('WoodWood task started');
+			websites.woodwood.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'bstn') {
 			console.log('BSTN task started');
 			websites.bstn.initTask(task, profile)
@@ -800,7 +810,7 @@ function openBot(onReady) {
 		});
 	});
 
-	
+
 	ipcMain.on('saveIGlist', function (e, igsToSave) {
 		global.instagrams = igsToSave;
 		fs.writeFile(appDataDir + "\\instagrams.txt", igsToSave, function (err) {
@@ -1018,9 +1028,7 @@ exports.sendWebhook = function (website, email, additional, password, task, prof
 			}
 			if (parsed.valid == true) {
 				console.log("Entry saved")
-			}
-			else
-			{
+			} else {
 				console.log(body)
 				console.log(response.statusCode);
 			}
@@ -1409,14 +1417,11 @@ exports.getAuthHeader = function (hwid, token, key) {
 		'743677397A24432646294A404E635266556A586E5A7234753778214125442A472D4B6150645367566B59703373357638792F423F4528482B4D6251655468576D',
 		'5970337336763979244226452948404D635166546A576E5A7134743777217A25432A462D4A614E645267556B58703273357538782F413F4428472B4B62506553'
 	];
-	rawndom = Math.floor(Math.random()*salts.length);
-	if(rawndom >= 0)
-	{
+	rawndom = Math.floor(Math.random() * salts.length);
+	if (rawndom >= 0) {
 		return (crypto.createHash('sha256').update(token + key + hwid + salts[rawndom] + rawndom).digest('hex') + rawndom);
-	}
-	else
-	{
-		rawndom = Math.floor(Math.random()*salts.length);
+	} else {
+		rawndom = Math.floor(Math.random() * salts.length);
 		return (crypto.createHash('sha256').update(token + key + hwid + salts[rawndom] + rawndom).digest('hex') + rawndom);
 	}
 }
