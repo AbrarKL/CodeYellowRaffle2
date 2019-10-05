@@ -474,14 +474,17 @@ $("#deleteAllProxies").click(function () {
 $("#removeFailed").click(function () {
 	$.each($(".proxyInput"), function () {
 		var uid = $(this).data('uid');
-		var failed = $('#proxyResult' + uid).html().toLowerCase() == 'failed' ? true : false;
-		if (failed) {
-			var index = proxies.indexOf($(this).data('ip'));
-			console.log($(this).data('ip'));
-			if (index > -1) {
-				proxies.splice(index, 1);
+		if(uid != null)
+		{
+			var failed = $('#proxyResult' + uid).html().toLowerCase() == 'failed' ? true : false;
+			if (failed) {
+				var index = proxies.indexOf($(this).data('ip'));
+				console.log($(this).data('ip'));
+				if (index > -1) {
+					proxies.splice(index, 1);
+				}
+				$(this).remove()
 			}
-			$(this).remove()
 		}
 	});
 });
