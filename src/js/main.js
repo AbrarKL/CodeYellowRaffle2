@@ -694,7 +694,26 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 		emailsForTasks[taskEmail] = {};
 		emailsForTasks[taskEmail][variantName] = true;
 	}
-	if (taskSiteSelect == 'bstn') {
+	if (taskSiteSelect == 'shinzoparis') {
+		tasks.push({
+			taskID: taskID,
+			proxyType: taskTypeOfProxy,
+			captchaHandler: captchaHandler,
+			type: 'mass',
+			filterID: selectedQuickTaskRelease['filterID'],
+			taskTypeOfEmail: taskTypeOfEmail,
+			proxy: proxy,
+			taskSiteSelect: taskSiteSelect,
+			taskSizeSelect: taskSizeSelect,
+			taskSizeVariant: taskSizeVariant,
+			taskProfile: taskProfile,
+			taskEmail: taskEmail,
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			shinzoparis: selectedQuickTaskRelease['shinzoparis'],
+			igHandler: IGHandler
+		});
+	} 
+	else if (taskSiteSelect == 'bstn') {
 		tasks.push({
 			taskID: taskID,
 			proxyType: taskTypeOfProxy,
