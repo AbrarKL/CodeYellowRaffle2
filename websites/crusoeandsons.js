@@ -136,6 +136,13 @@ exports.initTask = function (task, profile) {
 		}
 	}
 
+	if (task['taskEmail'] != null && task['taskEmail'].indexOf("'") > -1) {
+		task['taskEmail'] = task['taskEmail'].replaceAll("'", '');
+	}
+	if (task['taskEmail'] != null && task['taskEmail'].indexOf(' ') > -1) {
+		task['taskEmail'] = task['taskEmail'].replaceAll(' ', '');
+	}
+
 	if (profile['country'] != 'United States') {
 		profile["stateProvince"] = 'none';
 	}

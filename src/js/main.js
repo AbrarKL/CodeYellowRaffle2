@@ -256,7 +256,7 @@ $('#deactivateButton').click(function () {
 
 // Update tasks
 ipcRenderer.on('taskUpdate', function (event, data) {
-	if (data.message.toLowerCase().indexOf('entry submitted') >= 0 || data.message.toLowerCase().indexOf('check email') >= 0) {
+	if (data.message.toLowerCase().indexOf('entry submitted') >= 0 || data.message.toLowerCase().indexOf('check email') >= 0 || data.message.toLowerCase().indexOf('check email!') >= 0 || data.message.toLowerCase().indexOf('entry submitted!') >= 0) {
 		$('#entries').html(parseInt($('#entries').html()) + 1)
 	}
 	$(`#taskResult${data.id}`).html(data.message.toLowerCase())
@@ -603,7 +603,7 @@ $("#createTaskButton").click(function () {
 								Materialize.toast("Task size variant does not exist.", 3500, "rounded");
 								return;
 							}
-							if (createTask(taskSiteSelect, taskSizeSelect2, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
+							if (createTask(taskSiteSelect, taskSizeSelect2, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler, $('#checklistnigga').val()) == true) {
 								return;
 							}
 
@@ -640,7 +640,7 @@ $("#createTaskButton").click(function () {
 
 
 
-function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) {
+function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler, IGHandler) {
 	if (taskTypeOfEmail == 'saved') {
 		var emailKeys = Object.keys(emails);
 		taskEmail = emailKeys[Math.floor(Math.random() * emailKeys.length)];
@@ -709,7 +709,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			bstn: selectedQuickTaskRelease['bstn']
+			bstn: selectedQuickTaskRelease['bstn'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'nakedcph') {
 		tasks.push({
@@ -726,7 +727,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			nakedcph: selectedQuickTaskRelease['nakedcph']
+			nakedcph: selectedQuickTaskRelease['nakedcph'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'footshop') {
 		tasks.push({
@@ -743,7 +745,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			footshop: selectedQuickTaskRelease['footshop']
+			footshop: selectedQuickTaskRelease['footshop'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'ymeuniverse') {
 		tasks.push({
@@ -760,7 +763,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			ymeuniverse: selectedQuickTaskRelease['ymeuniverse']
+			ymeuniverse: selectedQuickTaskRelease['ymeuniverse'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'dsml') {
 		tasks.push({
@@ -777,7 +781,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			dsml: selectedQuickTaskRelease['dsml']
+			dsml: selectedQuickTaskRelease['dsml'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'dsmny') {
 		tasks.push({
@@ -794,7 +799,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			dsmny: selectedQuickTaskRelease['dsmny']
+			dsmny: selectedQuickTaskRelease['dsmny'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'dsms') {
 		tasks.push({
@@ -811,7 +817,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			dsms: selectedQuickTaskRelease['dsms']
+			dsms: selectedQuickTaskRelease['dsms'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'dsmla') {
 		tasks.push({
@@ -828,7 +835,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			dsmla: selectedQuickTaskRelease['dsmla']
+			dsmla: selectedQuickTaskRelease['dsmla'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'oneblockdown') {
 		tasks.push({
@@ -845,7 +853,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			oneblockdown: selectedQuickTaskRelease['oneblockdown']
+			oneblockdown: selectedQuickTaskRelease['oneblockdown'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'backdoor') {
 		tasks.push({
@@ -862,7 +871,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			backdoor: selectedQuickTaskRelease['backdoor']
+			backdoor: selectedQuickTaskRelease['backdoor'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'dtlr') {
 		tasks.push({
@@ -879,7 +889,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			dtlr: selectedQuickTaskRelease['dtlr']
+			dtlr: selectedQuickTaskRelease['dtlr'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'supplystore') {
 		tasks.push({
@@ -896,7 +907,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			supplystore: selectedQuickTaskRelease['supplystore']
+			supplystore: selectedQuickTaskRelease['supplystore'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'bdgastore') {
 		tasks.push({
@@ -913,7 +925,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			bdgastore: selectedQuickTaskRelease['bdgastore']
+			bdgastore: selectedQuickTaskRelease['bdgastore'],
+			igHandler: IGHandler
 		});
 	} else if (taskSiteSelect == 'joyce') {
 		tasks.push({
@@ -930,7 +943,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
 			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
-			hkidnumber: $('#hkIDNUMBER4').val()
+			hkidnumber: $('#hkIDNUMBER4').val(),
+			igHandler: IGHandler
 		});
 	} else {
 		tasks.push({
@@ -946,7 +960,8 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			taskSizeVariant: taskSizeVariant,
 			taskProfile: taskProfile,
 			taskEmail: taskEmail,
-			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect]
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			igHandler: IGHandler
 		});
 	}
 
@@ -1282,7 +1297,11 @@ $(".release-item").on('click', '.release-button', function () {
 	var sites = Object.keys(releases[releaseID]['sites_supported']);
 	for (var i = 0; i < sites.length; i++) {
 		var taskSiteSelect = sites[i];
-		console.log('creating 20 tasks for ' + taskSiteSelect)
+		if(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect] == undefined)
+		{
+			taskSizeSelect = 'random';
+		}
+		console.log('creating '+taskQuantity+' tasks for ' + taskSiteSelect)
 		var taskSizeSelect = require('electron').remote.getGlobal('settings').stingSize;
 		var taskProfile = require('electron').remote.getGlobal('settings').stingProfiles;
 		var taskSpecificProxy = '';
@@ -1293,6 +1312,7 @@ $(".release-item").on('click', '.release-button', function () {
 		var taskTypeOfEmail = 'catchall';
 		var taskTypeOfProxy = require('electron').remote.getGlobal('settings').stingProxytype;
 		var captchaHandler = require('electron').remote.getGlobal('settings').stingCaptcha;
+		var igHandler = require('electron').remote.getGlobal('settings')['stingIG'];
 		if (taskSiteSelect == 'footpatroluk' && profiles[taskProfile]['country'] != 'United Kingdom') {
 			Materialize.toast("The site you have selected is for UK profile only.", 3500, "rounded");
 			return;
@@ -1317,7 +1337,6 @@ $(".release-item").on('click', '.release-button', function () {
 			Materialize.toast("You cannot create a task with the example profile", 2000, "rounded");
 			return;
 		}
-
 		var proxyUsed = '';
 		if (selectedQuickTaskRelease != undefined) {
 			if (taskSiteSelect != 'default') {
@@ -1332,7 +1351,7 @@ $(".release-item").on('click', '.release-button', function () {
 										Materialize.toast("Task size variant does not exist.", 3500, "rounded");
 										return;
 									}
-									if (createTask(taskSiteSelect, tempTaskSize, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
+									if (createTask(taskSiteSelect, tempTaskSize, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler, igHandler) == true) {
 										return;
 									}
 								} else {
@@ -1341,7 +1360,7 @@ $(".release-item").on('click', '.release-button', function () {
 										Materialize.toast("Task size variant does not exist.", 3500, "rounded");
 										return;
 									}
-									if (createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler) == true) {
+									if (createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificProxy, taskQuantity, taskEmail, taskTypeOfEmail, proxyUsed, taskTypeOfProxy, taskSizeVariant, captchaHandler, igHandler) == true) {
 										return;
 									}
 								}
@@ -1560,11 +1579,25 @@ $('#country').on('change', function () {
 		$.each($(".USProfileState"), function () {
 			$(this).css('display', 'block')
 		});
-	} else if (country == 'Canada') {
+	} else if (country == 'United Kingdom') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".UKProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	}  else if (country == 'Canada') {
 		$.each($(".stateSelectOption"), function () {
 			$(this).css('display', 'none')
 		});
 		$.each($(".CAProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	} else if (country == 'Hong Kong') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".HKProfileState"), function () {
 			$(this).css('display', 'block')
 		});
 	} else if (country == 'Italy') {
@@ -1588,7 +1621,14 @@ $('#country').on('change', function () {
 		$.each($(".AUSProfileState"), function () {
 			$(this).css('display', 'block')
 		});
-	} else if (country == 'Germany') {
+	} else if (country == 'Austria') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".AUSTProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	}  else if (country == 'Germany') {
 		$.each($(".stateSelectOption"), function () {
 			$(this).css('display', 'none')
 		});
@@ -1635,6 +1675,55 @@ $('#country').on('change', function () {
 			$(this).css('display', 'none')
 		});
 		$.each($(".JPProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	} else if (country == 'Malaysia') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".MYProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	} else if (country == 'Spain') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".ESProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	} else if (country == 'China') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".HKProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	} else if (country == 'China') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".CNProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	} else if (country == 'Japan') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".JPProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	} else if (country == 'Portugal') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".PTProfileState"), function () {
+			$(this).css('display', 'block')
+		});
+	} else if (country == 'Russia') {
+		$.each($(".stateSelectOption"), function () {
+			$(this).css('display', 'none')
+		});
+		$.each($(".RUProfileState"), function () {
 			$(this).css('display', 'block')
 		});
 	} else {

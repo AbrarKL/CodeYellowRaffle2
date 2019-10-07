@@ -482,16 +482,7 @@ $( document ).ready(function() {
 	});
 });
 
-$( document ).ready(function() {
-	$("#checklistnigga").change(function () {
-		if ($(this).val()=="catchall")
-	   {
-		   $("#instaName").removeAttr('disabled');
-	   } else {
-		   $("#instaName").attr('disabled','disabled');
-	   }
-	});
-});
+
 
 
 $('.proxCover').click(function() {

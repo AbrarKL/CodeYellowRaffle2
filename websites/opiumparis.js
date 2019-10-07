@@ -128,6 +128,13 @@ exports.initTask = function (task, profile) {
 		}
 	}
 
+	if (task['taskEmail'] != null && task['taskEmail'].indexOf("'") > -1) {
+		task['taskEmail'] = task['taskEmail'].replaceAll("'", '');
+	}
+	if (task['taskEmail'] != null && task['taskEmail'].indexOf(' ') > -1) {
+		task['taskEmail'] = task['taskEmail'].replaceAll(' ', '');
+	}
+
 	if (profile['jigProfileAddress'] == true) {
 		profile['aptSuite'] = faker.fake("{{address.secondaryAddress}}");
 		// ********************************************* Add this only to sites with no address line 2 *********************************************

@@ -187,10 +187,14 @@ $(".plus1").click(function () {
     }
 
     if ($('#captchaHandler').val() != 'manual') {
-      if (settings['2capAPIKey'] == '' || settings['2capAPIKey'] == undefined || settings['antiCapAPIKey'] == '' || settings['antiCapAPIKey'] == undefined) {
-        Materialize.toast("You must enter an API key in the settings tab.", 4500, "rounded");
-        return;
+      if (require('electron').remote.getGlobal('settings')['2capAPIKey'] == '' || require('electron').remote.getGlobal('settings')['2capAPIKey'] == undefined) {
+		if (require('electron').remote.getGlobal('settings')['antiCapAPIKey'] == '' || require('electron').remote.getGlobal('settings')['antiCapAPIKey'] == undefined)
+		  {
+			Materialize.toast("You must enter an API key in the settings tab.", 4500, "rounded");
+			return;
+		  }
       }
+	  
     }
 
     if (taskSizeSelect == 'default') {

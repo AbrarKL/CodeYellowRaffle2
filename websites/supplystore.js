@@ -132,6 +132,14 @@ exports.initTask = function (task, profile) {
 		}
 	}
 
+	if (task['taskEmail'] != null && task['taskEmail'].indexOf("'") > -1) {
+		task['taskEmail'] = task['taskEmail'].replaceAll("'", '');
+	}
+	if (task['taskEmail'] != null && task['taskEmail'].indexOf(' ') > -1) {
+		task['taskEmail'] = task['taskEmail'].replaceAll(' ', '');
+	}
+
+
 	if (profile['jigProfileAddress'] == true) {
 		profile['aptSuite'] = faker.fake("{{address.secondaryAddress}}");
 
@@ -310,11 +318,17 @@ exports.submitRaffle = function (request, task, profile, urlToPost) {
 			"${task['supplystore']['email']}": "${task['taskEmail']}",
 			"${task['supplystore']['phoneNumber']}": "${profile['phoneNumber']}",
 			"${task['supplystore']['size']}": "${task['taskSizeSelect']}",
+			"${task['supplystore']['streetNumber']}": "${profile['address']}",
 			"${task['supplystore']['street']}": "${profile['address']}",
 			"${task['supplystore']['suburbTown']}": "${profile['city']}",
 			"${task['supplystore']['state']}": "${task['stateToSubmit']}",
-			"${task['supplystore']['country']}": "Australia",
+			"${task['supplystore']['country']}": "${task['supplystore']['countryVal']}",
 			"${task['supplystore']['postCode']}": "${profile['zipCode']}",
+			"${task['supplystore']['streetType']}": "${profile['zipCode']}",
+			"${task['supplystore']['irrelevant1']}": "",
+			"${task['supplystore']['irrelevant2']}": "",
+			"${task['supplystore']['irrelevant3']}": "",
+			"${task['supplystore']['irrelevant4']}": "",
 			"cm-privacy-consent": "on",
 			"cm-privacy-consent-hidden": "true",
 			"cm-privacy-email": "on",

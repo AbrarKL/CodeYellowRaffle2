@@ -50,6 +50,16 @@ function getRandomProxy() {
 	}
 }
 
+function getRandomIG() {
+	var igs = global.instagrams.split('\n');
+	if (igs[0] != '') {
+		var ig = igs[Math.floor(Math.random() * igs.length)];
+		return ig;
+	} else {
+		return '';
+	}
+}
+
 exports.initTask = function (task, profile) {
 	if (task['captchaHandler'] == 'manual') {
 		mainBot.mainBotWin.send('taskUpdate', {
@@ -391,6 +401,14 @@ exports.initTask = function (task, profile) {
 			}
 		}
 	}
+
+	if (task['taskEmail'] != null && task['taskEmail'].indexOf("'") > -1) {
+		task['taskEmail'] = task['taskEmail'].replaceAll("'", '');
+	}
+	if (task['taskEmail'] != null && task['taskEmail'].indexOf(' ') > -1) {
+		task['taskEmail'] = task['taskEmail'].replaceAll(' ', '');
+	}
+
 
 	if (profile['jigProfileAddress'] == true) {
 		profile['aptSuite'] = faker.fake("{{address.secondaryAddress}}");
@@ -795,11 +813,8 @@ exports.submitRaffle = function (request, task, profile) {
 	}
 
 	require('request')({
-		url: 'https://codeyellow.io/api/get_bstn_ig.php',
-		method: 'post',
-		formData: {
-			'token': global.settings.token
-		},
+		url: 'https://api.codeyellow.io/instagram/get?type=bstn',
+		method: 'get'
 	}, function (err, response, body) {
 		try {
 			var parsedAPI = JSON.parse(body);
@@ -845,7 +860,22 @@ exports.submitRaffle = function (request, task, profile) {
 				profile['instagram'] = profile['firstName'].toLowerCase() + profile['lastName'].toLowerCase();
 			}
 		} else {
-			profile['instagram'] = parsedAPI.instagram;
+			if(task['igHandler'] == 'mylist')
+			{
+				var ig = getRandomIG();
+				if(ig == '' || ig == undefined)
+				{	
+					profile['instagram'] = parsedAPI.instagram;
+				}
+				else
+				{
+					profile['instagram'] = getRandomIG();
+				}
+			}
+			else
+			{
+				profile['instagram'] = parsedAPI.instagram;
+			}
 		}
 		console.log('Instagram used: ' + profile['instagram'])
 		request({
@@ -900,6 +930,31 @@ exports.submitRaffle = function (request, task, profile) {
 						return;
 					}
 					if (body['message'] == 'success') {
+						console.log(JSON.stringify({
+							"additional": {
+								"instagram": profile['instagram']
+							},
+							"title": "male",
+							"email": task['taskEmail'],
+							"firstName": profile['firstName'],
+							"lastName": profile['lastName'],
+							"street": profile['address'],
+							"streetno": profile['address'],
+							"address2": profile['aptSuite'],
+							"zip": profile['zipCode'],
+							"city": profile['city'],
+							"country": countryFormatter(profile["country"]),
+							"acceptedPrivacy": true,
+							"newsletter": true,
+							"recaptchaToken": mainBot.taskCaptchas[task['type']][task['taskID']],
+							"raffle": {
+								"raffleId": task['bstn']['raffleId'],
+								"parentIndex": 0,
+								"option": task['taskSizeVariant']
+							},
+							"issuerId": "raffle.bstn.com"
+						}));
+						console.log(body);
 						mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 						mainBot.mainBotWin.send('taskUpdate', {
 							id: task.taskID,
@@ -1217,4 +1272,7 @@ function twoCaptchaResponseErrorFormatter(message) {
 			return '2Captcha error. DM Log';
 			break;
 	}
+}
+String.prototype.replaceAll = function (str1, str2, ignore) {
+	return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
 }
