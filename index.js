@@ -15,7 +15,7 @@
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var currentVersion = '0.0.1';
+var currentVersion = '0.0.2';
 global.currentVersion = currentVersion;
 // LATER REMOVE EMAIL FROM if (fileExists('profiles.json')) {
 const {
