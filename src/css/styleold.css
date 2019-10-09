@@ -1702,6 +1702,8 @@ input.proxCover:checked  {
 	text-align: left;
 	opacity: 0.8;
 	padding: 0px 25px 0px 25px;
+	position: relative;
+	z-index: 9999999;
 }
 
 .proxcount span:hover {
