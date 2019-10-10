@@ -70,7 +70,7 @@ $(".proxies").click(function () {
 	$(".accountcon-tab").get(0).style.setProperty("display", "none");
 	$(".insta-tab").get(0).style.setProperty("display", "none");
 	
-	$("#deleteAllProxies").get(0).style.setProperty("display", "block");	
+	$(".proxcount").get(0).style.setProperty("display", "block");	
 	
     window.setTimeout(function(){$(".sec-nav").addClass("test");}, 300);
   }
@@ -119,7 +119,7 @@ $(".aproxz").click(function () {
 
 	$(".addproxy-tab").get(0).style.setProperty("display", "block");
 	
-	$("#deleteAllProxies").get(0).style.setProperty("display", "none");	
+	$(".proxcount").get(0).style.setProperty("display", "none");	
 	
     window.setTimeout(function(){$(".sec-nav").addClass("second-nav-hidden");}, 300);
   }
