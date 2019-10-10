@@ -304,7 +304,10 @@ $(".pnext1").click(function () {
 });
 
 $(".pnext2").click(function () {
-  profiletabx = 2;
+  if($('#newProfileName').val() != '')
+  {
+    profiletabx = 2;
+  }
 });
 
 $(".createbumbutton, .refro, .pcancel, .createprofile, .editprofile, .pnext2, .pnext1, .pmin1").click(function () {
