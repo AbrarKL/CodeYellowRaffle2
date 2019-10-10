@@ -68,7 +68,9 @@ $(".proxies").click(function () {
 	$(".addproxy-tab").get(0).style.setProperty("display", "none");
 	$(".createmass-tab").get(0).style.setProperty("display", "none");
 	$(".accountcon-tab").get(0).style.setProperty("display", "none");
-	$(".insta-tab").get(0).style.setProperty("display", "none");	
+	$(".insta-tab").get(0).style.setProperty("display", "none");
+	
+	$("#deleteAllProxies").get(0).style.setProperty("display", "block");	
 	
     window.setTimeout(function(){$(".sec-nav").addClass("test");}, 300);
   }
@@ -116,6 +118,8 @@ $(".aproxz").click(function () {
 	$(".sec-nav").removeClass("test")	
 
 	$(".addproxy-tab").get(0).style.setProperty("display", "block");
+	
+	$("#deleteAllProxies").get(0).style.setProperty("display", "none");	
 	
     window.setTimeout(function(){$(".sec-nav").addClass("second-nav-hidden");}, 300);
   }
