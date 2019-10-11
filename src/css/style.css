@@ -1300,6 +1300,36 @@ select:disabled {
 	color: #595965;
 }
 
+.smallproxtit {
+	height: 15px;
+	width: 100%;
+	text-align: left;
+	font-size: 12px;
+	color: #aaa;
+	line-height: 15px;
+}
+
+.bigproxtit {
+	height: 50px;
+	width: 100%;
+	text-align: left;
+	font-size: 40px;
+	color: #ff5c5c;
+	line-height: 50px;
+	font-weight: bold;
+}
+
+.notifyproxycont {
+    width: 210px;
+    margin-top: 20px;
+    height: 335px;
+    border-radius: 25px;
+    background: #28282e;
+	position: relative;
+}
+
+
+
 /*
 .redirectToElectron {
 	display: none;
