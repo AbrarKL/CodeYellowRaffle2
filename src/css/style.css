@@ -119,6 +119,7 @@ body {
   padding-left: 15px;
   overflow: hidden;
   z-index: 99999;
+  margin-right: 5px;
 }
 
 .window-c {
