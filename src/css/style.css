@@ -1330,6 +1330,47 @@ select:disabled {
 }
 
 
+.bot-size2 {
+    width: 100%;
+    height: 100%;
+    background: #1b1b1f;
+    display: inline-block;
+    /* border-radius: 50px; */
+    /* position: relative; */
+    overflow: hidden;
+}
+
+
+.tallandwide {
+	width: 100%;
+	height: 100%;
+}
+
+.testit2 {
+    width: calc(100% + 50px);
+    height: 52.5px;
+    display: inline-block;
+    margin-left: -25px;
+    border-radius: 35px;
+    z-index: 9989;
+}
+
+.second-nav-hidden-new {
+  width: calc(100% + 50px) !important;
+  background: transparent;
+  display: none;
+  opacity: 0;
+  height: 52.5px;
+  display: inline-block;
+  margin-left: 0px;
+  z-index: -10;
+  top: 30px;
+  margin-left: 0px !important;
+  height: 50px;
+  border-radius: 0px  !important;
+  margin-top: -100px;
+}
+
 
 /*
 .redirectToElectron {

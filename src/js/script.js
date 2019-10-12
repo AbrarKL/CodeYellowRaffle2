@@ -161,6 +161,44 @@ $(".instaz").click(function () {
   }
 });
 
+
+
+
+
+
+//$(document).ready(function() {
+//  $(window).on('resize', function(){
+//    if(screen.width === window.innerWidth){
+//      // this is full screen
+//	  console.log("we full baby");
+//	  $('.bot-size').addClass('bot-size2').removeClass('bot-size');
+//      $('body').addClass('tallandwide');  
+//	  $('.sec-nav').addClass('testit2').removeClass('test');
+//    } else {
+//		console.log("nah we chilloing");
+//	  $('.bot-size2').addClass('bot-size').removeClass('bot-size2');
+//      $('body').removeClass('tallandwide');  
+//	  $('.sec-nav').addClass('test').removeClass('testit2');
+//	}
+//  });
+//});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var tasktab = 1;
 
 $(".releases").click(function () {
@@ -489,6 +527,25 @@ $( document ).ready(function() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $('.proxCover').click(function() {
 
 if($('#usapb').is(':checked'))
@@ -547,6 +604,11 @@ if($('#aupb').is(':checked'))
   $('#aup').removeClass('prox-sel');
 }
 });
+
+
+
+
+
 
 
 
