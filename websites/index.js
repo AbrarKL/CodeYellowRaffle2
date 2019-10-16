@@ -38,3 +38,4 @@ exports.basket4ballers = require('./basket4ballers.js');
 exports.basketsstore = require('./basketsstore.js');
 exports.opiumparis = require('./opiumparis.js');
 exports.shinzoparis = require('./shinzo.js');
+exports.fearofgod = require('./fearofgod.js');

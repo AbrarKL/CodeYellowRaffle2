@@ -947,6 +947,24 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			bdgastore: selectedQuickTaskRelease['bdgastore'],
 			igHandler: IGHandler
 		});
+	} else if (taskSiteSelect == 'fearofgod') {
+		tasks.push({
+			taskID: taskID,
+			proxyType: taskTypeOfProxy,
+			captchaHandler: captchaHandler,
+			type: 'mass',
+			filterID: selectedQuickTaskRelease['filterID'],
+			taskTypeOfEmail: taskTypeOfEmail,
+			proxy: proxy,
+			taskSiteSelect: taskSiteSelect,
+			taskSizeSelect: taskSizeSelect,
+			taskSizeVariant: taskSizeVariant,
+			taskProfile: taskProfile,
+			taskEmail: taskEmail,
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			fearofgod: selectedQuickTaskRelease['fearofgod'],
+			igHandler: IGHandler
+		});
 	} else if (taskSiteSelect == 'joyce') {
 		tasks.push({
 			taskID: taskID,

@@ -15,7 +15,7 @@
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var currentVersion = '0.0.5';
+var currentVersion = '0.0.6';
 global.currentVersion = currentVersion;
 // LATER REMOVE EMAIL FROM if (fileExists('profiles.json')) {
 const {
@@ -129,6 +129,11 @@ global.websites = {
 		sitekey: '6LdhYxYUAAAAAAcorjMQeKmZb6W48bqb0ZEDRPCl',
 		url: 'app.viralsweep.com',
 		name: 'BDGAStore'
+	},
+	'fearofgod': {
+		sitekey: '6LdhYxYUAAAAAAcorjMQeKmZb6W48bqb0ZEDRPCl',
+		url: 'app.viralsweep.com',
+		name: 'FOG'
 	},
 	'dsmny': {
 		sitekey: '6LetKEIUAAAAAPk-uUXqq9E82MG3e40OMt_74gjS',
@@ -713,7 +718,10 @@ function openBot(onReady) {
 		} else if (task['taskSiteSelect'] == 'bdgastore') {
 			console.log('BDGAStore task started');
 			websites.bdgastore.initTask(task, profile)
-		} else if (task['taskSiteSelect'] == 'footpatroluk') {
+		} else if (task['taskSiteSelect'] == 'fearofgod') {
+			console.log('fearofgod task started');
+			websites.fearofgod.initTask(task, profile)
+		}  else if (task['taskSiteSelect'] == 'footpatroluk') {
 			console.log('Footpatroluk task started');
 			websites.footpatroluk.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'dsmny') {
@@ -1295,7 +1303,7 @@ function getUpcomingReleases() {
 				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
 			},
 			json: true,
-			url: 'https://codeyellow.io/api/releases_56.php'
+			url: 'https://codeyellow.io/api/releases_57.php'
 		},
 		function (error, response, body) {
 			global.releases = body;
