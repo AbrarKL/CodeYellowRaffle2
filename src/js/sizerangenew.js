@@ -4,6 +4,7 @@ $("#sizesket, .randomSize").on("click", ".savaliable", function () {
 		$(".allthemsizes").empty();
 		$(".size-select").removeClass("wegoagain");
 		
+		var nosize = 0;
 		var size4 = 0;
 		var size45 = 0;
 		var size5 = 0;
@@ -26,6 +27,14 @@ $("#sizesket, .randomSize").on("click", ".savaliable", function () {
 		var size135 = 0;
 		var size14 = 0;
 
+		if($('#snosize').is(":checked"))
+			{
+				nosize = 1;
+				 $(".sizeinput").append("no size, ");
+				 $('.ssnosize').addClass("wegoagain");
+			} else {
+				nosize = 0;
+			}
 
 		if($('#s4').is(":checked"))
 			{
@@ -220,14 +229,6 @@ $("#sizesket, .randomSize").on("click", ".savaliable", function () {
 
 
 
-			
-		if($('#nosize').is(":checked"))
-			{
-				 $(".sizeinput").append("no size, ");
-				 $('.noSize').addClass("wegoagain");
-			} else {
-			}	
-
 		if($('#selectWin').is(":checked"))
 			{
 				 $(".sizeinput").append("select on win, ");
@@ -239,7 +240,7 @@ $("#sizesket, .randomSize").on("click", ".savaliable", function () {
 			
 
 
-		if(size4 == 1 || size45 == 1 || size5 == 1 || size55 == 1 || size6 == 1 || size65 == 1 || size7 == 1 || size75 == 1 || size8 == 1 || size85 == 1 || size9 == 1 || size95 == 1 || size10 == 1 || size105 == 1 || size11 == 1 || size115 == 1 || size12 == 1 || size125 == 1 || size13 == 1 || size135 == 1 || size14 == 1)
+		if(nosize == 1 || size4 == 1 || size45 == 1 || size5 == 1 || size55 == 1 || size6 == 1 || size65 == 1 || size7 == 1 || size75 == 1 || size8 == 1 || size85 == 1 || size9 == 1 || size95 == 1 || size10 == 1 || size105 == 1 || size11 == 1 || size115 == 1 || size12 == 1 || size125 == 1 || size13 == 1 || size135 == 1 || size14 == 1)
 			{
 
 			} else {
@@ -285,14 +286,6 @@ $("#sizesket, .randomSize").on("click", ".savaliable", function () {
 				 $('.selectWin').addClass("wegoagain");
 			} else {
 				 $('.selectWin').removeClass("wegoagain");
-			}	
- });
- $("#nosize").click(function () {
-		if($('#nosize').is(":checked"))
-			{
-				 $('.nosize').addClass("wegoagain");
-			} else {
-				 $('.nosize').removeClass("wegoagain");
 			}	
  });
  $("#randomSize").click(function () {

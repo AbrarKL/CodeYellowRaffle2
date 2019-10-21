@@ -389,7 +389,7 @@ exports.captchaWorker = function (request, task, profile, postInputs) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LeepqwUAAAAAKmQ_Dj-bY23bKZtThXNxlxFKp6F&pageurl=' + task["variant"] + '&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LeepqwUAAAAAKmQ_Dj-bY23bKZtThXNxlxFKp6F&pageurl=' + task["variant"] + '&json=1&soft_id=2553',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {

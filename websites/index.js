@@ -39,3 +39,4 @@ exports.basketsstore = require('./basketsstore.js');
 exports.opiumparis = require('./opiumparis.js');
 exports.shinzoparis = require('./shinzo.js');
 exports.fearofgod = require('./fearofgod.js');
+exports.solestory = require('./solestory.js');

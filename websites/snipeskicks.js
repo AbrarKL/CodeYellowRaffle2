@@ -158,10 +158,10 @@ exports.initTask = function (task, profile) {
 	});
 	console.log(`[${task.taskID}] ` + ' Getting size variant');
 	request({
-		url: 'https://codeyellow.io/api/get_snipes_size.php',
+		url: 'https://codeyellow.io/api/v2/get_snipes_size.php',
 		method: 'post',
 		formData: {
-			'email': global.settings.email
+			'key': global.settings.key
 		},
 	}, function (err, response, body) {
 		console.log(body)
@@ -178,11 +178,11 @@ exports.initTask = function (task, profile) {
 			}
 			// IF CREDENTIALS ARE NOT VALID
 			else {
-				console.log("You must save a size https://codeyellow.io/snipes_size")
+				console.log("You must save a size https://codeyellow.io/v2/snipes")
 				mainBot.mainBotWin.send('taskUpdate', {
 					id: task.taskID,
 					type: task.type,
-					message: 'Save a size here https://codeyellow.io/snipes_size'
+					message: 'Save a size here https://codeyellow.io/v2/snipes'
 				});
 				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 				return;
@@ -313,23 +313,23 @@ exports.captchaWorker = function (request, task, profile, csrfToken) {
 		}
 		capHandler();
 	} else {
-		if (global.settings.capAPIKey == '' || global.settings.capAPIKey == undefined) {
-			mainBot.mainBotWin.send('taskUpdate', {
-				id: task.taskID,
-				type: task.type,
-				message: 'Captcha API Key not set. Check settings.'
-			});
-			mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-			mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-			return;
-		}
 		agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 		if (task['captchaHandler'] == 'anticaptcha') {
+			if (global.settings.antiCapAPIKey == '' || global.settings.antiCapAPIKey == undefined) {
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Captcha API Key not set. Check settings.'
+				});
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+				return;
+			}
 			request({
 				url: 'https://api.anti-captcha.com/createTask',
 				method: 'POST',
 				body: {
-					clientKey: global.settings.capAPIKey,
+					clientKey: global.settings.antiCapAPIKey,
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
 						"websiteURL": "https://raffle.snipesusa.com/releases/current",
@@ -363,7 +363,7 @@ exports.captchaWorker = function (request, task, profile, csrfToken) {
 							url: 'https://api.anti-captcha.com/getTaskResult',
 							method: 'POST',
 							body: {
-								clientKey: global.settings.capAPIKey,
+								clientKey: global.settings.antiCapAPIKey,
 								taskId: taskId
 							},
 							json: true,
@@ -424,8 +424,18 @@ exports.captchaWorker = function (request, task, profile, csrfToken) {
 				}
 			});
 		} else if (task['captchaHandler'] == '2captcha') {
+			if (global.settings['2capAPIKey'] == '' || global.settings['2capAPIKey'] == undefined) {
+				mainBot.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Captcha API Key not set. Check settings.'
+				});
+				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+				mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+				return;
+			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings.capAPIKey + '&method=userrecaptcha&googlekey=6Lf1zbMUAAAAANBwSjY8Mh5d0bTe4-ucx5Gt1UEz&pageurl=https://raffle.snipesusa.com/releases/current&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6Lf1zbMUAAAAANBwSjY8Mh5d0bTe4-ucx5Gt1UEz&pageurl=https://raffle.snipesusa.com/releases/current&json=1&soft_id=2553',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {
@@ -459,7 +469,7 @@ exports.captchaWorker = function (request, task, profile, csrfToken) {
 							});
 							console.log('Checking for Captcha token (2Captcha Task ID: ' + taskId + ')');
 							request({
-								url: 'https://2captcha.com/res.php?key=' + global.settings.capAPIKey + '&action=get&id=' + taskId + '&json=1',
+								url: 'https://2captcha.com/res.php?key=' + global.settings['2capAPIKey'] + '&action=get&id=' + taskId + '&json=1',
 								method: 'GET',
 								json: true
 							}, function (error, response, body) {
@@ -580,7 +590,6 @@ exports.submitRaffle = function (request, task, profile, csrfToken) {
 		agent: agent,
 		followAllRedirects: true
 	}, function callback(error, response, body) {
-		console.log(body);
 		if (!error) {
 			if (response.statusCode != 200) {
 				if (JSON.stringify(body).toLowerCase().indexOf('postal_code') > -1 && JSON.stringify(body).toLowerCase().indexOf('allowed to be empty') > -1) {
@@ -651,6 +660,40 @@ exports.submitRaffle = function (request, task, profile, csrfToken) {
 						console.log(JSON.stringify(body))
 						console.log(JSON.stringify(task))
 						console.log(JSON.stringify(profile))
+						try
+						{
+							if(body['error'] == 'not_permitted')
+							{
+								mainBot.mainBotWin.send('taskUpdate', {
+									id: task.taskID,
+									type: task.type,
+									message: 'snipes server may be down.'
+								});
+								mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+								mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+								return;
+							}
+						} catch (e)
+						{
+							
+						}
+						try
+						{
+							if(JSON.stringify(body).toLowerCase().indexOf('application error') !== -1)
+							{
+								mainBot.mainBotWin.send('taskUpdate', {
+									id: task.taskID,
+									type: task.type,
+									message: 'snipes server may be down.'
+								});
+								mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+								mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+								return;
+							}
+						} catch (e)
+						{
+							
+						}
 						mainBot.mainBotWin.send('taskUpdate', {
 							id: task.taskID,
 							type: task.type,
@@ -761,7 +804,7 @@ exports.verifyEntry = function (request, task, profile, verifyURL) {
 					message: 'Entry submitted and verified!'
 				});
 				registerEmail(task);
-				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '');
+				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '', task, profile);
 				mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 			}
 			else
@@ -773,7 +816,7 @@ exports.verifyEntry = function (request, task, profile, verifyURL) {
 					message: 'Error. Need to manually confirm entry'
 				});
 				registerEmail(task);
-				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], verifyURL, '');
+				mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], verifyURL, '', task, profile);
 				var open = require("open");
 				open(verifyURL);
 				return;
@@ -788,7 +831,7 @@ exports.verifyEntry = function (request, task, profile, verifyURL) {
 				message: 'Error. Need to manually confirm entry'
 			});
 			registerEmail(task);
-			mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], verifyURL, '');
+			mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], verifyURL, '', task, profile);
 			var open = require("open");
 			open(verifyURL);
 			return;

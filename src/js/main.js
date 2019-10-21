@@ -1392,6 +1392,10 @@ $(".release-item").on('click', '.release-button', function () {
 										return;
 									}
 								} else {
+									if (selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][taskSizeSelect] == undefined) {
+										var sizesonly = Object.keys(selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect])
+										taskSizeSelect = sizesonly[Math.floor(Math.random() * sizesonly.length)].trimLeft().trimRight()
+									}
 									var taskSizeVariant = selectedQuickTaskRelease['sizes_supported_' + taskSiteSelect][taskSizeSelect];
 									if (taskSizeVariant == undefined) {
 										Materialize.toast("Task size variant does not exist.", 3500, "rounded");

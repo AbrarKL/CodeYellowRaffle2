@@ -185,7 +185,6 @@ exports.captchaWorker = function (request, task, profile) {
 		capHandler();
 	} else {
 
-
 		agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 		if (task['captchaHandler'] == 'anticaptcha') {
 			if (global.settings.antiCapAPIKey == '' || global.settings.antiCapAPIKey == undefined) {
