@@ -210,17 +210,6 @@ exports.initTask = function (task, profile) {
 		return;
 	}
 
-	if (profile['zipCode'] == '' || profile['zipCode'] == undefined) {
-		mainBot.mainBotWin.send('taskUpdate', {
-			id: task.taskID,
-			type: task.type,
-			message: 'SoleStory requires a zip code'
-		});
-		console.log(`[${task.taskID}] ` + JSON.stringify(profile));
-		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-		return;
-	}
-
 	if (profile['cardNumber'] == '' || profile['cardNumber'] == undefined) {
 		mainBot.mainBotWin.send('taskUpdate', {
 			id: task.taskID,
