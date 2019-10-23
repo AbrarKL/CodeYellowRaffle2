@@ -284,6 +284,7 @@ exports.captchaWorker = function (request, task, profile, postInputs) {
 				method: 'POST',
 				body: {
 					clientKey: global.settings.antiCapAPIKey,
+					"softId": "924",
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
 						"websiteURL": task["variant"],

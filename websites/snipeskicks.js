@@ -330,6 +330,7 @@ exports.captchaWorker = function (request, task, profile, csrfToken) {
 				method: 'POST',
 				body: {
 					clientKey: global.settings.antiCapAPIKey,
+					"softId": "924",
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
 						"websiteURL": "https://raffle.snipesusa.com/releases/current",

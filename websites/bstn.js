@@ -96,7 +96,7 @@ exports.initTask = function (task, profile) {
 			console.log(captcha.siteKey);
 			if (task['captchaHandler'] == '2captcha') {
 				request({
-					url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=' + captcha.siteKey + '&pageurl=' + task["variant"] + '&json=1',
+					url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=' + captcha.siteKey + '&pageurl=' + task["variant"] + '&json=1&soft_id=2553',
 					method: 'GET',
 					json: true,
 					agent: agent
@@ -238,6 +238,7 @@ exports.initTask = function (task, profile) {
 					method: 'POST',
 					body: {
 						clientKey: global.settings.antiCapAPIKey,
+						"softId": "924",
 						"task": {
 							"type": "NoCaptchaTaskProxyless",
 							"websiteURL": task["variant"],
@@ -472,7 +473,8 @@ exports.initTask = function (task, profile) {
 			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
 			'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
-		}
+		},
+		agent: agent
 	}, function callback(error, response, body) {
 		console.log(error);
 		if (!error) {
@@ -541,6 +543,7 @@ exports.captchaWorker = function (request, task, profile) {
 				method: 'POST',
 				body: {
 					clientKey: global.settings.antiCapAPIKey,
+					"softId": "924",
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
 						"websiteURL": task["variant"],
@@ -643,7 +646,7 @@ exports.captchaWorker = function (request, task, profile) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LeZJZEUAAAAAPLuYfMYiMOF7X7tKMz45xfEIXaZ&pageurl=' + task["variant"] + '&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LeZJZEUAAAAAPLuYfMYiMOF7X7tKMz45xfEIXaZ&pageurl=' + task["variant"] + '&json=1&soft_id=2553',
 				method: 'GET',
 				json: true,
 				agent: agent
@@ -914,7 +917,8 @@ exports.submitRaffle = function (request, task, profile) {
 					"option": task['taskSizeVariant']
 				},
 				"issuerId": "raffle.bstn.com"
-			}
+			},
+			agent: agent
 		}, function callback(error, response, body) {
 			if (!error) {
 				if (response.statusCode == 200 || response.statusCode == 201) {
