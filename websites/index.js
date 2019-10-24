@@ -40,3 +40,4 @@ exports.opiumparis = require('./opiumparis.js');
 exports.shinzoparis = require('./shinzo.js');
 exports.fearofgod = require('./fearofgod.js');
 exports.solestory = require('./solestory.js');
+exports.lapstoneandhammer = require('./lapstoneandhammer.js');
