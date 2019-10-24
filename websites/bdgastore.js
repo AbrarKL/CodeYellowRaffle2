@@ -247,6 +247,7 @@ exports.captchaWorker = function (request, task, profile) {
 				method: 'POST',
 				body: {
 					clientKey: global.settings.antiCapAPIKey,
+					"softId": "924",
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
 						"websiteURL": task['bdgastore']['referer'],
@@ -357,7 +358,7 @@ exports.captchaWorker = function (request, task, profile) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LdhYxYUAAAAAAcorjMQeKmZb6W48bqb0ZEDRPCl&pageurl=' + task['bdgastore']['referer'] + '&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LdhYxYUAAAAAAcorjMQeKmZb6W48bqb0ZEDRPCl&pageurl=' + task['bdgastore']['referer'] + '&json=1&soft_id=2553',
 				method: 'GET',
 				json: true,
 				agent: agent
