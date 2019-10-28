@@ -180,7 +180,7 @@ exports.initTask = function (task, profile) {
 		year: getRandomInt(1982, 2000)
 	};
 	request({
-		url: 'https://www.opiumparis.com/fr/raffles/1232-7732-travis-scott-x-air-jordan-6-medium-olive.html',
+		url: 'https://www.opiumparis.com/fr/raffles/1286-8017-air-jordan-1-shattered-backboard-30.html',
 		method: 'POST',
 		headers: {
 			'authority': 'www.opiumparis.com',
@@ -193,10 +193,10 @@ exports.initTask = function (task, profile) {
 			'sec-fetch-user': '?1',
 			'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 			'sec-fetch-site': 'same-origin',
-			'referer': 'https://www.opiumparis.com/fr/raffles/1232-7732-travis-scott-x-air-jordan-6-medium-olive.html',
+			'referer': 'https://www.opiumparis.com/fr/raffles/1286-8017-air-jordan-1-shattered-backboard-30.html',
 			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 		},
-		body: 'id_customer=&id_gender=1&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&password=' + task['taskPassword'] + '&birthday=' + task['birthday']['day'] + '/' + task['birthday']['month'] + '/' + task['birthday']['year'] + '&submitCreate=1',
+		body: 'id_customer=&id_gender=1&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&password=' + task['taskPassword'] + '&birthday=' + task['birthday']['day'] + '/' + task['birthday']['month'] + '/' + task['birthday']['year'] + '&newsletter=1&submitCreate=1',
 		agent: agent
 	}, function callback(error, response, body) {
 		if (!error) {

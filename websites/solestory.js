@@ -303,7 +303,7 @@ exports.initTask = function (task, profile) {
 			'authority': 'launch.solestory.se',
 			'sec-fetch-site': 'same-origin'
 		},
-		body: 'attribute_pa_size='+task['taskSizeVariant'].split('|')[0]+'&quantity=1&add-to-cart=87235&product_id=87235&variation_id='+task['taskSizeVariant'].split('|')[1],
+		body: 'attribute_pa_size='+task['taskSizeVariant'].split('|')[0]+'&quantity=1&add-to-cart=201803&product_id=201803&variation_id='+task['taskSizeVariant'].split('|')[1],
 		agent: agent
 	}, function callback(error, response, body) {
 		if (!error && response.statusCode == 200) {
