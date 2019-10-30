@@ -756,6 +756,9 @@ function stateFormatter(profile) {
 			case "Venezia":
 				return "VE";
 				break;
+			case "MIL":
+				return "MI";
+				break;
 			default:
 				return profile['stateProvince'];
 				break;

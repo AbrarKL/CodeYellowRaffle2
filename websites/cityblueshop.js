@@ -166,9 +166,9 @@ exports.initTask = function (task, profile) {
 
 	//https://www.hervia.com/launches/yeezy-350
 	request({
-		url: 'https://cityblueshop.us7.list-manage.com/subscribe/post-json?u=46797cba2d82c4eefc385aed3&id=b1eccdd29e&c=jQuery19001798579592019358_1571925649317&EMAIL='+task['taskEmail']+'&FNAME='+profile['firstName']+'&LNAME='+profile['lastName']+'&MMERGE3=Men+(7.5-14)&MMERGE4='+task['taskSizeSelect']+'&MMERGE6=&MMERGE5=&b_46797cba2d82c4eefc385aed3_b1eccdd29e=&subscribe=Submit&_=' + Math.floor(new Date()),
+		url: 'https://cityblueshop.us7.list-manage.com/subscribe/post-json?u=46797cba2d82c4eefc385aed3&id=f6f6ea1906&c=jQuery19004441496831702745_1572475736710&EMAIL='+task['taskEmail']+'&FNAME='+profile['firstName']+'&LNAME='+profile['lastName']+'&MMERGE3='+task['taskSizeSelect']+'&MMERGE4=&MMERGE5=&b_46797cba2d82c4eefc385aed3_f6f6ea1906=&subscribe=Submit&_=' + Math.floor(new Date()),
 		headers: {
-			'Referer': 'https://www.lapstoneandhammer.com/pages/air-jordan-1-high-og-shattered-backboard-3-0-online-raffle',
+			'Referer': 'https://www.cityblueshop.com/pages/air-jordan-1-retro-high-og-fearless-online-raffle-1',
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'
 		},
 		agent: agent
