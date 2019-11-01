@@ -1,16 +1,3 @@
-/*
-	Copyright (C) 2019 Code Yellow
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-	You should have received a copy of the GNU General Public License
-	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
-*/
 
 var HttpsProxyAgent = require('https-proxy-agent');
 var mainBot = require('../index.js')
@@ -178,7 +165,7 @@ exports.initTask = function (task, profile) {
 			}
 			// IF CREDENTIALS ARE NOT VALID
 			else {
-				console.log("You must save a size https://codeyellow.io/v2/snipes")
+				console.log("You must save a size https://codeyellow.io/snipes")
 				mainBot.mainBotWin.send('taskUpdate', {
 					id: task.taskID,
 					type: task.type,

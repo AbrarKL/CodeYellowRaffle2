@@ -1,19 +1,4 @@
-/*
-	Copyright (C) 2019 Code Yellow
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
-*/
 
 var HttpsProxyAgent = require('https-proxy-agent');
 var mainBot = require('../index.js')
@@ -166,9 +151,9 @@ exports.initTask = function (task, profile) {
 
 	//https://www.hervia.com/launches/yeezy-350
 	request({
-		url: 'https://lapstoneandhammer.us10.list-manage.com/subscribe/post-json?u=3dd44920c3e2410d48d7462fc&id=0322480296&c=jQuery19007264335867234344_1571912298907&EMAIL='+task['taskEmail']+'&FNAME='+profile['firstName']+'&LNAME='+profile['lastName']+'&MMERGE3=Men+(7.5-14)&MMERGE4='+task['taskSizeSelect']+'&MMERGE6=&MMERGE5=&b_3dd44920c3e2410d48d7462fc_0322480296=&subscribe=Submit&_=' + Math.floor(new Date()),
+		url: 'https://lapstoneandhammer.us10.list-manage.com/subscribe/post-json?u=3dd44920c3e2410d48d7462fc&id=e9b8667939&c=jQuery190007697378436950597_1572522491354&EMAIL='+task['taskEmail']+'&FNAME='+profile['firstName']+'&LNAME='+profile['lastName']+'&MMERGE3='+task['taskSizeSelect']+'&MMERGE4=&MMERGE5=&b_3dd44920c3e2410d48d7462fc_e9b8667939=&subscribe=Submit&_=' + Math.floor(new Date()),
 		headers: {
-			'Referer': 'https://www.lapstoneandhammer.com/pages/air-jordan-1-high-og-shattered-backboard-3-0-online-raffle',
+			'Referer': 'https://www.lapstoneandhammer.com/pages/air-jordan-1-retro-high-og-fearless-online-raffle',
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'
 		},
 		agent: agent
