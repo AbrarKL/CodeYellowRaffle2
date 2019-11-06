@@ -295,10 +295,10 @@ exports.postRaffleInfo = function (request, task, profile, token) {
             'MERGE1': profile['firstName'],
             'MERGE2': profile['lastName'],
             'MERGE4': profile['phoneNumber'],
-            'MERGE7': profile['city'],
-            'MERGE5': countryFormatter(profile['country']),
-            'MERGE3': task['taskSizeVariant'],
-            'gdpr[601]:': 'Y',
+            'MERGE3': countryFormatter(profile['country']),
+            'MERGE5': profile['city'],
+            'MERGE7': task['taskSizeVariant'],
+            'gdpr[641]:': 'Y',
             'submit': 'Subscribe',
             'ht': token,
             'mc_signupsource': 'hosted'
@@ -433,6 +433,7 @@ exports.captchaWorker = function (request, task, profile, token, mf) {
                 method: 'POST',
                 body: {
                     clientKey: global.settings.antiCapAPIKey,
+                    "softId": "924",
                     "task": {
                         "type": "NoCaptchaTaskProxyless",
                         "websiteURL": task["variant"],
@@ -537,7 +538,7 @@ exports.captchaWorker = function (request, task, profile, token, mf) {
 				return;
 			}
             request({
-                url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LcN9xoUAAAAAHqSkoJixPbUldBoHojA_GCp6Ims&pageurl=' + task["variant"] + '&json=1',
+                url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LcN9xoUAAAAAHqSkoJixPbUldBoHojA_GCp6Ims&pageurl=' + task["variant"] + '&json=1&soft_id=2553',
                 method: 'GET',
                 json: true
             }, function (error, response, body) {
@@ -736,11 +737,11 @@ exports.submitRaffle = function (request, task, profile, token, mf) {
                 }
             } else {
                 var header = $('#templateBody h2').html();
-                if (header.toLowerCase().indexOf('almost finished...') !== -1) {
+                if (header.toLowerCase().indexOf('subscription confirmed') !== -1) {
                     mainBot.mainBotWin.send('taskUpdate', {
                         id: task.taskID,
                         type: task.type,
-                        message: 'Check email!'
+                        message: 'entry submitted!'
                     });
                     console.log(`[${task.taskID}] ` + ' Entry submitted!');
                     registerEmail(task);

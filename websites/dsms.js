@@ -256,6 +256,7 @@ exports.captchaWorker = function (request, task, profile, viewkey) {
 			request({
 				url: 'https://api.anti-captcha.com/createTask',
 				method: 'POST',
+				"softId": "924",
 				body: {
 					clientKey: global.settings.antiCapAPIKey,
 					"task": {
@@ -355,7 +356,7 @@ exports.captchaWorker = function (request, task, profile, viewkey) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LetKEIUAAAAAPk-uUXqq9E82MG3e40OMt_74gjS&pageurl=' + task['dsms']['mainLink'] + '&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LetKEIUAAAAAPk-uUXqq9E82MG3e40OMt_74gjS&pageurl=' + task['dsms']['mainLink'] + '&json=1&soft_id=2553',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {
