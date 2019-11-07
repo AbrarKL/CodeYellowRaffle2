@@ -15,7 +15,7 @@
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var currentVersion = '0.1.5';
+var currentVersion = '0.1.6';
 global.currentVersion = currentVersion;
 // LATER REMOVE EMAIL FROM if (fileExists('profiles.json')) {
 const {
@@ -50,6 +50,11 @@ console.log = function (msg) {
 
 
 global.websites = {
+	'woodwood': {
+		sitekey: '6LcN9xoUAAAAAHqSkoJixPbUldBoHojA_GCp6Ims',
+		url: 'woodwood.us4.list-manage.com',
+		name: 'WoodWood'
+	},
 	'shinzoparis': {
 		sitekey: '6LczOjoUAAAAABEfbqdtD11pFD5cZ0n5nhz89nxI',
 		url: 'raffle.shinzo.paris',
