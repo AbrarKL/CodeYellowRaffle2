@@ -1,4 +1,3 @@
-
 var HttpsProxyAgent = require('https-proxy-agent');
 var mainBot = require('../index.js')
 var cheerio = require('cheerio');
@@ -59,25 +58,19 @@ exports.initTask = function (task, profile) {
 	if (profile['jigProfileLastName'] == true) {
 		profile['lastName'] = faker.fake("{{name.lastName}}");
 	}
-	
+
 	if (profile['jigProfileFirstNameLetter'] == true) {
-		if (Math.random() >= 0.5)
-		{
-			profile['firstName'] = profile['firstName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
-		}
-		else
-		{
-			profile['firstName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['firstName'];
+		if (Math.random() >= 0.5) {
+			profile['firstName'] = profile['firstName'] + String.fromCharCode(97 + Math.floor(Math.random() * 26));
+		} else {
+			profile['firstName'] = String.fromCharCode(97 + Math.floor(Math.random() * 26)) + profile['firstName'];
 		}
 	}
 	if (profile['jigProfileLastNameLetter'] == true) {
-		if (Math.random() >= 0.5)
-		{
-			profile['lastName'] = profile['lastName'] + String.fromCharCode(97+Math.floor(Math.random() * 26));
-		}
-		else
-		{
-			profile['lastName'] = String.fromCharCode(97+Math.floor(Math.random() * 26)) + profile['lastName'];
+		if (Math.random() >= 0.5) {
+			profile['lastName'] = profile['lastName'] + String.fromCharCode(97 + Math.floor(Math.random() * 26));
+		} else {
+			profile['lastName'] = String.fromCharCode(97 + Math.floor(Math.random() * 26)) + profile['lastName'];
 		}
 	}
 
@@ -149,13 +142,13 @@ exports.getRafflePage = function (request, task, profile) {
 		agent = '';
 	}
 
-	
+
 	mainBot.mainBotWin.send('taskUpdate', {
 		id: task.taskID,
 		type: task.type,
 		message: 'Obtaining raffle page'
 	});
-	
+
 	request({
 		url: task['variant'],
 		headers: {
@@ -261,7 +254,7 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 					clientKey: global.settings.antiCapAPIKey,
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
-						"websiteURL": "https://raffle.vooberlin.com/index.php?alias=yeezyboost350v2black",
+						"websiteURL": "https://raffle.vooberlin.com/index.php?alias=clotxnikeairforce1",
 						"websiteKey": "6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec"
 					}
 				},
@@ -356,7 +349,7 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec&pageurl=https://raffle.vooberlin.com/index.php?alias=yeezyboost350v2black&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec&pageurl=https://raffle.vooberlin.com/index.php?alias=clotxnikeairforce1&json=1',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {
@@ -405,8 +398,7 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 								}
-								if(body == undefined)
-								{
+								if (body == undefined) {
 									return setTimeout(() => capHandler(), 12000);
 								}
 								if (body.status == 0) {
@@ -682,6 +674,39 @@ function countryFormatter(profileCountry) {
 			break;
 		case 'Poland':
 			return 'Poland';
+			break;
+		case 'Portugal':
+			return 'Portugal';
+			break;
+		case 'Czech Republic':
+			return 'Czech Republic';
+			break;
+		case 'Austria':
+			return 'Austria';
+			break;
+		case 'Slovakia':
+			return 'Slovakia';
+			break;
+		case 'Denmark':
+			return 'Denmark';
+			break;
+		case 'Finland':
+			return 'Finland';
+			break;
+		case 'Romania':
+			return 'Romania';
+			break;
+		case 'Hungary':
+			return 'Hungary';
+			break;
+		case 'Russia':
+			return 'Russia';
+			break;
+		case 'Luxembourg':
+			return 'Luxembourg';
+			break;
+		default:
+			return profileCountry;
 			break;
 	}
 }
