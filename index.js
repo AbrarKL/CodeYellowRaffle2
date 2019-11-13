@@ -15,7 +15,7 @@
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var currentVersion = '0.1.9';
+var currentVersion = '0.2.0';
 global.currentVersion = currentVersion;
 // LATER REMOVE EMAIL FROM if (fileExists('profiles.json')) {
 const {
@@ -816,6 +816,9 @@ function openBot(onReady) {
 		} else if (task['taskSiteSelect'] == 'shinzoparis') {
 			console.log('ShinzoParis task started');
 			websites.shinzoparis.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'juicestore') {
+			console.log('juicestore task started');
+			websites.juicestore.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'bouncewear') {
 			console.log('BounceWear task started');
 			websites.bouncewear.initTask(task, profile)
@@ -1320,7 +1323,7 @@ function getUpcomingReleases() {
 				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
 			},
 			json: true,
-			url: 'https://codeyellow.io/api/releases_68.php'
+			url: 'https://codeyellow.io/api/releases_69.php'
 		},
 		function (error, response, body) {
 			global.releases = body;

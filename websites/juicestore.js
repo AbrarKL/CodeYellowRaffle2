@@ -138,6 +138,17 @@ exports.initTask = function (task, profile) {
 	if (profile['jigProfilePhoneNumber'] == true) {
 		profile['phoneNumber'] = faker.fake("{{phone.phoneNumberFormat}}");
 	}
+	
+	if (countryFormatter(profile["country"]) == 'noexist') {
+		mainBot.mainBotWin.send('taskUpdate', {
+			id: task.taskID,
+			type: task.type,
+			message: 'juice may not ship to your country'
+		});
+		console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+		return;
+	}
 
 	if (task['proxy'] != '') {
 		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
@@ -180,7 +191,7 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 		message: 'Posting raffle information'
 	});
 	require('request')({
-		url: 'https://api.codeyellow.io/instagram/get?type=deadstock',
+		url: 'https://api.codeyellow.io/instagram/get?type=juicestore',
 		method: 'get'
 	}, function (err, response, body) {
 		try {
@@ -239,29 +250,23 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 			}
 		}
 		console.log('Instagram used: ' + profile['instagram'])
+
 		request({
-			url: 'https://deadstock.us6.list-manage.com/subscribe/post?u=be9b719d1c345d54269781365&id=eaea586abb%20',
-			method: 'POST',
+			url: 'https://juicestore.us5.list-manage.com/subscribe/post-json?u=79db5a8ad215b2f787d68cb55&id=c7fd97f847&c=jQuery19005428593779189539_1573658947778&EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&MMERGE4=' + profile['phoneNumber'] + '&MMERGE6%5Baddr1%5D=' + profile['address'] + '&MMERGE6%5Baddr2%5D=' + profile['aptSuite'] + '&MMERGE6%5Bcity%5D=' + profile['city'] + '&MMERGE6%5Bstate%5D=' + profile['stateProvince'] + '&MMERGE6%5Bzip%5D=' + profile['zipCode'] + '&MMERGE6%5Bcountry%5D='+countryFormatter(profile['country'])+'&MMERGE3=Male&MMERGE5%5Bday%5D=' + getRandomInt(1, 25) + '&MMERGE5%5Bmonth%5D=' + getRandomInt(1, 9) + '&MMERGE5%5Byear%5D=' + getRandomInt(1982, 2000) + '&MMERGE8=' + task['taskSizeVariant'] + '&MMERGE7=' + profile['instagram'] + '&LANGUAGEP=English&b_79db5a8ad215b2f787d68cb55_c7fd97f847=&subscribe=Join+The+Raffle&_=' + new Date().getTime(),
 			headers: {
-				'authority': 'deadstock.us6.list-manage.com',
-				'cache-control': 'max-age=0',
-				'upgrade-insecure-requests': '1',
+				'authority': 'juicestore.us5.list-manage.com',
 				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
-				'sec-fetch-user': '?1',
-				'origin': 'https://www.deadstock.ca',
-				'content-type': 'application/x-www-form-urlencoded',
-				'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+				'accept': '*/*',
 				'sec-fetch-site': 'cross-site',
-				'sec-fetch-mode': 'navigate',
-				'referer': 'https://www.deadstock.ca/pages/raffles',
+				'sec-fetch-mode': 'no-cors',
+				'referer': 'https://juicestore.com/blogs/editorial/travis-scott-x-nike-releases-brand-new-air-force-1-low-cactus-jack?utm_medium=email&utm_source=newsletter&utm_campaign=travis-scott-nike-cactus-jack-raffle&utm_content=button&utm_term=edm-raffle&utm_source=JUICESTORE+Newsletter&utm_campaign=6c6dbbbeff-EMAIL_CAMPAIGN_2019_11_11_07_06&utm_medium=email&utm_term=0_354ed87645-6c6dbbbeff-109021089&goal=0_354ed87645-6c6dbbbeff-109021089&mc_cid=6c6dbbbeff&mc_eid=9458d28cc9',
 				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 			},
-			body: 'EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&PHONE=' + profile['phoneNumber'] + '&MMERGE5=INSTAGRAM&MMERGE6=' + profile['city'] + '&MMERGE7=Nike+x+Travis+Scott+Air+Force+1+%22Cactus+Jack%22&MMERGE8=' + task['taskSizeVariant'] + '&MMERGE9=&MMERGE10=' + profile['instagram'] + '&MMERGE11=&+b_be9b719d1c345d54269781365_eaea586abb+=&subscribe=Subscribe',
 			agent: agent
 		}, function callback(error, response, body) {
 			//change below line to be separate
 			if (!error) {
-				if (response.statusCode != 200 && response.request.href != 'https://deadstock.us6.list-manage.com/subscribe/post?u=be9b719d1c345d54269781365&id=eaea586abb%20') {
+				if (response.statusCode != 200) {
 					console.log(JSON.stringify(profile));
 					console.log(JSON.stringify(task));
 					var proxy2 = getRandomProxy();
@@ -274,71 +279,83 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 					});
 					return setTimeout(() => exports.postRaffleInfo(request, task, profile, token), global.settings.retryDelay);
 				}
-				$ = cheerio.load(body);
-				var error2 = $('.errorText').html();
-				if (error2) {
-					console.log(error2);
-					if (error2.toLowerCase().indexOf('already entered') !== -1) {
+				//code here
+				try {
+					console.log(body);
+				} catch (e) {}
+				try {
+					if (body.toLowerCase().indexOf('thank you for subscribing') !== -1) {
+						console.log('entry submitted');
 						mainBot.mainBotWin.send('taskUpdate', {
 							id: task.taskID,
 							type: task.type,
-							message: 'Unknown error. DM log'
-						});
-						console.log(body);
-						console.log(JSON.stringify(profile));
-						console.log(JSON.stringify(task));
-						console.log(`[${task.taskID}] ` + ' Error: ' + error2)
-						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-						return;
-					} else if (error2.toLowerCase().indexOf('please enter a value') >= 0) {
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'please complete your profile'
-						});
-						console.log(body);
-						console.log(JSON.stringify(profile));
-						console.log(JSON.stringify(task));
-						console.log(`[${task.taskID}] ` + ' Error: ' + error2)
-						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-						return;
-					} else {
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'Already entered!'
-						});
-						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-						return;
-
-					}
-				}
-				var header = $('#templateBody h2').html();
-				if (header) {
-					if (header.toLowerCase().indexOf('almost finished') !== -1) {
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'Check Email!'
+							message: 'Entry submitted!'
 						});
 						console.log(`[${task.taskID}] ` + ' Entry submitted!');
 						registerEmail(task);
 						mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '', task, profile);
 						return;
-					} else {
+					} else if (body.toLowerCase().indexOf('is already subscribed to list') !== -1) {
+						console.log('already entered');
 						mainBot.mainBotWin.send('taskUpdate', {
 							id: task.taskID,
 							type: task.type,
-							message: 'Unknown Error!'
+							message: 'already entered!'
 						});
-						console.log(body);
-						console.log(JSON.stringify(profile));
-						console.log(JSON.stringify(task));
-						console.log(`[${task.taskID}] ` + ' Unknown Error!');
 						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 						return;
+					} else if (body.toLowerCase().indexOf('1 - please enter a value') !== -1) {
+						console.log('please save a first name');
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'please save a first name!'
+						});
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					} else if (body.toLowerCase().indexOf('2 - please enter a value') !== -1) {
+						console.log('please save a last name');
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'please save a last name!'
+						});
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					} else if (body.toLowerCase().indexOf('4 - please enter a value') !== -1) {
+						console.log('please save a number');
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'please save a phone number!'
+						});
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					} else if (body.toLowerCase().indexOf('6 - please enter a complete address') !== -1) {
+						console.log('please save an address');
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'please save an address!'
+						});
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						return;
+					} else {
+						try {
+							console.log(body);
+							console.log('unknown error. dm logjuice');
+							mainBot.mainBotWin.send('taskUpdate', {
+								id: task.taskID,
+								type: task.type,
+								message: 'unknown error. dm log!'
+							});
+							mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+							return;
+						} catch (e) {
+
+						}
 					}
-				} else {
+				} catch (e) {
 					var proxy2 = getRandomProxy();
 					task['proxy'] = proxy2;
 					console.log('New proxy: ' + formatProxy(task['proxy']));
@@ -403,14 +420,102 @@ function registerEmail(task) {
 	}
 }
 
+
 // Needed for country localizations being different per site
 function countryFormatter(profileCountry) {
 	switch (profileCountry) {
+		case 'United Kingdom':
+			return '262';
+			break;
 		case 'United States':
-			return 'United States of America';
+			return '164';
+			break;
+		case 'Canada':
+			return '30';
+			break;
+		case 'Ireland':
+			return '74';
+			break;
+		case 'Germany':
+			return '59';
+			break;
+		case 'Portugal':
+			return '124';
+			break;
+		case 'Switzerland':
+			return '149';
+			break;
+		case 'France':
+			return '54';
+			break;
+		case 'Spain':
+			return '143';
+			break;
+		case 'Italy':
+			return '76';
+			break;
+		case 'Netherlands':
+			return '109';
+			break;
+		case 'Czech Republic':
+			return '42';
+			break;
+		case 'Australia':
+			return '8';
+			break;
+		case 'Austria':
+			return '9';
+			break;
+		case 'Slovakia':
+			return '138';
+			break;
+		case 'Belgium':
+			return '16';
+			break;
+		case 'Slovenia':
+			return '139';
+			break;
+		case 'Singapore':
+			return '137';
+			break;
+		case 'Malaysia':
+			return '96';
+			break;
+		case 'Hong Kong':
+			return '67';
+			break;
+		case 'China':
+			return '36';
+			break;
+		case 'Japan':
+			return '78';
+			break;
+		case 'Sweden':
+			return '148';
+			break;
+		case 'Denmark':
+			return '43';
+			break;
+		case 'Finland':
+			return '53';
+			break;
+		case 'Romania':
+			return '128';
+			break;
+		case 'Poland':
+			return '123';
+			break;
+		case 'Hungary':
+			return '68';
+			break;
+		case 'Russia':
+			return '129';
+			break;
+		case 'Luxembourg':
+			return '92';
 			break;
 		default:
-			return profileCountry;
+			return 'noexist';
 			break;
 	}
 }
@@ -428,71 +533,9 @@ function countryFormatter(profileCountry) {
 
 
 
-
-
-
-function antiCaptchaErrorFormatter(message) {
-	switch (message) {
-		case 'ERROR_ZERO_BALANCE':
-			return 'AntiCaptcha balance 0';
-			break;
-		case 'ERROR_KEY_DOES_NOT_EXIST':
-			return 'Captcha API Key invalid. Check settings';
-			break;
-		case 'ERROR_NO_SLOT_AVAILABLE':
-			return 'No AntiCaptcha workers available';
-			break;
-		case 'ERROR_RECAPTCHA_INVALID_SITEKEY':
-			return 'Invalid SiteKey. DM Devs';
-			break;
-		case 'ERROR_RECAPTCHA_INVALID_DOMAIN':
-			return 'Invalid website. DM Devs';
-			break;
-		default:
-			return 'AntiCaptcha error. DM Log';
-			break;
-	}
-}
-
-function twoCaptchaCreateErrorFormatter(message) {
-	switch (message) {
-		case 'ERROR_ZERO_BALANCE':
-			return 'AntiCaptcha balance 0';
-			break;
-		case 'ERROR_WRONG_USER_KEY':
-			return 'Captcha API Key invalid. Check settings';
-			break;
-		case 'ERROR_KEY_DOES_NOT_EXIST':
-			return 'Captcha API Key invalid. Check settings';
-			break;
-		case 'ERROR_NO_SLOT_AVAILABLE':
-			return 'No 2Captcha workers available';
-			break;
-		case 'ERROR_BAD_TOKEN_OR_PAGEURL':
-			return 'Invalid token or url. DM Devs';
-			break;
-		case 'ERROR_PAGEURL':
-			return 'Invalid website. DM Devs';
-			break;
-		default:
-			return '2Captcha error. DM Log';
-			break;
-	}
-}
-
-function twoCaptchaResponseErrorFormatter(message) {
-	switch (message) {
-		case 'ERROR_CAPTCHA_UNSOLVABLE':
-			return 'Captcha was unsolvable';
-			break;
-		case 'ERROR_WRONG_USER_KEY':
-			return 'Captcha API Key invalid. Check settings';
-			break;
-		case 'ERROR_KEY_DOES_NOT_EXIST':
-			return 'Captcha API Key invalid. Check settings';
-			break;
-		default:
-			return '2Captcha error. DM Log';
-			break;
-	}
+// Random birthday
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
 }

@@ -43,3 +43,4 @@ exports.solestory = require('./solestory.js');
 exports.lapstoneandhammer = require('./lapstoneandhammer.js');
 exports.cityblueshop = require('./cityblueshop.js');
 exports.deadstock = require('./deadstock.js');
+exports.juicestore = require('./juicestore.js');
