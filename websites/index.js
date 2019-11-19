@@ -44,3 +44,5 @@ exports.lapstoneandhammer = require('./lapstoneandhammer.js');
 exports.cityblueshop = require('./cityblueshop.js');
 exports.deadstock = require('./deadstock.js');
 exports.juicestore = require('./juicestore.js');
+exports.mahaamsterdam = require('./mahaamsterdam.js');
+exports.afewstore = require('./afewstore.js');

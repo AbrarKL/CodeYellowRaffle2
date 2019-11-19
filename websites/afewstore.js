@@ -1,8 +1,7 @@
-
 var HttpsProxyAgent = require('https-proxy-agent');
 var mainBot = require('../index.js')
-var cheerio = require('cheerio');
 var faker = require('faker');
+var cheerio = require('cheerio');
 
 function formatProxy(proxy) {
 	if (proxy == '') {
@@ -57,11 +56,6 @@ exports.initTask = function (task, profile) {
 		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 		return;
 	}
-	if (task['proxy'] != '') {
-		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
-	} else {
-		agent = '';
-	}
 	var jar = require('request').jar()
 	var request = require('request').defaults({
 		jar: jar
@@ -88,7 +82,10 @@ exports.initTask = function (task, profile) {
 			profile['lastName'] = String.fromCharCode(97 + Math.floor(Math.random() * 26)) + profile['lastName'];
 		}
 	}
-
+	if(profile['stateProvince'] == '')
+	{
+		profile['stateProvince'] = 'none';
+	}
 	if (task['taskTypeOfEmail'] == 'catchall') {
 		if (task['catchallJigged'] == false || task['catchallJigged'] == undefined) {
 			var pickEmail = Math.floor(Math.random() * 7) + 1;
@@ -130,19 +127,6 @@ exports.initTask = function (task, profile) {
 		}
 	}
 
-
-	if (profile['phoneNumber'] != null && profile['phoneNumber'].indexOf('-') > -1) {
-		profile['phoneNumber'] = profile['phoneNumber'].replaceAll('-', '');
-	}
-
-	if (profile['phoneNumber'] != null && profile['phoneNumber'].indexOf(')') > -1) {
-		profile['phoneNumber'] = profile['phoneNumber'].replaceAll(')', '');
-	}
-
-	if (profile['phoneNumber'] != null && profile['phoneNumber'].indexOf('(') > -1) {
-		profile['phoneNumber'] = profile['phoneNumber'].replaceAll('(', '');
-	}
-
 	if (task['taskEmail'] != null && task['taskEmail'].indexOf("'") > -1) {
 		task['taskEmail'] = task['taskEmail'].replaceAll("'", '');
 	}
@@ -150,117 +134,36 @@ exports.initTask = function (task, profile) {
 		task['taskEmail'] = task['taskEmail'].replaceAll(' ', '');
 	}
 
-
 	if (profile['jigProfileAddress'] == true) {
 		profile['aptSuite'] = faker.fake("{{address.secondaryAddress}}");
-		// ********************************************* Add this only to sites with no address line 2 *********************************************
-		//profile['address'] = profile['address'] + ' ' + faker.fake("{{address.secondaryAddress}}");
-		// ********************************************* Add this only to sites with no address line 2 *********************************************
 	}
 
 	if (profile['jigProfilePhoneNumber'] == true) {
 		profile['phoneNumber'] = faker.fake("{{phone.phoneNumberFormat}}");
 	}
 
+	if (task['proxy'] != '') {
+		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
+	} else {
+		agent = '';
+	}
+
 	if (countryFormatter(profile["country"]) == 'noexist') {
 		mainBot.mainBotWin.send('taskUpdate', {
 			id: task.taskID,
 			type: task.type,
-			message: 'Shinzo doesn\'t ship to your country'
+			message: 'afew may not ship to your country'
 		});
 		console.log(`[${task.taskID}] ` + JSON.stringify(profile));
 		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 		return;
 	}
 
-	if (profile['firstName'] == null || profile['firstName'] == undefined || profile['firstName'] == '') {
-		mainBot.mainBotWin.send('taskUpdate', {
-			id: task.taskID,
-			type: task.type,
-			message: 'Please save a first name'
-		});
-		console.log(`[${task.taskID}] ` + JSON.stringify(profile));
-		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-		return;
-	}
-	if (profile['lastName'] == null || profile['lastName'] == undefined || profile['lastName'] == '') {
-		mainBot.mainBotWin.send('taskUpdate', {
-			id: task.taskID,
-			type: task.type,
-			message: 'Please save a last name'
-		});
-		console.log(`[${task.taskID}] ` + JSON.stringify(profile));
-		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-		return;
-	}
-
-
-
-
-
-
-	mainBot.mainBotWin.send('taskUpdate', {
-		id: task.taskID,
-		type: task.type,
-		message: 'Getting registration page'
-	});
-	console.log(`[${task.taskID}] ` + ' Getting registration page');
-	request({
-		url: 'https://raffle.shinzo.paris/en/nike-x-sacai-blazer-mid-black-wolf-grey/',
-		headers: {
-			'Connection': 'keep-alive',
-			'Cache-Control': 'max-age=0',
-			'Upgrade-Insecure-Requests': '1',
-			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-			'Sec-Fetch-Mode': 'navigate',
-			'Sec-Fetch-User': '?1',
-			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-			'Sec-Fetch-Site': 'none',
-			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
-		},
-		agent: agent,
-	}, function callback(error, response, body) {
-		if (!error) {
-			if (response.statusCode == 200) {
-				var bb2 = body.split('myElement.value = ')[1].split("'")[1].split("'")[0];
-				if (bb2) {
-					console.log(bb2);
-					console.log('Now needs captcha');
-					return exports.captchaWorker(request, task, profile, bb2);
-				} else {
-					var proxy2 = getRandomProxy();
-					task['proxy'] = proxy2;
-					mainBot.mainBotWin.send('taskUpdate', {
-						id: task.taskID,
-						type: task.type,
-						message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
-					});
-					return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
-				}
-			} else {
-				var proxy2 = getRandomProxy();
-				task['proxy'] = proxy2;
-				mainBot.mainBotWin.send('taskUpdate', {
-					id: task.taskID,
-					type: task.type,
-					message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
-				});
-				return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
-			}
-		} else {
-			var proxy2 = getRandomProxy();
-			task['proxy'] = proxy2;
-			mainBot.mainBotWin.send('taskUpdate', {
-				id: task.taskID,
-				type: task.type,
-				message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
-			});
-			return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay);
-		}
-	});
+	console.log('needs captcha');
+	return exports.captchaWorker(request, task, profile);
 }
 
-exports.captchaWorker = function (request, task, profile, bb2) {
+exports.captchaWorker = function (request, task, profile) {
 	if (task['proxy'] != '') {
 		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 	} else {
@@ -274,17 +177,18 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 			message: 'Awaiting captcha'
 		});
 		console.log(`[${task.taskID}] ` + ' Awaiting captcha');
-		mainBot.requestCaptcha('shinzoparis', task, false);
+		mainBot.requestCaptcha('afewstore', task, false);
 		const capHandler = () => {
 			if (mainBot.taskCaptchas[task['type']][task['taskID']] == undefined || mainBot.taskCaptchas[task['type']][task['taskID']] == '') {
 				setTimeout(() => capHandler(), 100);
 			} else {
-				exports.submitRaffle(request, task, profile, bb2);
+				exports.submitRaffle(request, task, profile);
 				return;
 			}
 		}
 		capHandler();
 	} else {
+		agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 		if (task['captchaHandler'] == 'anticaptcha') {
 			if (global.settings.antiCapAPIKey == '' || global.settings.antiCapAPIKey == undefined) {
 				mainBot.mainBotWin.send('taskUpdate', {
@@ -304,11 +208,12 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 					"softId": "924",
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
-						"websiteURL": task["variant"],
-						"websiteKey": "6LczOjoUAAAAABEfbqdtD11pFD5cZ0n5nhz89nxI"
+						"websiteURL": "https://mailchi.mp/afew-store/mim54y8lty",
+						"websiteKey": "6Lexz1YUAAAAAJZknL3EkeY_xBlIKGKGfGwFHhjK"
 					}
 				},
-				json: true
+				json: true,
+				agent: agent
 			}, function (error, response, body) {
 				if (error) {
 					mainBot.mainBotWin.send('taskUpdate', {
@@ -318,7 +223,7 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 					});
 					var proxy2 = getRandomProxy();
 					task['proxy'] = proxy2;
-					return setTimeout(() => exports.captchaWorker(request, task, profile, bb2), 15000);
+					return setTimeout(() => exports.captchaWorker(request, task, profile), 15000);
 				}
 				if (body.errorId != undefined && body.errorId == 0) {
 					var taskId = body.taskId;
@@ -337,7 +242,8 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 								clientKey: global.settings.antiCapAPIKey,
 								taskId: taskId
 							},
-							json: true
+							json: true,
+							agent: agent
 						}, function (error, response, body) {
 							if (error) {
 								mainBot.mainBotWin.send('taskUpdate', {
@@ -362,7 +268,8 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 										type: task.type,
 										message: 'Submitting entry'
 									});
-									return exports.submitRaffle(request, task, profile, bb2);
+									console.log('submitting');
+									return exports.submitRaffle(request, task, profile);
 								} else {
 									return setTimeout(() => capHandler(), 5000);
 								}
@@ -404,31 +311,17 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LczOjoUAAAAABEfbqdtD11pFD5cZ0n5nhz89nxI&pageurl=' + task["variant"] + '&json=1&soft_id=2553',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6Lexz1YUAAAAAJZknL3EkeY_xBlIKGKGfGwFHhjK&pageurl=https://mailchi.mp/afew-store/mim54y8lty&json=1&soft_id=2553',
 				method: 'GET',
-				json: true,
-				agent: agent
+				json: true
 			}, function (error, response, body) {
 				if (error) {
-					if (task['proxyType'] != 'noProxy') {
-						var proxy2 = getRandomProxy();
-						task['proxy'] = proxy2;
-
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: '2Captcha Proxy Error. Retrying in 5s'
-						});
-						return setTimeout(() => exports.initTask(task, profile), 5000);
-					} else {
-						task['proxy'] = '';
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: '2Captcha Error. Retrying in 15s'
-						});
-						return setTimeout(() => exports.initTask(task, profile), 15000);
-					}
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: '2Captcha error. Retrying in 15s'
+					});
+					return setTimeout(() => exports.captchaWorker(request, task, profile), 15000);
 				}
 				if (body.status == 0) {
 					console.log(JSON.stringify(body));
@@ -454,31 +347,16 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 							request({
 								url: 'https://2captcha.com/res.php?key=' + global.settings['2capAPIKey'] + '&action=get&id=' + taskId + '&json=1',
 								method: 'GET',
-								json: true,
-								agent: agent
+								json: true
 							}, function (error, response, body) {
 								if (error) {
-									if (task['proxyType'] != 'noProxy') {
-										var proxy2 = getRandomProxy();
-										task['proxy'] = proxy2;
-										agent = new HttpsProxyAgent(formatProxy(task['proxy']));
-
-										mainBot.mainBotWin.send('taskUpdate', {
-											id: task.taskID,
-											type: task.type,
-											message: '2Captcha Proxy error. Retrying in 5s'
-										});
-										return setTimeout(() => capHandler(), 5000);
-									} else {
-										task['proxy'] = '';
-										agent = new HttpsProxyAgent(formatProxy(task['proxy']));
-										mainBot.mainBotWin.send('taskUpdate', {
-											id: task.taskID,
-											type: task.type,
-											message: '2Captcha Proxy error. Retrying in 15s'
-										});
-										return setTimeout(() => capHandler(), 5000);
-									}
+									mainBot.mainBotWin.send('taskUpdate', {
+										id: task.taskID,
+										type: task.type,
+										message: '2Captcha error'
+									});
+									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 								}
 								if (body == undefined) {
 									return setTimeout(() => capHandler(), 10000);
@@ -505,7 +383,8 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 											type: task.type,
 											message: 'Submitting entry'
 										});
-										return exports.submitRaffle(request, task, profile, bb2);
+										console.log('submitting');
+										return exports.submitRaffle(request, task, profile);
 									} else {
 										if (body.request == 'CAPCHA_NOT_READY') {
 											return setTimeout(() => capHandler(), 5000);
@@ -544,8 +423,8 @@ exports.captchaWorker = function (request, task, profile, bb2) {
 }
 
 
-
-exports.submitRaffle = function (request, task, profile, bb2) {
+exports.submitRaffle = function (request, task, profile) {
+	console.log('submitraffle called');
 	if (shouldStop(task) == true) {
 		return;
 	}
@@ -558,15 +437,11 @@ exports.submitRaffle = function (request, task, profile, bb2) {
 		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 		return;
 	}
-	console.log(`[${task.taskID}] ` + 'Submitting entry');
-	mainBot.mainBotWin.send('taskUpdate', {
-		id: task.taskID,
-		type: task.type,
-		message: 'Submitting entry'
-	});
-	console.log(`[${task.taskID}] ` + JSON.stringify(task));
-	console.log(`[${task.taskID}] ` + JSON.stringify(profile));
-	// Captcha bypass = fake value in response
+	if (mainBot.taskCaptchas[task['type']][task['taskID']] == undefined || mainBot.taskCaptchas[task['type']][task['taskID']] == '') {
+		// NEEDS CAPTCHA AGAIN
+		return setTimeout(() => exports.initTask(task, profile), global.settings.retryDelay); // REPLACE 3000 WITH RETRY DELAY
+	}
+
 	if (task['proxy'] != '') {
 		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
 	} else {
@@ -574,7 +449,7 @@ exports.submitRaffle = function (request, task, profile, bb2) {
 	}
 
 	require('request')({
-		url: 'https://api.codeyellow.io/instagram/get?type=shinzoparis',
+		url: 'https://api.codeyellow.io/instagram/get?type=afewstore',
 		method: 'get'
 	}, function (err, response, body) {
 		try {
@@ -634,188 +509,121 @@ exports.submitRaffle = function (request, task, profile, bb2) {
 		}
 		console.log('Instagram used: ' + profile['instagram'])
 
-		var g = task['shinzoparis']['group'];
-		var formid = task['shinzoparis']['formid'];
-
-		var group = (`["${g}"]`).replaceAll('"', '\\"');
-		var options = (`{"form_id":${formid},"conditions":[{"if_field":"delivery","operator":"equals","if_value":"1","then_field":"${g}"}],"settings":false}`).replaceAll('"', '\\"');
-
-
-		var t = JSON.parse(`{"_wpcf7":"${formid}",
-								"_wpcf7_version":"${task['shinzoparis']['version']}",
-								"_wpcf7_locale":"fr_FR",
-								"_wpcf7_unit_tag":"${task['shinzoparis']['unit_tag']}",
-								"_wpcf7_container_post":"${task['shinzoparis']['container_post']}",
-								"_wpcf7cf_hidden_group_fields":"[]",
-								"_wpcf7cf_hidden_groups":"[]",
-								"_wpcf7cf_visible_groups": "${group}",
-								"_wpcf7cf_options": "${options}",
-								"lang":"en",
-								"your-firstname":"${profile['firstName']}",
-								"your-name":"${profile['lastName']}",
-								"your-email":"${task['taskEmail']}",
-								"your-instagram":"${profile['instagram']}",
-								"your-tel":"${profile['phoneNumber']}",
-								"delivery[]":"1",
-								"your-address":"${profile['address']}",
-								"your-postcode":"${profile['zipCode']}",
-								"your-city":"${profile['city']}",
-								"your-state":"${profile['stateProvince']}",
-								"your-country":"United Kingdom",
-								"size":"${task['taskSizeVariant']}",
-								"opt-in[]":"1",
-								"accept":"1",
-								"g-recaptcha-response":"${mainBot.taskCaptchas[task['type']][task['taskID']]}",
-								"${task['shinzoparis']['randomrafflething']}":"",
-								"bb2_screener_":"${bb2}"
-						}`)
 		request({
-			url: 'https://raffle.shinzo.paris/en/wp-json/contact-form-7/v1/contact-forms/' + task['shinzoparis']['formid'] + '/feedback',
-			method: 'POST',
+			url: 'https://mc.us5.list-manage.com/signup-form/subscribe?u=936d4960278d1960e43d58d0d&id=0034c3e1f0&EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&STREET=' + profile['address'] + 'd&ZIP=' + profile['zipCode'] + '&STATE=' + profile['stateProvince'] + '&CITY=' + profile['city'] + '&INSTAGRAM=' + profile['instagram'] + '&SIZES=' + task['taskSizeSelect'] + '&COUNTRY=' + countryFormatter(profile["country"]) + '&b_936d4960278d1960e43d58d0d_149123=&g-recaptcha-response=' + mainBot.taskCaptchas[task['type']][task['taskID']] + '&gdpr%5B179%5D=on&c=dojo_request_script_callbacks.dojo_request_script2',
 			headers: {
-				'Sec-Fetch-Mode': 'cors',
-				'Sec-Fetch-Site': 'same-origin',
-				'Origin': 'https://raffle.shinzo.paris',
-				'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
-				'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-				'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryXGOOfmdA4pQRjRU0',
-				'Accept': 'application/json, text/javascript, */*; q=0.01',
-				'Referer': task['variant'],
-				'X-Requested-With': 'XMLHttpRequest',
-				'Connection': 'keep-alive'
-			},
-			formData: t,
-			agent: agent
+				'authority': 'mc.us5.list-manage.com',
+				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
+				'accept': '*/*',
+				'sec-fetch-site': 'cross-site',
+				'sec-fetch-mode': 'no-cors',
+				'referer': 'https://mailchi.mp/afew-store/mim54y8lty',
+				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+			}
 		}, function callback(error, response, body) {
 			if (!error) {
-				if (response.statusCode == 200 || response.statusCode == 201) {
-					if (body == null || body == undefined) {
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'Unknown error. DM log'
-						});
-						console.log(`[${task.taskID}] ` + JSON.stringify(profile));
-						console.log(`[${task.taskID}] ` + JSON.stringify(task));
-						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-						return;
-					}
-					console.log(body);
-					try {
-						parsed = JSON.parse(body);
-					} catch (e) {
-						var proxy2 = getRandomProxy();
-						task['proxy'] = proxy2;
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
-						});
-						return setTimeout(() => exports.submitRaffle(request, task, profile, bb2), global.settings.retryDelay);
-					}
-					console.log(parsed)
-					if (parsed['message'] == 'Your registration has been succeeded. A confirmation e-mail will be send to you soon.') {
-						console.log(JSON.stringify(t));
-						console.log(JSON.stringify(parsed));
-						mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'Check Email!'
-						});
-						console.log(`[${task.taskID}] ` + 'Check Email!');
-						registerEmail(task);
-						mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '', task, profile);
-						return;
-					} else if (parsed['status'] == 'spam' && parsed['message'] == 'There was an error with your registration. Please try again later.') {
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'Cap error. Retrying'
-						});
-						mainBot.taskCaptchas[task['type']][task['taskID']] = '';
-						return exports.captchaWorker(request, task, profile, bb2);
-					} else {
-						console.log(body);
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: parsed['message']
-						});
-						console.log(`[${task.taskID}] ` + JSON.stringify(profile));
-						console.log(`[${task.taskID}] ` + JSON.stringify(task));
-						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-						return;
-					}
-				} else {
+				if (response.statusCode != 200) {
 					var proxy2 = getRandomProxy();
 					task['proxy'] = proxy2;
+					console.log('New proxy: ' + formatProxy(task['proxy']));
 					mainBot.mainBotWin.send('taskUpdate', {
 						id: task.taskID,
 						type: task.type,
-						message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
+						message: 'Proxy error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 					});
-					return setTimeout(() => exports.submitRaffle(request, task, profile, bb2), global.settings.retryDelay);
+					return setTimeout(() => exports.submitRaffle(request, task, profile), global.settings.retryDelay);
+				}
+				if (!body) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'error. retrying in ' + global.settings.retryDelay / 1000 + 's'
+					});
+					return setTimeout(() => exports.submitRaffle(request, task, profile), global.settings.retryDelay);
+				}
+				if (body.toLowerCase().indexOf('almost finished') > -1) {
+					console.log('Entered');
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'check email!'
+					});
+					console.log(`[${task.taskID}] ` + ' Entry submitted!');
+					registerEmail(task);
+					mainBot.sendWebhook(task['taskSiteSelect'], task['taskEmail'], '', '', task, profile);
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				} else if (body.toLowerCase().indexOf('has too many recent signup requests') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Already entered!'
+					});
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				}  else if (body.toLowerCase().indexOf('too many subscribe attempts for this email address.') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'too many attempts! use proxies or try later'
+					});
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				}  else if (body.toLowerCase().indexOf('captcha is invalid. please try again') > -1) {
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'cap error. retrying'
+					});
+					mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+					return exports.captchaWorker(request, task, profile);
+				} else if (body.toLowerCase().indexOf('please enter a value') > -1) {
+					console.log(`[${task.taskID}] ` + JSON.stringify(task));
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'Make sure every field has a value saved'
+					});
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
+				} else {
+					try {
+						console.log(body);
+					} catch (e) {
+
+					}
+					console.log(`[${task.taskID}] ` + JSON.stringify(task));
+					console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+					console.log('unknownafewerror');
+					mainBot.mainBotWin.send('taskUpdate', {
+						id: task.taskID,
+						type: task.type,
+						message: 'unknown error. dm log'
+					});
+					mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+					return;
 				}
 			} else {
 				var proxy2 = getRandomProxy();
 				task['proxy'] = proxy2;
+				console.log('New proxy: ' + formatProxy(task['proxy']));
 				mainBot.mainBotWin.send('taskUpdate', {
 					id: task.taskID,
 					type: task.type,
-					message: 'Error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
+					message: 'Proxy error. Retrying in ' + global.settings.retryDelay / 1000 + 's'
 				});
-				return setTimeout(() => exports.submitRaffle(request, task, profile, bb2), global.settings.retryDelay);
+				return setTimeout(() => exports.submitRaffle(request, task, profile), global.settings.retryDelay);
 			}
 		});
 	});
 }
 
-// Check if task should stop, for example if deleted
-function shouldStop(task) {
-	if (mainBot.taskStatuses[task['type']][task['taskID']] == 'stop') {
-		mainBot.taskStatuses[task['type']][task['taskID']] = 'idle';
-		return true;
-	} else if (mainBot.taskStatuses[task['type']][task['taskID']] == 'delete') {
-		mainBot.taskStatuses[task['type']][task['taskID']] = '';
-		return true;
-	} else {
-		return false;
-	}
-}
-
-// Checks if this email was already entered into a raffle
-function checkEmail(task) {
-	if (task['taskTypeOfEmail'] == 'saved') {
-		if (global.emails[task['taskEmail']] == undefined) {
-			return false;
-		}
-		if (global.emails[task['taskEmail']][task['taskSiteSelect'] + '_' + task['filterID']] == true && task['type'] == 'mass') {
-			return true;
-		} else {
-			return false;
-		}
-	}
-}
-// Saves email in emails.json to show email was entered 
-function registerEmail(task) {
-	if (task['taskTypeOfEmail'] == 'saved') {
-		if (global.emails[task['taskEmail']] == undefined) {
-			return;
-		}
-		var variantName = task['taskSiteSelect'] + '_' + task['filterID'];
-		global.emails[task['taskEmail']][variantName] = true;
-		mainBot.saveEmails(global.emails);
-	}
-}
-
-
-
 // Needed for country localizations being different per site
 function countryFormatter(profileCountry) {
 	switch (profileCountry) {
 		case 'United Kingdom':
-			return 'United Kingdom';
+			return 'Great Britain';
 			break;
 		case 'United States':
 			return 'United States';
@@ -899,7 +707,7 @@ function countryFormatter(profileCountry) {
 			return 'Hungary';
 			break;
 		case 'Russia':
-			return 'Russia';
+			return 'Russian Federation';
 			break;
 		case 'Luxembourg':
 			return 'Luxembourg';
@@ -910,24 +718,43 @@ function countryFormatter(profileCountry) {
 	}
 }
 
+// Check if task should stop, for example if deleted
+function shouldStop(task) {
+	if (mainBot.taskStatuses[task['type']][task['taskID']] == 'stop') {
+		mainBot.taskStatuses[task['type']][task['taskID']] = 'idle';
+		return true;
+	} else if (mainBot.taskStatuses[task['type']][task['taskID']] == 'delete') {
+		mainBot.taskStatuses[task['type']][task['taskID']] = '';
+		return true;
+	} else {
+		return false;
+	}
+}
 
-
-
-
-//stockItemId = size
-/* code to extract sizes from https://www.oneblockdown.it/en/footwear-sneakers/nike/men-unisex/nike-mars-yard-overshoe/12339
-var sizeList = '';
-for(var i = 0; i < preloadedStock.length; i++)
-{
-	var size = preloadedStock[i]['variant'];
-	size = parseFloat(size.match(/[\d\.]+/));
-	var stockItemId = preloadedStock[i]['stockItemId'];
-	sizeList = sizeList + `'${size}' => '${stockItemId}',`;
-}*/
-
-
-
-
+// Checks if this email was already entered into a raffle
+function checkEmail(task) {
+	if (task['taskTypeOfEmail'] == 'saved') {
+		if (global.emails[task['taskEmail']] == undefined) {
+			return false;
+		}
+		if (global.emails[task['taskEmail']][task['taskSiteSelect'] + '_' + task['filterID']] == true && task['type'] == 'mass') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+// Saves email in emails.json to show email was entered 
+function registerEmail(task) {
+	if (task['taskTypeOfEmail'] == 'saved') {
+		if (global.emails[task['taskEmail']] == undefined) {
+			return;
+		}
+		var variantName = task['taskSiteSelect'] + '_' + task['filterID'];
+		global.emails[task['taskEmail']][variantName] = true;
+		mainBot.saveEmails(global.emails);
+	}
+}
 
 
 
@@ -968,7 +795,7 @@ function antiCaptchaErrorFormatter(message) {
 function twoCaptchaCreateErrorFormatter(message) {
 	switch (message) {
 		case 'ERROR_ZERO_BALANCE':
-			return '2captcha balance 0';
+			return 'AntiCaptcha balance 0';
 			break;
 		case 'ERROR_WRONG_USER_KEY':
 			return 'Captcha API Key invalid. Check settings';
@@ -1006,7 +833,4 @@ function twoCaptchaResponseErrorFormatter(message) {
 			return '2Captcha error. DM Log';
 			break;
 	}
-}
-String.prototype.replaceAll = function (str1, str2, ignore) {
-	return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
 }

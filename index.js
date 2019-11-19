@@ -15,7 +15,7 @@
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var currentVersion = '0.2.0';
+var currentVersion = '0.2.2';
 global.currentVersion = currentVersion;
 // LATER REMOVE EMAIL FROM if (fileExists('profiles.json')) {
 const {
@@ -50,6 +50,11 @@ console.log = function (msg) {
 
 
 global.websites = {
+	'afewstore': {
+		sitekey: '6Lexz1YUAAAAAJZknL3EkeY_xBlIKGKGfGwFHhjK',
+		url: 'mc.us5.list-manage.com',
+		name: 'AFewStore'
+	},
 	'woodwood': {
 		sitekey: '6LcN9xoUAAAAAHqSkoJixPbUldBoHojA_GCp6Ims',
 		url: 'woodwood.us4.list-manage.com',
@@ -741,6 +746,12 @@ function openBot(onReady) {
 		} else if (task['taskSiteSelect'] == 'dsml') {
 			console.log('DSML task started');
 			websites.dsml.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'mahaamsterdam') {
+			console.log('mahaamsterdam task started');
+			websites.mahaamsterdam.initTask(task, profile)
+		} else if (task['taskSiteSelect'] == 'afewstore') {
+			console.log('afewstore task started');
+			websites.afewstore.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'dsmla') {
 			console.log('DSMLA task started');
 			websites.dsmla.initTask(task, profile)
@@ -1323,7 +1334,7 @@ function getUpcomingReleases() {
 				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
 			},
 			json: true,
-			url: 'https://codeyellow.io/api/releases_69.php'
+			url: 'https://codeyellow.io/api/releases_71.php'
 		},
 		function (error, response, body) {
 			global.releases = body;

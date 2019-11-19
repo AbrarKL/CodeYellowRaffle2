@@ -167,7 +167,7 @@ exports.initTask = function (task, profile) {
 		year: getRandomInt(1982, 2000)
 	};
 	request({
-		url: 'https://www.opiumparis.com/fr/nouveautes/1304-8134-air-jordan-1-high-fearless.html',
+		url: 'https://www.opiumparis.com/en/raffles/1366-8755-air-force-1.html',
 		method: 'POST',
 		headers: {
 			'authority': 'www.opiumparis.com',
@@ -180,10 +180,10 @@ exports.initTask = function (task, profile) {
 			'sec-fetch-user': '?1',
 			'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 			'sec-fetch-site': 'same-origin',
-			'referer': 'https://www.opiumparis.com/fr/nouveautes/1304-8134-air-jordan-1-high-fearless.html',
+			'referer': 'https://www.opiumparis.com/en/raffles/1366-8755-air-force-1.html',
 			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 		},
-		body: 'id_customer=&id_gender=1&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&password=' + task['taskPassword'] + '&birthday=' + task['birthday']['day'] + '/' + task['birthday']['month'] + '/' + task['birthday']['year'] + '&newsletter=1&submitCreate=1',
+		body: 'id_customer=&id_gender=1&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&password=' + task['taskPassword'] + '&birthday=' + task['birthday']['year'] + '-' + task['birthday']['month'] + '-' + task['birthday']['day'] + '&newsletter=1&submitCreate=1',
 		agent: agent
 	}, function callback(error, response, body) {
 		if (!error) {
@@ -269,7 +269,7 @@ exports.submitRaffle = function (request, task, profile) {
 	}
 
 	request({
-		url: 'https://www.opiumparis.com/fr/nouveautes/1304-8134-air-jordan-1-high-fearless.html',
+		url: 'https://www.opiumparis.com/en/raffles/1366-8755-air-force-1.html',
 		method: 'POST',
 		headers: {
 			'sec-fetch-mode': 'cors',
@@ -279,7 +279,7 @@ exports.submitRaffle = function (request, task, profile) {
 			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
 			'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
 			'accept': 'application/json, text/javascript, */*; q=0.01',
-			'referer': 'https://www.opiumparis.com/fr/nouveautes/1304-8134-air-jordan-1-high-fearless.html',
+			'referer': 'https://www.opiumparis.com/en/raffles/1366-8755-air-force-1.html',
 			'authority': 'www.opiumparis.com',
 			'sec-fetch-site': 'same-origin'
 		},
