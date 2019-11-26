@@ -376,7 +376,7 @@ exports.captchaWorker = function (request, task, profile, key) {
 					"softId": "924",
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
-						"websiteURL": "https://shop.maha-amsterdam.com/us/services/challenge/://mailchi.mp/afew-store/mim54y8lty",
+						"websiteURL": "https://shop.maha-amsterdam.com/us/services/challenge/",
 						"websiteKey": "6LcSoR4UAAAAAO3mKqp729zO-PAz1m7DK9AqnONr"
 					}
 				},
@@ -716,10 +716,10 @@ exports.submitRaffle = function (request, task, profile, key) {
 							'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 							'Sec-Fetch-Site': 'cross-site',
 							'Sec-Fetch-Mode': 'cors',
-							'Referer': 'https://shop.maha-amsterdam.com/us/nike-air-force-1-07-para-noise-black.html',
+							'Referer': 'https://shop.maha-amsterdam.com/us/adidas-yeezy-boost-350-v2-black-black.html',
 							'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 						},
-						body: 'product=Nike+Air+Force+1+\'07+Para-Noise+Black&productImage=https%3A%2F%2Fcdn.webshopapp.com%2Fshops%2F171311%2Ffiles%2F310039021%2F112x132x1%2Fimage.jpg&productId=104438143&dontfill=&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&phone=' + profile['phoneNumber'] + '&shoeSize=' + task['taskSizeVariant'] + '&email=' + task['taskEmail'] + '&country=' + profile['country'] + '&instagram=' + profile['instagram'] + '&shipping=shipping&keepMePosted=on',
+						body: 'product=Adidas+Yeezy+Boost+350+V2+Black+Black&productImage=https%3A%2F%2Fcdn.webshopapp.com%2Fshops%2F171311%2Ffiles%2F310836521%2F112x132x1%2Fimage.jpg&productId=104438143&dontfill=&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&phone=' + profile['phoneNumber'] + '&shoeSize=' + task['taskSizeVariant'] + '&email=' + task['taskEmail'] + '&country=' + profile['country'] + '&instagram=' + profile['instagram'] + '&shipping=shipping&keepMePosted=on',
 						agent: agent
 					}, function callback(error, response, body) {
 						if (!error) {

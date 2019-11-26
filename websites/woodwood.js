@@ -294,11 +294,11 @@ exports.postRaffleInfo = function (request, task, profile, token) {
             'MERGE0': task['taskEmail'],
             'MERGE1': profile['firstName'],
             'MERGE2': profile['lastName'],
+            'MERGE3': profile['city'],
+            'MERGE5': countryFormatter(profile['country']),
             'MERGE4': profile['phoneNumber'],
-            'MERGE3': countryFormatter(profile['country']),
-            'MERGE5': profile['city'],
-            'MERGE7': task['taskSizeVariant'],
-            'gdpr[641]:': 'Y',
+            'MERGE6': task['taskSizeVariant'],
+            'gdpr[657]:': 'Y',
             'submit': 'Subscribe',
             'ht': token,
             'mc_signupsource': 'hosted'
@@ -737,7 +737,7 @@ exports.submitRaffle = function (request, task, profile, token, mf) {
                 }
             } else {
                 var header = $('#templateBody h2').html();
-                if (header.toLowerCase().indexOf('subscription confirmed') !== -1) {
+                if (header.toLowerCase().indexOf('almost finished...') !== -1) {
                     mainBot.mainBotWin.send('taskUpdate', {
                         id: task.taskID,
                         type: task.type,
