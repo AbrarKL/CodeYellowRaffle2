@@ -182,7 +182,8 @@ exports.initTask = function (task, profile) {
 			'Sec-Fetch-Mode': 'navigate',
 			'Referer': 'https://raffles.granit-shop.com/fr/raffles/914-3054-adidas-yeezy-boost-350-v2-black.html',
 			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
-		}
+		},
+		agent: agent
 	}, function callback(error, response, body) {
 		if (!error) {
 			if (response.statusCode != 200) {
@@ -218,7 +219,8 @@ exports.initTask = function (task, profile) {
 					'Referer': 'https://raffles.granit-shop.com/gb/raffles/914-3054-adidas-yeezy-boost-350-v2-black.html',
 					'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 				},
-				body: 'id=914&group[1]='+task['taskSizeVariant']+'&qty=1'
+				body: 'id=914&group[1]='+task['taskSizeVariant']+'&qty=1',
+				agent: agent
 			}, function callback(error, response, body) {
 				if (!error) {
 					if (response.statusCode != 200) {
@@ -250,7 +252,8 @@ exports.initTask = function (task, profile) {
 								'Sec-Fetch-Mode': 'navigate',
 								'Referer': 'https://raffles.granit-shop.com/gb/raffles/914-3065-adidas-yeezy-boost-350-v2-black.html',
 								'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
-							}
+							},
+							agent: agent
 						}, function callback(error, response, body) {
 							if (!error) {
 								if (response.statusCode != 200) {
@@ -363,7 +366,8 @@ exports.submitRaffle = function (request, task, profile) {
 			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 		},
 		body: 'id_customer=&id_gender=1&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&submitCreate=1&continue=1',
-		followAllRedirects: true
+		followAllRedirects: true,
+		agent: agent
 	}, function callback(error, response, body) {
 		if (!error) {
 			if (response.statusCode != 200) {
@@ -452,7 +456,8 @@ exports.submitRaffle = function (request, task, profile) {
 					'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 				},
 				body: 'id_address=&id_customer=&back=&token=' + token + '&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&address1='+profile['address']+'&address2='+profile['aptSuite']+'&city=' + profile['city'] + '&postcode='+profile['zipCode']+'&id_country='+countryFormatter(profile['country'])+'&phone='+profile['phoneNumber']+'&saveAddress=delivery&use_same_address=1&submitAddress=1&confirm-addresses=1&' + stateFormatter(profile),
-				followAllRedirects: true
+				followAllRedirects: true,
+				agent: agent
 			}, function callback(error, response, body) {
 				$ = cheerio.load(body);
 				if ($('.alert.error') && $('#checkout-addresses-step').hasClass('-current')) {
@@ -557,7 +562,8 @@ exports.submitRaffle = function (request, task, profile) {
 							'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 						},
 						body: 'delivery_option[' + addressID + ']=' + deliveryMethod + '&confirmDeliveryOption=1&delivery_message=',
-						followAllRedirects: true
+						followAllRedirects: true,
+						agent: agent
 					}, function callback(error, response, body) {
 						if (!error) {
 							if (response.statusCode != 200) {
@@ -589,7 +595,8 @@ exports.submitRaffle = function (request, task, profile) {
 									'Referer': 'https://raffles.granit-shop.com/gb/order',
 									'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 								},
-								followAllRedirects: true
+								followAllRedirects: true,
+								agent: agent
 							}, function callback(error, response, body) {		
 								mainBot.mainBotWin.send('taskUpdate', {
 									id: task.taskID,

@@ -252,14 +252,14 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 		console.log('Instagram used: ' + profile['instagram'])
 
 		request({
-			url: 'https://juicestore.us5.list-manage.com/subscribe/post-json?u=79db5a8ad215b2f787d68cb55&id=c7fd97f847&c=jQuery19005428593779189539_1573658947778&EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&MMERGE4=' + profile['phoneNumber'] + '&MMERGE6%5Baddr1%5D=' + profile['address'] + '&MMERGE6%5Baddr2%5D=' + profile['aptSuite'] + '&MMERGE6%5Bcity%5D=' + profile['city'] + '&MMERGE6%5Bstate%5D=' + profile['stateProvince'] + '&MMERGE6%5Bzip%5D=' + profile['zipCode'] + '&MMERGE6%5Bcountry%5D='+countryFormatter(profile['country'])+'&MMERGE3=Male&MMERGE5%5Bday%5D=' + getRandomInt(1, 25) + '&MMERGE5%5Bmonth%5D=' + getRandomInt(1, 9) + '&MMERGE5%5Byear%5D=' + getRandomInt(1982, 2000) + '&MMERGE8=' + task['taskSizeVariant'] + '&MMERGE7=' + profile['instagram'] + '&LANGUAGEP=English&b_79db5a8ad215b2f787d68cb55_c7fd97f847=&subscribe=Join+The+Raffle&_=' + new Date().getTime(),
+			url: 'https://juicestore.us5.list-manage.com/subscribe/post-json?u=79db5a8ad215b2f787d68cb55&id=40c6f45085&c=jQuery19005261197996565479_1575731925638&EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&MMERGE3='+profile['phoneNumber']+'&MMERGE4=Male&MMERGE5%5Bday%5D=' + getRandomInt(1, 25) + '&MMERGE5%5Bmonth%5D=' + getRandomInt(1, 9) + '&MMERGE5%5Byear%5D=' + getRandomInt(1982, 2000) + '&MMERGE6=' + task['taskSizeVariant'] + '&MMERGE8=' + profile['instagram'] + '&MMERGE7=English&b_79db5a8ad215b2f787d68cb55_40c6f45085=&subscribe=Join+The+Raffle&_=' + new Date().getTime(),
 			headers: {
 				'authority': 'juicestore.us5.list-manage.com',
-				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
+				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.`36',
 				'accept': '*/*',
 				'sec-fetch-site': 'cross-site',
 				'sec-fetch-mode': 'no-cors',
-				'referer': 'https://juicestore.com/blogs/editorial/travis-scott-x-nike-releases-brand-new-air-force-1-low-cactus-jack?utm_medium=email&utm_source=newsletter&utm_campaign=travis-scott-nike-cactus-jack-raffle&utm_content=button&utm_term=edm-raffle&utm_source=JUICESTORE+Newsletter&utm_campaign=6c6dbbbeff-EMAIL_CAMPAIGN_2019_11_11_07_06&utm_medium=email&utm_term=0_354ed87645-6c6dbbbeff-109021089&goal=0_354ed87645-6c6dbbbeff-109021089&mc_cid=6c6dbbbeff&mc_eid=9458d28cc9',
+				'referer': 'https://juicestore.com/blogs/editorial/raffle-nike-dunk-low-viotech',
 				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 			},
 			agent: agent

@@ -4,7 +4,7 @@ resultPromise = electronInstaller.createWindowsInstaller({
     outputDirectory: './builds/installer',
     authors: 'CodeYellow.',
     exe: 'CodeYellowRaffleV2.exe',
-	version: '0.2.8',
+	version: '0.3.2',
 	noMsi: true,
 	loadingGif: './assets/installer.gif',
 	setupIcon: './assets/icons/win/icon.ico'
