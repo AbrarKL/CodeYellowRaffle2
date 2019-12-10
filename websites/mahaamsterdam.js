@@ -719,7 +719,7 @@ exports.submitRaffle = function (request, task, profile, key) {
 							'Referer': 'https://shop.maha-amsterdam.com/us/adidas-yeezy-boost-350-v2-black-black.html',
 							'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 						},
-						body: 'product=Adidas+Yeezy+Boost+350+V2+Black+Black&productImage=https%3A%2F%2Fcdn.webshopapp.com%2Fshops%2F171311%2Ffiles%2F310836521%2F112x132x1%2Fimage.jpg&productId=104438143&dontfill=&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&phone=' + profile['phoneNumber'] + '&shoeSize=' + task['taskSizeVariant'] + '&email=' + task['taskEmail'] + '&country=' + profile['country'] + '&instagram=' + profile['instagram'] + '&shipping=shipping&keepMePosted=on',
+						body: 'product=Yeezy+Boost+350+V2+Yeezreel&productImage=https%3A%2F%2Fcdn.webshopapp.com%2Fshops%2F171311%2Ffiles%2F311631473%2F112x132x1%2Fimage.jpg&productId=104942308&dontfill=&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&phone=' + profile['phoneNumber'] + '&shoeSize=' + task['taskSizeVariant'] + '&email=' + task['taskEmail'] + '&country=' + profile['country'] + '&instagram=' + profile['instagram'] + '&shipping=shipping&keepMePosted=on',
 						agent: agent
 					}, function callback(error, response, body) {
 						if (!error) {
