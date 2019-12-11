@@ -16,16 +16,16 @@
     "electron-winstaller": "^2.6.4"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.3",
-    "cloudscraper": "^4.1.2",
+    "cloudscraper": "^4.5.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-window-manager": "^1.0.6",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "faker": "^4.1.0",
     "fs": "0.0.1-security",
     "http-proxy-agent": "^2.1.0",
-    "https-proxy-agent": "^2.2.1",
+    "https-proxy-agent": "^2.2.4",
     "node-machine-id": "^1.1.12",
     "open": "0.0.5",
     "request": "^2.88.0"
