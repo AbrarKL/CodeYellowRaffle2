@@ -187,9 +187,10 @@ exports.captchaWorker = function (request, task, profile) {
 				method: 'POST',
 				body: {
 					clientKey: global.settings.antiCapAPIKey,
+					"softId": "924",
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
-						"websiteURL": "https://yeezy.chmielna20.pl/",
+						"websiteURL": "http://yeezy350.chmielna20.pl/",
 						"websiteKey": "6Lf14jgUAAAAAJ_xxyVSusFVOJY7yOR-wjpw-8nf"
 					}
 				},
@@ -292,7 +293,7 @@ exports.captchaWorker = function (request, task, profile) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6Lf14jgUAAAAAJ_xxyVSusFVOJY7yOR-wjpw-8nf&pageurl=https://yeezy.chmielna20.pl/&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6Lf14jgUAAAAAJ_xxyVSusFVOJY7yOR-wjpw-8nf&pageurl=http://yeezy350.chmielna20.pl/&json=1&soft_id=2553',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {
@@ -435,15 +436,15 @@ exports.submitRaffle = function (request, task, profile) {
 	});
 
 	request({
-		url: 'https://yeezy.chmielna20.pl/register.php',
+		url: 'http://yeezy350.chmielna20.pl/register.php',
 		method: 'POST',
 		headers: {
-			'Origin': 'https://yeezy.chmielna20.pl',
+			'Origin': 'http://yeezy350.chmielna20.pl/',
 			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
 			'Content-type': 'application/x-www-form-urlencoded',
 			'Accept': '*/*',
-			'Referer': 'https://yeezy.chmielna20.pl/',
+			'Referer': 'http://yeezy350.chmielna20.pl/',
 			'Connection': 'keep-alive'
 		},
 		formData: {

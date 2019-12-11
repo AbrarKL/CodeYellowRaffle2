@@ -251,7 +251,7 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 		}
 		console.log('Instagram used: ' + profile['instagram'])
 		request({
-			url: 'https://email.oki-ni.com/p/4EYZ-7ZL/yeezy-350-black-1119-form',
+			url: 'https://email.oki-ni.com/p/4EYZ-87H',
 			headers: {
 				'authority': 'email.oki-ni.com',
 				'cache-control': 'max-age=0',
@@ -297,21 +297,22 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 				console.log(respondent);
 
 				request({
-					url: 'https://email.oki-ni.com/Response/SurveyLP/8a4eyz7e-6a4al097?pUrl=https%3A%2F%2Fr1.dotmailer-surveys.com%2F8a4eyz7e-6a4al097&random=' + Math.random(),
+					url: 'https://email.oki-ni.com/Response/SurveyLP/8a4eyz7e-ef4bti37?pUrl=https%3A%2F%2Fr1.dotmailer-surveys.com%2F8a4eyz7e-ef4bti37&random=' + Math.random(),
 					method: 'POST',
 					headers: {
 						'authority': 'email.oki-ni.com',
 						'accept': 'application/json, text/plain, */*',
 						'cache-control': 'no-cache, no-store, max-age=0, must-revalidate',
 						'origin': 'https://email.oki-ni.com',
-						'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+						'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36',
 						'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
 						'sec-fetch-site': 'same-origin',
 						'sec-fetch-mode': 'cors',
-						'referer': 'https://email.oki-ni.com/p/4EYZ-7ZL/yeezy-350-black-1119-form',
+						'referer': 'https://email.oki-ni.com/p/4EYZ-87H/draw-yeezy-boost-350-v2-yeezreel',
 						'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 					},
-					body: '22='+task['taskEmail']+'&23='+profile['firstName']+'&24='+profile['lastName']+'&25='+profile['instagram']+'&26=instagram&27=+1201' + getRandomInt(1000001, 9999999) + '&28='+countryFormatter(profile["country"])+'&30='+task['taskSizeVariant']+'&32=1&defaultSubmitAction=Complete&respondent=' + respondent,
+					body: '22='+task['taskEmail']+'&23='+profile['firstName']+'&24='+profile['lastName']+'&25='+profile['instagram']+'&26=instagram&27=+1201' + getRandomInt(1000001, 9999999) + '&28='+countryFormatter(profile["country"])+'&30='+task['taskSizeVariant']+'&32=1&34=on&defaultSubmitAction=Complete&respondent=' + respondent
+					,
 					followAllRedirects: true
 				}, function callback(error, response, body) {
 					if (!error) {
