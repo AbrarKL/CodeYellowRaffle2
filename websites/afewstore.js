@@ -510,14 +510,14 @@ exports.submitRaffle = function (request, task, profile) {
 		console.log('Instagram used: ' + profile['instagram'])
 
 		request({
-			url: 'https://mc.us5.list-manage.com/signup-form/subscribe?u=936d4960278d1960e43d58d0d&id=008cc0e1f0&EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&STREET=' + profile['address'] + '&ZIP=' + profile['zipCode'] + '&STATE=' + profile['stateProvince'] + '&CITY=' + profile['city'] + '&INSTAGRAM=' + profile['instagram'] + '&SIZES=' + task['taskSizeSelect'] + '&COUNTRY=' + countryFormatter(profile["country"]) + '&b_936d4960278d1960e43d58d0d_149167=&g-recaptcha-response=' + mainBot.taskCaptchas[task['type']][task['taskID']] + '&gdpr%5B223%5D=on&c=dojo_request_script_callbacks.dojo_request_script2',
+			url: 'https://mc.us5.list-manage.com/signup-form/subscribe?u=936d4960278d1960e43d58d0d&id=00b4c0e1f0&EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&STREET=' + profile['address'] + '&ZIP=' + profile['zipCode'] + '&STATE=' + profile['stateProvince'] + '&CITY=' + profile['city'] + '&INSTAGRAM=' + profile['instagram'] + '&SIZES=' + task['taskSizeSelect'] + '&COUNTRY=' + countryFormatter(profile["country"]) + '&b_936d4960278d1960e43d58d0d_149171=&g-recaptcha-response=' + mainBot.taskCaptchas[task['type']][task['taskID']] + '&gdpr%5B227%5D=on&c=dojo_request_script_callbacks.dojo_request_script2',
 			headers: {
 				'authority': 'mc.us5.list-manage.com',
 				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
 				'accept': '*/*',
 				'sec-fetch-site': 'cross-site',
 				'sec-fetch-mode': 'no-cors',
-				'referer': 'https://mailchi.mp/afew-store/mim54y8lty',
+				'referer': 'https://mailchi.mp/b6f2aa55aa16/adidas-yeezy-boost-350-v2-yecheil',
 				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
 			},
 			agent: agent

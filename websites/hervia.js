@@ -151,20 +151,26 @@ exports.initTask = function (task, profile) {
 
 	//https://www.hervia.com/launches/yeezy-350
 	request({
-		url: 'https://hervia.us18.list-manage.com/subscribe/post-json?u=20f9d17397f4df73ac4c41b87&id=d12cf77049&c=jQuery190030285865658116684_1559488318041&EMAIL='+task['taskEmail']+'&FNAME='+profile['firstName']+'&LNAME='+profile['lastName']+'&SIZE='+task['taskSizeSelect']+'&interestgroup_field=&gdpr%5B61521%5D=Y&b_20f9d17397f4df73ac4c41b87_d12cf77049=&subscribe=Subscribe&_=' + Math.floor(new Date()),
+		url: 'https://hervia.us18.list-manage.com/subscribe/post-json?u=20f9d17397f4df73ac4c41b87&id=0ca52cf727&c=jQuery19008341236396050742_1576510041793&EMAIL='+task['taskEmail']+'&FNAME='+profile['firstName']+'&LNAME='+profile['lastName']+'&interestgroup_field=&gdpr%5B62695%5D=Y&b_20f9d17397f4df73ac4c41b87_0ca52cf727=&subscribe=Subscribe&_=' + Math.floor(new Date()),
 		headers: {
-			'Referer': 'https://www.hervia.com/launches/yeezy-350',
-			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+			'authority': 'hervia.us18.list-manage.com',
+			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36',
+			'accept': '*/*',
+			'sec-fetch-site': 'cross-site',
+			'sec-fetch-mode': 'no-cors',
+			'referer': 'https://www.hervia.com/launches/yeezy-350-yecheil',
+			'accept-encoding': 'gzip, deflate, br',
+			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
 		},
 		agent: agent
 	}, function callback(error, response, body) {
 		if (!error && response.statusCode == 200) {
-			if (body.toLowerCase().indexOf('thank you for subscribing') > -1) {
+			if (body.toLowerCase().indexOf('almost finished') > -1) {
 				console.log('Entered');
 				mainBot.mainBotWin.send('taskUpdate', {
 					id: task.taskID,
 					type: task.type,
-					message: 'Entry submitted!'
+					message: 'check email!'
 				});
 				console.log(`[${task.taskID}] ` + ' Entry submitted!');
 				registerEmail(task);

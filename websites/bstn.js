@@ -1,5 +1,3 @@
-
-
 var HttpsProxyAgent = require('https-proxy-agent');
 var mainBot = require('../index.js')
 var cheerio = require('cheerio');
@@ -139,7 +137,7 @@ exports.initTask = function (task, profile) {
 											var proxy2 = getRandomProxy();
 											task['proxy'] = proxy2;
 											agent = new HttpsProxyAgent(formatProxy(task['proxy']));
-	
+
 											mainBot.mainBotWin.send('taskUpdate', {
 												id: task.taskID,
 												type: task.type,
@@ -848,20 +846,14 @@ exports.submitRaffle = function (request, task, profile) {
 				profile['instagram'] = profile['firstName'].toLowerCase() + profile['lastName'].toLowerCase();
 			}
 		} else {
-			if(task['igHandler'] == 'mylist')
-			{
+			if (task['igHandler'] == 'mylist') {
 				var ig = getRandomIG();
-				if(ig == '' || ig == undefined)
-				{	
+				if (ig == '' || ig == undefined) {
 					profile['instagram'] = parsedAPI.instagram;
-				}
-				else
-				{
+				} else {
 					profile['instagram'] = getRandomIG();
 				}
-			}
-			else
-			{
+			} else {
 				profile['instagram'] = parsedAPI.instagram;
 			}
 		}
@@ -870,13 +862,15 @@ exports.submitRaffle = function (request, task, profile) {
 			url: 'https://raffle.bstn.com/api/register',
 			method: 'POST',
 			headers: {
-				'origin': 'https://raffle.bstn.com',
-				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
-				'content-type': 'application/json;charset=UTF-8',
-				'accept': 'application/json, text/plain, */*',
-				'referer': task['variant'],
 				'authority': 'raffle.bstn.com',
+				'accept': 'application/json, text/plain, */*',
+				'origin': 'https://raffle.bstn.com',
+				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36',
+				'content-type': 'application/json;charset=UTF-8',
+				'sec-fetch-site': 'same-origin',
+				'sec-fetch-mode': 'cors',
+				'referer': task['variant'],
+				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 			},
 			json: true,
 			body: {
@@ -884,6 +878,8 @@ exports.submitRaffle = function (request, task, profile) {
 					"instagram": profile['instagram']
 				},
 				"title": "male",
+				"bDay": getRandomInt(1, 25),
+				"bMonth": getRandomInt(1, 9),
 				"email": task['taskEmail'],
 				"firstName": profile['firstName'],
 				"lastName": profile['lastName'],
@@ -902,9 +898,9 @@ exports.submitRaffle = function (request, task, profile) {
 					"option": task['taskSizeVariant']
 				},
 				"issuerId": "raffle.bstn.com"
-			},
-			agent: agent
+			}
 		}, function callback(error, response, body) {
+			console.log('BODY:' + body);
 			if (!error) {
 				if (response.statusCode == 200 || response.statusCode == 201) {
 					if (body == null || body == undefined) {
@@ -919,30 +915,6 @@ exports.submitRaffle = function (request, task, profile) {
 						return;
 					}
 					if (body['message'] == 'success') {
-						console.log(JSON.stringify({
-							"additional": {
-								"instagram": profile['instagram']
-							},
-							"title": "male",
-							"email": task['taskEmail'],
-							"firstName": profile['firstName'],
-							"lastName": profile['lastName'],
-							"street": profile['address'],
-							"streetno": profile['address'],
-							"address2": profile['aptSuite'],
-							"zip": profile['zipCode'],
-							"city": profile['city'],
-							"country": countryFormatter(profile["country"]),
-							"acceptedPrivacy": true,
-							"newsletter": true,
-							"recaptchaToken": mainBot.taskCaptchas[task['type']][task['taskID']],
-							"raffle": {
-								"raffleId": task['bstn']['raffleId'],
-								"parentIndex": 0,
-								"option": task['taskSizeVariant']
-							},
-							"issuerId": "raffle.bstn.com"
-						}));
 						console.log(body);
 						mainBot.taskCaptchas[task['type']][task['taskID']] = '';
 						mainBot.mainBotWin.send('taskUpdate', {
@@ -1264,4 +1236,11 @@ function twoCaptchaResponseErrorFormatter(message) {
 }
 String.prototype.replaceAll = function (str1, str2, ignore) {
 	return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, "\\$&"), (ignore ? "gi" : "g")), (typeof (str2) == "string") ? str2.replace(/\$/g, "$$$$") : str2);
+}
+
+// Random birthday
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
 }

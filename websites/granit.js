@@ -170,18 +170,17 @@ exports.initTask = function (task, profile) {
 
 	//task['variant'] = url below
 	request({
-		url: 'https://raffles.granit-shop.com/gb/raffles/914-3054-adidas-yeezy-boost-350-v2-black.html',
+		url: 'https://raffles.granit-shop.com/gb/raffles/916-3100-adidas-yeezy-boost-350-v2-yecheil.html',
 		headers: {
 			'Connection': 'keep-alive',
 			'Cache-Control': 'max-age=0',
 			'Upgrade-Insecure-Requests': '1',
-			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36',
 			'Sec-Fetch-User': '?1',
-			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-			'Sec-Fetch-Site': 'same-origin',
+			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+			'Sec-Fetch-Site': 'none',
 			'Sec-Fetch-Mode': 'navigate',
-			'Referer': 'https://raffles.granit-shop.com/fr/raffles/914-3054-adidas-yeezy-boost-350-v2-black.html',
-			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
+			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 		},
 		agent: agent
 	}, function callback(error, response, body) {
@@ -212,14 +211,14 @@ exports.initTask = function (task, profile) {
 					'Accept': '*/*',
 					'Origin': 'https://raffles.granit-shop.com',
 					'X-Requested-With': 'XMLHttpRequest',
-					'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+					'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36',
 					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 					'Sec-Fetch-Site': 'same-origin',
 					'Sec-Fetch-Mode': 'cors',
-					'Referer': 'https://raffles.granit-shop.com/gb/raffles/914-3054-adidas-yeezy-boost-350-v2-black.html',
-					'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
+					'Referer': 'https://raffles.granit-shop.com/gb/raffles/916-3113-adidas-yeezy-boost-350-v2-yecheil.html',
+					'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 				},
-				body: 'id=914&group[1]='+task['taskSizeVariant']+'&qty=1',
+				body: 'id=916&group[1]='+task['taskSizeVariant']+'&qty=1',
 				agent: agent
 			}, function callback(error, response, body) {
 				if (!error) {
@@ -250,7 +249,7 @@ exports.initTask = function (task, profile) {
 								'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 								'Sec-Fetch-Site': 'same-origin',
 								'Sec-Fetch-Mode': 'navigate',
-								'Referer': 'https://raffles.granit-shop.com/gb/raffles/914-3065-adidas-yeezy-boost-350-v2-black.html',
+								'Referer': 'https://raffles.granit-shop.com/fr/raffles/916-3115-adidas-yeezy-boost-350-v2-yecheil.html',
 								'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 							},
 							agent: agent
@@ -357,13 +356,13 @@ exports.submitRaffle = function (request, task, profile) {
 			'Origin': 'https://raffles.granit-shop.com',
 			'Upgrade-Insecure-Requests': '1',
 			'Content-Type': 'application/x-www-form-urlencoded',
-			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36',
 			'Sec-Fetch-User': '?1',
-			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
 			'Sec-Fetch-Site': 'same-origin',
 			'Sec-Fetch-Mode': 'navigate',
 			'Referer': 'https://raffles.granit-shop.com/gb/order',
-			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
+			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 		},
 		body: 'id_customer=&id_gender=1&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&submitCreate=1&continue=1',
 		followAllRedirects: true,
@@ -447,15 +446,16 @@ exports.submitRaffle = function (request, task, profile) {
 					'Origin': 'https://raffles.granit-shop.com',
 					'Upgrade-Insecure-Requests': '1',
 					'Content-Type': 'application/x-www-form-urlencoded',
-					'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
+					'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36',
 					'Sec-Fetch-User': '?1',
-					'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+					'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
 					'Sec-Fetch-Site': 'same-origin',
 					'Sec-Fetch-Mode': 'navigate',
 					'Referer': 'https://raffles.granit-shop.com/gb/order',
 					'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 				},
-				body: 'id_address=&id_customer=&back=&token=' + token + '&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&address1='+profile['address']+'&address2='+profile['aptSuite']+'&city=' + profile['city'] + '&postcode='+profile['zipCode']+'&id_country='+countryFormatter(profile['country'])+'&phone='+profile['phoneNumber']+'&saveAddress=delivery&use_same_address=1&submitAddress=1&confirm-addresses=1&' + stateFormatter(profile),
+				body: 
+				'id_address=&id_customer=&back=&token=' + token + '&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&address1='+profile['address']+'&address2='+profile['aptSuite']+'&city=' + profile['city'] + '&postcode='+profile['zipCode']+'&id_country='+countryFormatter(profile['country'])+'&phone='+profile['phoneNumber']+'&saveAddress=delivery&use_same_address=1&submitAddress=1&confirm-addresses=1' + stateFormatter(profile),
 				followAllRedirects: true,
 				agent: agent
 			}, function callback(error, response, body) {
