@@ -48,3 +48,4 @@ exports.mahaamsterdam = require('./mahaamsterdam.js');
 exports.afewstore = require('./afewstore.js');
 exports.okini = require('./okini.js');
 exports.granit = require('./granit.js');
+exports.travisscott = require('./travisscott.js');

@@ -803,7 +803,25 @@ function createTask(taskSiteSelect, taskSizeSelect, taskProfile, taskSpecificPro
 			dsml: selectedQuickTaskRelease['dsml'],
 			igHandler: IGHandler
 		});
-	} else if (taskSiteSelect == 'dsmny') {
+	} else if (taskSiteSelect == 'juicestore') {
+		tasks.push({
+			taskID: taskID,
+			proxyType: taskTypeOfProxy,
+			captchaHandler: captchaHandler,
+			type: 'mass',
+			filterID: selectedQuickTaskRelease['filterID'],
+			taskTypeOfEmail: taskTypeOfEmail,
+			proxy: proxy,
+			taskSiteSelect: taskSiteSelect,
+			taskSizeSelect: taskSizeSelect,
+			taskSizeVariant: taskSizeVariant,
+			taskProfile: taskProfile,
+			taskEmail: taskEmail,
+			variant: selectedQuickTaskRelease['sites_supported'][taskSiteSelect],
+			juicestore: selectedQuickTaskRelease['juicestore'],
+			igHandler: IGHandler
+		});
+	}  else if (taskSiteSelect == 'dsmny') {
 		tasks.push({
 			taskID: taskID,
 			proxyType: taskTypeOfProxy,

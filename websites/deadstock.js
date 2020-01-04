@@ -240,7 +240,7 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 		}
 		console.log('Instagram used: ' + profile['instagram'])
 		request({
-			url: 'https://deadstock.us6.list-manage.com/subscribe/post?u=be9b719d1c345d54269781365&id=0f60ba4ff0',
+			url: 'https://deadstock.us6.list-manage.com/subscribe/post?u=be9b719d1c345d54269781365&id=acb86b6040',
 			method: 'POST',
 			headers: {
 				'authority': 'deadstock.us6.list-manage.com',
@@ -256,12 +256,13 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 				'referer': 'https://www.deadstock.ca/pages/raffles',
 				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 			},
-			body: 'EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&PHONE=' + profile['phoneNumber'] + '&MMERGE5=INSTAGRAM&MMERGE6=' + task['taskSizeSelect'] + '&MMERGE7=' + profile['instagram'] + '&MMERGE8=&MMERGE9=' + profile['city'] + '&gdpr%5B361%5D=Y&gdpr%5B369%5D=Y&+b_be9b719d1c345d54269781365_0f60ba4ff0=&subscribe=Subscribe',
+			body: 
+			'EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&PHONE=' + profile['phoneNumber'] + '&MMERGE5=INSTAGRAM&MMERGE6=' + task['taskSizeSelect'] + '&gdpr%5B489%5D=Y&+b_be9b719d1c345d54269781365_acb86b6040=&subscribe=Subscribe',
 			agent: agent
 		}, function callback(error, response, body) {
 			//change below line to be separate
 			if (!error) {
-				if (response.statusCode != 200 && response.request.href != 'https://deadstock.us6.list-manage.com/subscribe/post?u=be9b719d1c345d54269781365&id=0f60ba4ff0') {
+				if (response.statusCode != 200 && response.request.href != 'https://deadstock.us6.list-manage.com/subscribe/post?u=be9b719d1c345d54269781365&id=acb86b6040') {
 					console.log(JSON.stringify(profile));
 					console.log(JSON.stringify(task));
 					var proxy2 = getRandomProxy();
@@ -319,7 +320,7 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 						mainBot.mainBotWin.send('taskUpdate', {
 							id: task.taskID,
 							type: task.type,
-							message: 'Check Email!'
+							message: 'entry submitted!'
 						});
 						console.log(`[${task.taskID}] ` + ' Entry submitted!');
 						registerEmail(task);

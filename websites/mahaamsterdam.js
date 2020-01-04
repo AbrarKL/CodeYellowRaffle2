@@ -716,10 +716,11 @@ exports.submitRaffle = function (request, task, profile, key) {
 							'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 							'Sec-Fetch-Site': 'cross-site',
 							'Sec-Fetch-Mode': 'cors',
-							'Referer': 'https://shop.maha-amsterdam.com/us/adidas-yeezy-boost-350-v2-black-black.html',
+							'Referer': 'https://shop.maha-amsterdam.com/nl/yeezy-700-v3-azael.html',
 							'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 						},
-						body: 'product=Yeezy+Boost+350+V2+Yeezreel&productImage=https%3A%2F%2Fcdn.webshopapp.com%2Fshops%2F171311%2Ffiles%2F311631473%2F112x132x1%2Fimage.jpg&productId=104942308&dontfill=&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&phone=' + profile['phoneNumber'] + '&shoeSize=' + task['taskSizeVariant'] + '&email=' + task['taskEmail'] + '&country=' + profile['country'] + '&instagram=' + profile['instagram'] + '&shipping=shipping&keepMePosted=on',
+						body: 
+						'product=Yeezy+700+V3+Azael&productImage=https%3A%2F%2Fcdn.webshopapp.com%2Fshops%2F171311%2Ffiles%2F312231675%2F112x132x1%2Fimage.jpg&productId=105191691&dontfill=&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&phone=' + profile['phoneNumber'] + '&shoeSize=' + task['taskSizeVariant'] + '&email=' + task['taskEmail'] + '&country=' + profile['country'] + '&instagram=' + profile['instagram'] + '&shipping=shipping&keepMePosted=on',
 						agent: agent
 					}, function callback(error, response, body) {
 						if (!error) {
@@ -863,6 +864,9 @@ function countryFormatter(profileCountry) {
 			break;
 		case 'Germany':
 			return '80';
+			break;
+		case 'Greece':
+			return '83';
 			break;
 		case 'Portugal':
 			return '172';

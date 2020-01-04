@@ -138,17 +138,6 @@ exports.initTask = function (task, profile) {
 	if (profile['jigProfilePhoneNumber'] == true) {
 		profile['phoneNumber'] = faker.fake("{{phone.phoneNumberFormat}}");
 	}
-	
-	if (countryFormatter(profile["country"]) == 'noexist') {
-		mainBot.mainBotWin.send('taskUpdate', {
-			id: task.taskID,
-			type: task.type,
-			message: 'juice may not ship to your country'
-		});
-		console.log(`[${task.taskID}] ` + JSON.stringify(profile));
-		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-		return;
-	}
 
 	if (task['proxy'] != '') {
 		var agent = new HttpsProxyAgent(formatProxy(task['proxy']));
@@ -252,14 +241,14 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 		console.log('Instagram used: ' + profile['instagram'])
 
 		request({
-			url: 'https://juicestore.us5.list-manage.com/subscribe/post-json?u=79db5a8ad215b2f787d68cb55&id=2262e6305c&c=jQuery19009382252619299161_1576593127486&EMAIL=' + task['taskEmail'] + '&FNAME=' + profile['firstName'] + '&LNAME=' + profile['lastName'] + '&MMERGE3%5Bday%5D=' + getRandomInt(1, 25) + '&MMERGE3%5Bmonth%5D=' + getRandomInt(1, 9) + '&MMERGE3%5Byear%5D=' + getRandomInt(1982, 2000) + '&MMERGE4=Male&MMERGE5='+profile['phoneNumber']+'&MMERGE7='+task['juicestore']['colorInput']+'&MMERGE8=' + task['taskSizeVariant'] + '&MMERGE10=' + profile['instagram'] + '&MMERGE9=English&b_79db5a8ad215b2f787d68cb55_2262e6305c=&subscribe=Subscribe&_=' + new Date().getTime(),
+			url: 'https://travisscott.us14.list-manage.com/subscribe/post-json?u=5c3f63e5862cc7db84bc572ab&id=3c30f4cd05&EMAIL=' + task['taskEmail'] + '&c=jsonpCallback&callback=jsonp_jsh5ylj48xykbjx',
 			headers: {
-				'authority': 'juicestore.us5.list-manage.com',
-				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.`36',
+				'authority': 'travisscott.us14.list-manage.com',
+				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
 				'accept': '*/*',
 				'sec-fetch-site': 'cross-site',
 				'sec-fetch-mode': 'no-cors',
-				'referer': 'https://juicestore.com/blogs/editorial/raffle-off-white-x-nike-dunk-low',
+				'referer': 'https://jackboys.travisscott.com/products/cactus-jack-for-hot-wheels-bmw-m3-e30-jackboys-edition',
 				'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 			},
 			agent: agent
@@ -322,28 +311,10 @@ exports.postRaffleInfo = function (request, task, profile, token) {
 						});
 						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 						return;
-					} else if (body.toLowerCase().indexOf('4 - please enter a value') !== -1) {
-						console.log('please save a number');
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'please save a phone number!'
-						});
-						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-						return;
-					} else if (body.toLowerCase().indexOf('6 - please enter a complete address') !== -1) {
-						console.log('please save an address');
-						mainBot.mainBotWin.send('taskUpdate', {
-							id: task.taskID,
-							type: task.type,
-							message: 'please save an address!'
-						});
-						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
-						return;
 					} else {
 						try {
 							console.log(body);
-							console.log('unknown error. dm logjuice');
+							console.log('unknown error. dm log');
 							mainBot.mainBotWin.send('taskUpdate', {
 								id: task.taskID,
 								type: task.type,
@@ -419,107 +390,6 @@ function registerEmail(task) {
 		mainBot.saveEmails(global.emails);
 	}
 }
-
-
-// Needed for country localizations being different per site
-function countryFormatter(profileCountry) {
-	switch (profileCountry) {
-		case 'United Kingdom':
-			return '262';
-			break;
-		case 'United States':
-			return '164';
-			break;
-		case 'Canada':
-			return '30';
-			break;
-		case 'Ireland':
-			return '74';
-			break;
-		case 'Germany':
-			return '59';
-			break;
-		case 'Portugal':
-			return '124';
-			break;
-		case 'Switzerland':
-			return '149';
-			break;
-		case 'France':
-			return '54';
-			break;
-		case 'Spain':
-			return '143';
-			break;
-		case 'Italy':
-			return '76';
-			break;
-		case 'Netherlands':
-			return '109';
-			break;
-		case 'Czech Republic':
-			return '42';
-			break;
-		case 'Australia':
-			return '8';
-			break;
-		case 'Austria':
-			return '9';
-			break;
-		case 'Slovakia':
-			return '138';
-			break;
-		case 'Belgium':
-			return '16';
-			break;
-		case 'Slovenia':
-			return '139';
-			break;
-		case 'Singapore':
-			return '137';
-			break;
-		case 'Malaysia':
-			return '96';
-			break;
-		case 'Hong Kong':
-			return '67';
-			break;
-		case 'China':
-			return '36';
-			break;
-		case 'Japan':
-			return '78';
-			break;
-		case 'Sweden':
-			return '148';
-			break;
-		case 'Denmark':
-			return '43';
-			break;
-		case 'Finland':
-			return '53';
-			break;
-		case 'Romania':
-			return '128';
-			break;
-		case 'Poland':
-			return '123';
-			break;
-		case 'Hungary':
-			return '68';
-			break;
-		case 'Russia':
-			return '129';
-			break;
-		case 'Luxembourg':
-			return '92';
-			break;
-		default:
-			return 'noexist';
-			break;
-	}
-}
-
 
 
 

@@ -252,9 +252,10 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 				method: 'POST',
 				body: {
 					clientKey: global.settings.antiCapAPIKey,
+					"softId": "924",
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
-						"websiteURL": "https://raffle.vooberlin.com/index.php?alias=clotxnikeairforce1",
+						"websiteURL": task['variant'],
 						"websiteKey": "6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec"
 					}
 				},
@@ -349,7 +350,7 @@ exports.captchaWorker = function (request, task, profile, raffleToken, pageID) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec&pageurl=https://raffle.vooberlin.com/index.php?alias=clotxnikeairforce1&json=1',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LcyNx4UAAAAAGF7EPoti8G18kv9j9kDeQWzcVec&pageurl='+task['variant']+'&json=1&soft_id=2553',
 				method: 'GET',
 				json: true
 			}, function (error, response, body) {
@@ -626,6 +627,9 @@ function countryFormatter(profileCountry) {
 			break;
 		case 'Germany':
 			return 'Germany';
+			break;
+		case 'Greece':
+			return 'Greece';
 			break;
 		case 'Switzerland':
 			return 'Switzerland';
