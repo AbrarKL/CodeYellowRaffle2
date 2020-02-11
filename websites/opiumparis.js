@@ -35,6 +35,16 @@ function getRandomProxy() {
 }
 
 exports.initTask = function (task, profile) {
+	if (task['captchaHandler'] == 'manual') {
+		mainBot.mainBotWin.send('taskUpdate', {
+			id: task.taskID,
+			type: task.type,
+			message: 'You must use 2Cap or AntiCap for BSTN'
+		});
+		console.log(`[${task.taskID}] ` + JSON.stringify(profile));
+		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+		return;
+	}
 	if (shouldStop(task) == true) {
 		return;
 	}
@@ -47,9 +57,256 @@ exports.initTask = function (task, profile) {
 		mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
 		return;
 	}
-	var jar = require('request').jar()
-	var request = require('request').defaults({
-		jar: jar
+	var jar = require('cloudscraper').jar()
+	var request = require('cloudscraper').defaults({
+		jar: jar,
+		onCaptcha: function (options, response, body) {
+			const captcha = response.captcha;
+			console.log(captcha.siteKey);
+			if (task['captchaHandler'] == '2captcha') {
+				request({
+					url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=' + captcha.siteKey + '&pageurl=https://www.opiumparis.com/fr/raffles/1575-10802-air-jordan-1-hi-85-varsity-red.html&json=1&soft_id=2553',
+					method: 'GET',
+					json: true,
+					agent: agent
+				}, function (error, response, body) {
+					if (error) {
+						if (task['proxyType'] != 'noProxy') {
+							var proxy2 = getRandomProxy();
+							task['proxy'] = proxy2;
+
+							mainBot.mainBotWin.send('taskUpdate', {
+								id: task.taskID,
+								type: task.type,
+								message: '2Captcha Proxy Error. Retrying in 5s'
+							});
+							return setTimeout(() => exports.initTask(task, profile), 5000);
+						} else {
+							task['proxy'] = '';
+							mainBot.mainBotWin.send('taskUpdate', {
+								id: task.taskID,
+								type: task.type,
+								message: '2Captcha Error. Retrying in 15s'
+							});
+							return setTimeout(() => exports.initTask(task, profile), 15000);
+						}
+					}
+					if (body.status == 0) {
+						console.log(JSON.stringify(body));
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: twoCaptchaCreateErrorFormatter(body.request)
+						});
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+						return;
+					} else {
+						if (body.status == 1) {
+							var taskId = body.request;
+							console.log('Captcha task for 2Captcha queued. Task ID: ' + taskId)
+							const capHandler = () => {
+								mainBot.mainBotWin.send('taskUpdate', {
+									id: task.taskID,
+									type: task.type,
+									message: 'Checking 2Captcha every 5s (Cloudflare)'
+								});
+								console.log('Checking for Captcha token (2Captcha Task ID: ' + taskId + ')');
+								request({
+									url: 'https://2captcha.com/res.php?key=' + global.settings['2capAPIKey'] + '&action=get&id=' + taskId + '&json=1',
+									method: 'GET',
+									json: true,
+									agent: agent
+								}, function (error, response, body) {
+									if (error) {
+										if (task['proxyType'] != 'noProxy') {
+											var proxy2 = getRandomProxy();
+											task['proxy'] = proxy2;
+											agent = new HttpsProxyAgent(formatProxy(task['proxy']));
+
+											mainBot.mainBotWin.send('taskUpdate', {
+												id: task.taskID,
+												type: task.type,
+												message: '2Captcha Proxy error. Retrying in 5s'
+											});
+											return setTimeout(() => capHandler(), 5000);
+										} else {
+											task['proxy'] = '';
+											agent = new HttpsProxyAgent(formatProxy(task['proxy']));
+											mainBot.mainBotWin.send('taskUpdate', {
+												id: task.taskID,
+												type: task.type,
+												message: '2Captcha Proxy error. Retrying in 15s'
+											});
+											return setTimeout(() => capHandler(), 5000);
+										}
+									}
+									if (body == undefined) {
+										return setTimeout(() => capHandler(), 10000);
+									} else if (body.status == 0) {
+										if (body.request == 'CAPCHA_NOT_READY') {
+											return setTimeout(() => capHandler(), 5000);
+										} else {
+											console.log(JSON.stringify(body));
+											mainBot.mainBotWin.send('taskUpdate', {
+												id: task.taskID,
+												type: task.type,
+												message: twoCaptchaResponseErrorFormatter(body.request)
+											});
+											mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+											mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+											return;
+										}
+									} else {
+										if (body.status == 1) {
+											console.log(JSON.stringify(body));
+											mainBot.mainBotWin.send('taskUpdate', {
+												id: task.taskID,
+												type: task.type,
+												message: 'Submitting CloudFlare Captcha'
+											});
+											console.log('Submitting CloudFlare Captcha');
+											captcha.form['g-recaptcha-response'] = body.request;
+											captcha.submit();
+											return;
+										} else {
+											if (body.request == 'CAPCHA_NOT_READY') {
+												return setTimeout(() => capHandler(), 5000);
+											} else {
+												console.log(JSON.stringify(body));
+												mainBot.mainBotWin.send('taskUpdate', {
+													id: task.taskID,
+													type: task.type,
+													message: twoCaptchaResponseErrorFormatter(body.request)
+												});
+												mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+												mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+												return;
+											}
+										}
+									}
+								});
+							}
+							capHandler();
+						} else {
+							console.log(JSON.stringify(body));
+							mainBot.mainBotWin.send('taskUpdate', {
+								id: task.taskID,
+								type: task.type,
+								message: twoCaptchaCreateErrorFormatter(body.errorCode)
+							});
+							mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+							mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+							return;
+						}
+					}
+				});
+			} else if (task['captchaHandler'] == 'anticaptcha') {
+				request({
+					url: 'https://api.anti-captcha.com/createTask',
+					method: 'POST',
+					body: {
+						clientKey: global.settings.antiCapAPIKey,
+						"softId": "924",
+						"task": {
+							"type": "NoCaptchaTaskProxyless",
+							"websiteURL": "https://www.opiumparis.com/fr/raffles/1575-10802-air-jordan-1-hi-85-varsity-red.html",
+							"websiteKey": captcha.siteKey
+						}
+					},
+					json: true
+				}, function (error, response, body) {
+					if (error) {
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: 'AntiCaptcha error. Retrying in 15s'
+						});
+						if (task['proxyType'] != 'noProxy') {
+							var proxy2 = getRandomProxy();
+							task['proxy'] = proxy2;
+						} else {
+							task['proxy'] = '';
+						}
+						return setTimeout(() => exports.captchaWorker(request, task, profile), 15000);
+					}
+					if (body.errorId != undefined && body.errorId == 0) {
+						var taskId = body.taskId;
+						console.log('Captcha task for Anti-Captcha queued. Task ID: ' + taskId)
+						const capHandler = () => {
+							mainBot.mainBotWin.send('taskUpdate', {
+								id: task.taskID,
+								type: task.type,
+								message: 'Checking AntiCaptcha every 5s (Cloudflare)'
+							});
+							console.log('Checking for Captcha token (Anti-Captcha Task ID: ' + taskId + ')');
+							request({
+								url: 'https://api.anti-captcha.com/getTaskResult',
+								method: 'POST',
+								body: {
+									clientKey: global.settings.antiCapAPIKey,
+									taskId: taskId
+								},
+								json: true,
+							}, function (error, response, body) {
+								if (error) {
+									mainBot.mainBotWin.send('taskUpdate', {
+										id: task.taskID,
+										type: task.type,
+										message: 'AntiCaptcha error. Retrying in 25s'
+									});
+									return setTimeout(() => exports.captchaWorker(request, task, profile), 25000);
+								}
+								if (body == undefined) {
+									if (task['proxyType'] != 'noProxy') {
+										var proxy2 = getRandomProxy();
+										task['proxy'] = proxy2;
+									} else {
+										task['proxy'] = '';
+									}
+									return setTimeout(() => capHandler(), 10000);
+								}
+								if (body.errorId == 0) {
+									if (body.status == 'ready') {
+										mainBot.mainBotWin.send('taskUpdate', {
+											id: task.taskID,
+											type: task.type,
+											message: 'Submitting CloudFlare Captcha'
+										});
+										captcha.form['g-recaptcha-response'] = body.solution.gRecaptchaResponse;
+										captcha.submit();
+										return;
+									} else {
+										return setTimeout(() => capHandler(), 5000);
+									}
+								} else {
+									console.log(JSON.stringify(body));
+									mainBot.mainBotWin.send('taskUpdate', {
+										id: task.taskID,
+										type: task.type,
+										message: antiCaptchaErrorFormatter(body.errorCode)
+									});
+									mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+									mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+									return;
+								}
+							});
+						}
+						capHandler();
+					} else {
+						console.log(JSON.stringify(body));
+						mainBot.mainBotWin.send('taskUpdate', {
+							id: task.taskID,
+							type: task.type,
+							message: antiCaptchaErrorFormatter(body.errorCode)
+						});
+						mainBot.taskStatuses[task['type']][task.taskID] = 'idle';
+						mainBot.taskCaptchas[task['type']][task['taskID']] = '';
+						return;
+					}
+				});
+			}
+		}
 	});
 
 	if (profile['jigProfileFirstName'] == true) {
@@ -167,7 +424,7 @@ exports.initTask = function (task, profile) {
 		year: getRandomInt(1982, 2000)
 	};
 	request({
-		url: 'https://www.opiumparis.com/en/raffles/1398-9040-yeezy-boost-350-v2-black.html',
+		url: 'https://www.opiumparis.com/fr/raffles/1575-10802-air-jordan-1-hi-85-varsity-red.html',
 		method: 'POST',
 		headers: {
 			'authority': 'www.opiumparis.com',
@@ -180,7 +437,7 @@ exports.initTask = function (task, profile) {
 			'sec-fetch-user': '?1',
 			'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 			'sec-fetch-site': 'same-origin',
-			'referer': 'https://www.opiumparis.com/en/raffles/1398-9040-yeezy-boost-350-v2-black.html',
+			'referer': 'https://www.opiumparis.com/fr/raffles/1575-10802-air-jordan-1-hi-85-varsity-red.html',
 			'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8'
 		},
 		body: 'id_customer=&id_gender=1&firstname=' + profile['firstName'] + '&lastname=' + profile['lastName'] + '&email=' + task['taskEmail'] + '&password=' + task['taskPassword'] + '&birthday=' + task['birthday']['year'] + '-' + task['birthday']['month'] + '-' + task['birthday']['day'] + '&newsletter=1&submitCreate=1',
@@ -269,7 +526,7 @@ exports.submitRaffle = function (request, task, profile) {
 	}
 
 	request({
-		url: 'https://www.opiumparis.com/en/raffles/1398-9040-yeezy-boost-350-v2-black.html',
+		url: 'https://www.opiumparis.com/fr/raffles/1575-10802-air-jordan-1-hi-85-varsity-red.html',
 		method: 'POST',
 		headers: {
 			'sec-fetch-mode': 'cors',
@@ -279,7 +536,7 @@ exports.submitRaffle = function (request, task, profile) {
 			'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
 			'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
 			'accept': 'application/json, text/javascript, */*; q=0.01',
-			'referer': 'https://www.opiumparis.com/en/raffles/1398-9040-yeezy-boost-350-v2-black.html',
+			'referer': 'https://www.opiumparis.com/fr/raffles/1575-10802-air-jordan-1-hi-85-varsity-red.html',
 			'authority': 'www.opiumparis.com',
 			'sec-fetch-site': 'same-origin'
 		},
@@ -406,4 +663,82 @@ function makePassword(length) {
 		result += characters.charAt(Math.floor(Math.random() * charactersLength));
 	}
 	return result;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+function antiCaptchaErrorFormatter(message) {
+	switch (message) {
+		case 'ERROR_ZERO_BALANCE':
+			return 'AntiCaptcha balance 0';
+			break;
+		case 'ERROR_KEY_DOES_NOT_EXIST':
+			return 'Captcha API Key invalid. Check settings';
+			break;
+		case 'ERROR_NO_SLOT_AVAILABLE':
+			return 'No AntiCaptcha workers available';
+			break;
+		case 'ERROR_RECAPTCHA_INVALID_SITEKEY':
+			return 'Invalid SiteKey. DM Devs';
+			break;
+		case 'ERROR_RECAPTCHA_INVALID_DOMAIN':
+			return 'Invalid website. DM Devs';
+			break;
+		default:
+			return 'AntiCaptcha error. DM Log';
+			break;
+	}
+}
+
+function twoCaptchaCreateErrorFormatter(message) {
+	switch (message) {
+		case 'ERROR_ZERO_BALANCE':
+			return '2captcha balance 0';
+			break;
+		case 'ERROR_WRONG_USER_KEY':
+			return 'Captcha API Key invalid. Check settings';
+			break;
+		case 'ERROR_KEY_DOES_NOT_EXIST':
+			return 'Captcha API Key invalid. Check settings';
+			break;
+		case 'ERROR_NO_SLOT_AVAILABLE':
+			return 'No 2Captcha workers available';
+			break;
+		case 'ERROR_BAD_TOKEN_OR_PAGEURL':
+			return 'Invalid token or url. DM Devs';
+			break;
+		case 'ERROR_PAGEURL':
+			return 'Invalid website. DM Devs';
+			break;
+		default:
+			return '2Captcha error. DM Log';
+			break;
+	}
+}
+
+function twoCaptchaResponseErrorFormatter(message) {
+	switch (message) {
+		case 'ERROR_CAPTCHA_UNSOLVABLE':
+			return 'Captcha was unsolvable';
+			break;
+		case 'ERROR_WRONG_USER_KEY':
+			return 'Captcha API Key invalid. Check settings';
+			break;
+		case 'ERROR_KEY_DOES_NOT_EXIST':
+			return 'Captcha API Key invalid. Check settings';
+			break;
+		default:
+			return '2Captcha error. DM Log';
+			break;
+	}
 }

@@ -1,6 +1,6 @@
 {
   "name": "CodeYellowRaffleV2",
-  "version": "0.4.0",
+  "version": "0.4.3",
   "description": "Automated raffle entry bot made to help increase the chance of winning limited sneaker raffles",
   "main": "index.js",
   "scripts": {

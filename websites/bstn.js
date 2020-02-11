@@ -530,7 +530,7 @@ exports.captchaWorker = function (request, task, profile) {
 					"task": {
 						"type": "NoCaptchaTaskProxyless",
 						"websiteURL": task["variant"],
-						"websiteKey": "6LeZJZEUAAAAAPLuYfMYiMOF7X7tKMz45xfEIXaZ"
+						"websiteKey": "6LemOsYUAAAAABGFj8B7eEvmFT1D1j8IbXJIdvNn"
 					}
 				},
 				json: true
@@ -629,7 +629,7 @@ exports.captchaWorker = function (request, task, profile) {
 				return;
 			}
 			request({
-				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LeZJZEUAAAAAPLuYfMYiMOF7X7tKMz45xfEIXaZ&pageurl=' + task["variant"] + '&json=1&soft_id=2553',
+				url: 'https://2captcha.com/in.php?key=' + global.settings['2capAPIKey'] + '&method=userrecaptcha&googlekey=6LemOsYUAAAAABGFj8B7eEvmFT1D1j8IbXJIdvNn&pageurl=' + task["variant"] + '&json=1&soft_id=2553',
 				method: 'GET',
 				json: true,
 				agent: agent
@@ -710,7 +710,13 @@ exports.captchaWorker = function (request, task, profile) {
 								} else if (body.status == 0) {
 									if (body.request == 'CAPCHA_NOT_READY') {
 										return setTimeout(() => capHandler(), 5000);
-									} else {
+									} 
+									else if(body.request == 'ERROR_CAPTCHA_UNSOLVABLE')
+									{
+										return setTimeout(() => exports.captchaWorker(request, task, profile), 15000);
+									} 
+									else
+									{
 										console.log(JSON.stringify(body));
 										mainBot.mainBotWin.send('taskUpdate', {
 											id: task.taskID,
@@ -900,7 +906,8 @@ exports.submitRaffle = function (request, task, profile) {
 				"issuerId": "raffle.bstn.com"
 			}
 		}, function callback(error, response, body) {
-			console.log('BODY:' + body);
+			console.log('BODY:');
+			console.log(body);
 			if (!error) {
 				if (response.statusCode == 200 || response.statusCode == 201) {
 					if (body == null || body == undefined) {

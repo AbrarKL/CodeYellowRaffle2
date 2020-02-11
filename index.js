@@ -15,7 +15,7 @@
 	along with this program (license.md).  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var currentVersion = '0.4.0';
+var currentVersion = '0.4.3';
 global.currentVersion = currentVersion;
 // LATER REMOVE EMAIL FROM if (fileExists('profiles.json')) {
 const {
@@ -111,7 +111,7 @@ global.websites = {
 		name: 'Chmielna'
 	},
 	'vitkac': {
-		sitekey: '6LfmiqkUAAAAAD_Fm-4KvgdtZhZbzXh2kdie0y2B',
+		sitekey: '6LfBVakUAAAAAArEAiLiOFpR0iUMo0kvIUvFy7i4',
 		url: 'vitkac.com',
 		name: 'Vitkac'
 	},
@@ -663,7 +663,7 @@ function openBot(onReady) {
 	// Start Task
 	ipcMain.on('startTask', function (e, task, profile) {
 		//if (module.exports.taskStatuses[task.taskID] != 'active') {
-		if (module.exports.taskStatuses[task['type']][task.taskID] == 'active' && task['taskSiteSelect'] != 'oneblockdown') {
+		if (module.exports.taskStatuses[task['type']][task.taskID] == 'active' && task['taskSiteSelect'] != 'oneblockdown' && task['taskSiteSelect'] != 'vitkac') {
 			console.log('Task in progress');
 			return;
 		}
@@ -786,8 +786,17 @@ function openBot(onReady) {
 			console.log('Shelta task started');
 			websites.shelta.initTask(task, profile)
 		} else if (task['taskSiteSelect'] == 'vitkac') {
-			console.log('Vitkac task started');
-			websites.vitkac.initTask(task, profile)
+			if (module.exports.tasksAwaitingConfirm[task.type][task.taskID] != 'awaiting') {
+				console.log('Vitkac task started');
+				websites.vitkac.initTask(task, profile)
+			} else {
+				module.exports.tasksAwaitingConfirm[task.type][task.taskID] = 'confirmed';
+				module.exports.mainBotWin.send('taskUpdate', {
+					id: task.taskID,
+					type: task.type,
+					message: 'Attempting login'
+				});
+			}
 		} else if (task['taskSiteSelect'] == 'chmielna') {
 			console.log('Chmielna task started');
 			websites.chmielna.initTask(task, profile)
@@ -1343,7 +1352,7 @@ function getUpcomingReleases() {
 				'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
 			},
 			json: true,
-			url: 'https://codeyellow.io/api/releases_88.php'
+			url: 'https://codeyellow.io/api/releases_90.php'
 		},
 		function (error, response, body) {
 			global.releases = body;
