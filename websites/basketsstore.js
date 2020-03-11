@@ -165,15 +165,15 @@ exports.initTask = function (task, profile) {
 		method: 'POST',
 		headers: {
 			'Accept': '*/*',
-			'Referer': 'https://www.baskets-store.com/nl/adidas-yeezy-boost-350-v2-citrin-reflective.html',
+			'Referer': 'https://www.baskets-store.com/us/adidas-yeezy-350-v2-desert-sage.html',
 			'Origin': 'https://www.baskets-store.com',
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
 			'Sec-Fetch-Mode': 'cors',
 			'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 		},
 		formData: {
-			'product': 'Adidas YEEZY BOOST 350 V2 Citrin Reflective',
-			'productId': '101278296',
+			'product': 'Adidas YEEZY 350 V2 \'Desert Sage\'',
+			'productId': '107252305',
 			'dontfill': '',
 			'firstname': profile['firstName'],
 			'lastname': profile['lastName'],

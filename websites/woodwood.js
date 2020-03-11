@@ -298,7 +298,8 @@ exports.postRaffleInfo = function (request, task, profile, token) {
             'MERGE5': countryFormatter(profile['country']),
             'MERGE4': profile['phoneNumber'],
             'MERGE6': task['taskSizeVariant'],
-            'gdpr[657]:': 'Y',
+            'MERGE7': 'woodwood.com',
+            'gdpr[717]:': 'Y',
             'submit': 'Subscribe',
             'ht': token,
             'mc_signupsource': 'hosted'

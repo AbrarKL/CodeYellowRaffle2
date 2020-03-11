@@ -170,7 +170,7 @@ exports.initTask = function (task, profile) {
 
 	//task['variant'] = url below
 	request({
-		url: 'https://raffles.granit-shop.com/gb/raffles/916-3100-adidas-yeezy-boost-350-v2-yecheil.html',
+		url: 'https://raffles.granit-shop.com/gb/raffles/3084-5697-yeezy-boost-350-v2.html',
 		headers: {
 			'Connection': 'keep-alive',
 			'Cache-Control': 'max-age=0',
@@ -215,10 +215,10 @@ exports.initTask = function (task, profile) {
 					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 					'Sec-Fetch-Site': 'same-origin',
 					'Sec-Fetch-Mode': 'cors',
-					'Referer': 'https://raffles.granit-shop.com/gb/raffles/916-3113-adidas-yeezy-boost-350-v2-yecheil.html',
+					'Referer': 'https://raffles.granit-shop.com/gb/raffles/3084-5697-yeezy-boost-350-v2.html',
 					'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 				},
-				body: 'id=916&group[1]='+task['taskSizeVariant']+'&qty=1',
+				body: 'id=3084&group[2]='+task['taskSizeVariant']+'&group[3]=767&qty=1',
 				agent: agent
 			}, function callback(error, response, body) {
 				if (!error) {
@@ -249,7 +249,7 @@ exports.initTask = function (task, profile) {
 								'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
 								'Sec-Fetch-Site': 'same-origin',
 								'Sec-Fetch-Mode': 'navigate',
-								'Referer': 'https://raffles.granit-shop.com/fr/raffles/916-3115-adidas-yeezy-boost-350-v2-yecheil.html',
+								'Referer': 'https://raffles.granit-shop.com/gb/raffles/3084-5697-yeezy-boost-350-v2.html',
 								'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
 							},
 							agent: agent

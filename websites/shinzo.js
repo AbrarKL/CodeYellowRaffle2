@@ -206,7 +206,7 @@ exports.initTask = function (task, profile) {
 	});
 	console.log(`[${task.taskID}] ` + ' Getting registration page');
 	request({
-		url: 'https://raffle.shinzo.paris/en/nike-x-sacai-blazer-mid-black-wolf-grey/',
+		url: 'https://raffle.shinzo.paris/en/adidas-yeezy-boost-350-v2-desert-sage/',
 		headers: {
 			'Connection': 'keep-alive',
 			'Cache-Control': 'max-age=0',
@@ -634,11 +634,10 @@ exports.submitRaffle = function (request, task, profile, bb2) {
 		}
 		console.log('Instagram used: ' + profile['instagram'])
 
-		var g = task['shinzoparis']['group'];
 		var formid = task['shinzoparis']['formid'];
 
-		var group = (`["${g}"]`).replaceAll('"', '\\"');
-		var options = (`{"form_id":${formid},"conditions":[{"if_field":"delivery","operator":"equals","if_value":"1","then_field":"${g}"}],"settings":false}`).replaceAll('"', '\\"');
+		//var options = (`{"form_id":${formid},"conditions":[{"if_field":"delivery","operator":"equals","if_value":"1","then_field":"${g}"}],"settings":false}`).replaceAll('"', '\\"');
+		var options = (`{"form_id":${formid},"conditions":[],"settings":false}`).replaceAll('"', '\\"');
 
 
 		var t = JSON.parse(`{"_wpcf7":"${formid}",
@@ -648,20 +647,14 @@ exports.submitRaffle = function (request, task, profile, bb2) {
 								"_wpcf7_container_post":"${task['shinzoparis']['container_post']}",
 								"_wpcf7cf_hidden_group_fields":"[]",
 								"_wpcf7cf_hidden_groups":"[]",
-								"_wpcf7cf_visible_groups": "${group}",
+								"_wpcf7cf_visible_groups": "",
 								"_wpcf7cf_options": "${options}",
 								"lang":"en",
 								"your-firstname":"${profile['firstName']}",
 								"your-name":"${profile['lastName']}",
 								"your-email":"${task['taskEmail']}",
-								"your-instagram":"${profile['instagram']}",
 								"your-tel":"${profile['phoneNumber']}",
-								"delivery[]":"1",
-								"your-address":"${profile['address']}",
-								"your-postcode":"${profile['zipCode']}",
-								"your-city":"${profile['city']}",
-								"your-state":"${profile['stateProvince']}",
-								"your-country":"United Kingdom",
+								"your-instagram":"${profile['instagram']}",
 								"size":"${task['taskSizeVariant']}",
 								"opt-in[]":"1",
 								"accept":"1",
@@ -678,7 +671,7 @@ exports.submitRaffle = function (request, task, profile, bb2) {
 				'Origin': 'https://raffle.shinzo.paris',
 				'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 				'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-				'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryXGOOfmdA4pQRjRU0',
+				'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryG1xMNOLhTB5tm4lG',
 				'Accept': 'application/json, text/javascript, */*; q=0.01',
 				'Referer': task['variant'],
 				'X-Requested-With': 'XMLHttpRequest',
